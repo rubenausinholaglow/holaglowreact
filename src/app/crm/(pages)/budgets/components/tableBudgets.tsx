@@ -29,6 +29,7 @@ export default function TableBudgets() {
   const [pageInfo, setPageInfo] = useState<PageInfo>();
   const [totalCount, setTotalCount] = useState<number>(0);
   const [filterStatus, setFilterStatus] = useState('');
+  const [clinicFlowwwId, setClinicFlowwwId] = useState('');
   const [cursors, setCursors] = useState<Cursor[]>([]);
 
   const columns: ColumnDataTable[] = [
@@ -76,6 +77,9 @@ export default function TableBudgets() {
           title
         }
       }
+      clinicInfo {
+        flowwwId
+      }
     `,
   ];
 
@@ -121,11 +125,15 @@ export default function TableBudgets() {
     }
   };
   useEffect(() => {
-    executeQuery(true);
-  }, [filterStatus]);
+    if (clinicFlowwwId) executeQuery(true);
+  }, [filterStatus, clinicFlowwwId]);
 
   useEffect(() => {
-    executeQuery(true);
+    const queryString = window.location.search;
+    const params = new URLSearchParams(queryString);
+    const clinicId = params.get('clinicId') ?? '';
+    setClinicFlowwwId(clinicId);
+    if (clinicFlowwwId) executeQuery(true);
   }, []);
 
   const executeQuery = async (
@@ -151,7 +159,16 @@ export default function TableBudgets() {
       columnsToIgnoreSearch,
     };
     let filterValue = '';
-    if (filterStatus != '') filterValue = 'statusBudget == ' + filterStatus;
+    if (filterStatus != '') {
+      filterValue =
+        'statusBudget == ' +
+        filterStatus +
+        ' && clinicInfo.flowwwId == \\"' +
+        clinicFlowwwId +
+        '\\"';
+    } else {
+      filterValue = 'clinicInfo.flowwwId == \\"' + clinicFlowwwId + '\\"';
+    }
     const queryBuilders = createQuery(params, filterValue);
     await fetchBudgets(queryBuilders, nextPage);
   };

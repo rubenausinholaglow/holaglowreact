@@ -98,7 +98,11 @@ export class GraphQLQueryBuilder {
 
       filterString = parseNestedFields(fieldsArray).join(' || ');
     }
-    if (filterValue) filterString = filterValue;
+    if (filterValue) {
+      if (filterString)
+        filterString = '(' + filterString + ') && ' + filterValue;
+      else filterString = filterValue;
+    }
     const query = `
       query { 
         ${entity}(sort: [{ ${sortString} }] ${limitString}${afterString}${beforeString}${
