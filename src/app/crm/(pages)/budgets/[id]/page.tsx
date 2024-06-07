@@ -160,40 +160,49 @@ export default function BudgetDetailPage({ params }: BudgetDetailsProps) {
                   </Text>
 
                   <div className="w-full mt-8">
-                    {budgetDetail?.budgetComments!.map(x => (
-                      <div key={x.id} className="mb-2 relative">
-                        <TextArea
-                          placeholder="Nuevo comentario"
-                          className={`bg-hg-black100 p-4 rounded-2xl w-full mb-2 text-sm border-none ${
-                            commentId === x.id
-                              ? ''
-                              : 'opacity-50 pointer-events-none'
-                          }`}
-                          onChange={event => setComment(event.target.value)}
-                          value={commentId === x.id ? comment : x.comment}
-                        />
-                        {commentId === x.id ? (
-                          <Text
-                            className="cursor-pointer text-hg-secondary text-xs absolute bottom-6 right-4"
-                            onClick={() => {
-                              saveBudgetComment();
-                            }}
-                          >
-                            Guardar
+                    {budgetDetail
+                      ?.budgetComments!.sort((a, b) =>
+                        a.creationDate! < b.creationDate ? 1 : -1
+                      )
+                      .map(x => (
+                        <div key={x.id} className="mb-2 relative">
+                          <Text className="text-sm text-hg-black500budget">
+                            {dayjs(x?.creationDate).format(
+                              'YYYY-MM-DD HH:mm:ss'
+                            )}
                           </Text>
-                        ) : (
-                          <Text
-                            className="cursor-pointer text-hg-secondary text-xs absolute bottom-6 right-4"
-                            onClick={() => {
-                              setCommentId(x.id);
-                              setComment(x.comment);
-                            }}
-                          >
-                            Editar
-                          </Text>
-                        )}
-                      </div>
-                    ))}
+                          <TextArea
+                            placeholder="Nuevo comentario"
+                            className={`bg-hg-black100 p-4 rounded-2xl w-full mb-2 text-sm border-none ${
+                              commentId === x.id
+                                ? ''
+                                : 'opacity-50 pointer-events-none'
+                            }`}
+                            onChange={event => setComment(event.target.value)}
+                            value={commentId === x.id ? comment : x.comment}
+                          />
+                          {commentId === x.id ? (
+                            <Text
+                              className="cursor-pointer text-hg-secondary text-xs absolute bottom-6 right-4"
+                              onClick={() => {
+                                saveBudgetComment();
+                              }}
+                            >
+                              Guardar
+                            </Text>
+                          ) : (
+                            <Text
+                              className="cursor-pointer text-hg-secondary text-xs absolute bottom-6 right-4"
+                              onClick={() => {
+                                setCommentId(x.id);
+                                setComment(x.comment);
+                              }}
+                            >
+                              Editar
+                            </Text>
+                          )}
+                        </div>
+                      ))}
 
                     <Accordion collapsible type="single" className="">
                       <AccordionItem>

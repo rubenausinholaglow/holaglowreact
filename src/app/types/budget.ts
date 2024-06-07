@@ -38,6 +38,7 @@ export interface BudgetProduct {
 export interface BudgetCommentsReponse {
   comment: string;
   id: string;
+  creationDate: Date;
 }
 
 export interface TicketBudget extends Budget {

@@ -17,6 +17,7 @@ import { ColumnDataTable } from 'app/GraphQL/common/types/column';
 import { PageInfo } from 'app/GraphQL/PageInfo';
 import { mapBudgetsData } from 'app/GraphQL/utils/utilsMapping';
 import { createApolloClient } from 'lib/client';
+import { Button } from 'designSystem/Buttons/Buttons';
 
 export default function TableBudgets() {
   const [budgets, setBudgets] = useState<BudgetsResponseNode[] | undefined>(
@@ -27,6 +28,7 @@ export default function TableBudgets() {
   );
   const [pageInfo, setPageInfo] = useState<PageInfo>();
   const [totalCount, setTotalCount] = useState<number>(0);
+  const [filterStatus, setFilterStatus] = useState('');
   const [cursors, setCursors] = useState<Cursor[]>([]);
 
   const columns: ColumnDataTable[] = [
@@ -118,6 +120,9 @@ export default function TableBudgets() {
       setCursors(prev => [...prev, createCursor()]);
     }
   };
+  useEffect(() => {
+    executeQuery(true);
+  }, [filterStatus]);
 
   useEffect(() => {
     executeQuery(true);
@@ -145,22 +150,56 @@ export default function TableBudgets() {
       nextCursor,
       columnsToIgnoreSearch,
     };
-    const queryBuilders = createQuery(params);
+    let filterValue = '';
+    if (filterStatus != '') filterValue = 'statusBudget == ' + filterStatus;
+    const queryBuilders = createQuery(params, filterValue);
     await fetchBudgets(queryBuilders, nextPage);
   };
 
   return (
     <div>
       {budgets ? (
-        <DataTable
-          data={budgets}
-          columns={columns}
-          showActionsColumn={false}
-          executeQuery={executeQuery}
-          pageInfo={pageInfo!}
-          totalCount={totalCount}
-          entity={entity}
-        />
+        <>
+          <Button
+            type="primary"
+            className={filterStatus !== 'Open' ? 'opacity-30' : ''}
+            onClick={() => {
+              if (filterStatus == 'Open') setFilterStatus('');
+              else setFilterStatus('Open');
+            }}
+          >
+            Pendiente
+          </Button>
+          <Button
+            type="primary"
+            className={filterStatus !== 'Rejected' ? 'opacity-30' : ''}
+            onClick={() => {
+              if (filterStatus == 'Rejected') setFilterStatus('');
+              else setFilterStatus('Rejected');
+            }}
+          >
+            Rechazado
+          </Button>
+          <Button
+            type="primary"
+            className={filterStatus !== 'Paid' ? 'opacity-30' : ''}
+            onClick={() => {
+              if (filterStatus == 'Paid') setFilterStatus('');
+              else setFilterStatus('Paid');
+            }}
+          >
+            Pagado
+          </Button>
+          <DataTable
+            data={budgets}
+            columns={columns}
+            showActionsColumn={false}
+            executeQuery={executeQuery}
+            pageInfo={pageInfo!}
+            totalCount={totalCount}
+            entity={entity}
+          />
+        </>
       ) : errorMessage ? (
         <p className="text-red-500">{errorMessage}</p>
       ) : (

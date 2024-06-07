@@ -10,7 +10,12 @@ export class GraphQLQueryBuilder {
     private columnsToIgnoreSearch?: string[]
   ) {}
 
-  buildQuery(entity: string, filters?: string, sortedBy?: string): string {
+  buildQuery(
+    entity: string,
+    filters?: string,
+    sortedBy?: string,
+    filterValue?: string
+  ): string {
     let fieldsString: string;
     let fieldNames: string[];
 
@@ -44,7 +49,7 @@ export class GraphQLQueryBuilder {
       fieldNames = fieldsArray;
     }
 
-    if (filters && fieldNames) {
+    if (filters && fieldNames && !filterValue) {
       const parseNestedFields = (fieldsArray: string[]): string[] => {
         const filterableFields: string[] = [];
 
@@ -56,17 +61,17 @@ export class GraphQLQueryBuilder {
             let nextFieldIndex = i + 1;
             let nextField = fieldsArray[nextFieldIndex]?.trim();
             while (nextField && !nextField.includes('}')) {
+              let fieldToFilter = `${base}.${nextField}`;
+              fieldToFilter = fieldToFilter
+                .replaceAll(' ', '')
+                .replaceAll(',', '')
+                .replaceAll('{', '');
               const shouldIgnore = !this.columnsToIgnoreSearch
                 ? false
                 : this.columnsToIgnoreSearch.findIndex(
-                    x => x == `${base}.${nextField}`
+                    x => x == fieldToFilter
                   ) >= 0;
               if (!shouldIgnore) {
-                let fieldToFilter = `${base}.${nextField}`;
-                fieldToFilter = fieldToFilter
-                  .replaceAll(' ', '')
-                  .replaceAll(',', '')
-                  .replaceAll('{', '');
                 console.log(fieldToFilter);
                 filterableFields.push(
                   `${fieldToFilter}.contains(\\"${filters}\\")`
@@ -93,7 +98,7 @@ export class GraphQLQueryBuilder {
 
       filterString = parseNestedFields(fieldsArray).join(' || ');
     }
-
+    if (filterValue) filterString = filterValue;
     const query = `
       query { 
         ${entity}(sort: [{ ${sortString} }] ${limitString}${afterString}${beforeString}${

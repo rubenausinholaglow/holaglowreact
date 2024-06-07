@@ -23,7 +23,10 @@ export interface TableQuery {
   columnsToIgnoreSearch?: string[];
 }
 
-export function createQuery(params: TableQuery): DocumentNode {
+export function createQuery(
+  params: TableQuery,
+  filterValue?: string
+): DocumentNode {
   const {
     nextPage,
     queryToExecute,
@@ -47,7 +50,12 @@ export function createQuery(params: TableQuery): DocumentNode {
     columnsToIgnoreSearch
   );
 
-  const queryString = queryBuilder.buildQuery(entity!, stringFilter, sortedBy);
+  const queryString = queryBuilder.buildQuery(
+    entity!,
+    stringFilter,
+    sortedBy,
+    filterValue
+  );
   return gql(queryString);
 }
 
