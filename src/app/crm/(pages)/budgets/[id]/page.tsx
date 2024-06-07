@@ -146,7 +146,9 @@ export default function BudgetDetailPage({ params }: BudgetDetailsProps) {
                 <SvgHolaglowHand className="h-8 w-8 shrink-0 text-hg-secondary" />
                 <Flex layout="col-left" className="w-full">
                   <Text className="font-semibold">
-                    {budgetDetail?.products.map(x => <>{x.product?.title}</>)}
+                    {budgetDetail?.products.map(x => (
+                      <Text className="font-semibold">{x.product?.title}</Text>
+                    ))}
                   </Text>
                   <Text className="text-sm">
                     Importe: {budgetDetail?.totalPrice}€
