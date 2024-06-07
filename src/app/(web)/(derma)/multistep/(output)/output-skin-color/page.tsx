@@ -160,11 +160,7 @@ export default function SkinColorFeedback() {
                 <Button
                   type="derma"
                   size="lg"
-                  href={
-                    pain !== 1
-                      ? ROUTES.derma.multistep.secondaryConcern
-                      : ROUTES.derma.multistep.routine
-                  }
+                  href={ROUTES.derma.multistep.secondaryConcern}
                 >
                   Continuar
                 </Button>
