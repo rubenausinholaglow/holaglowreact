@@ -176,7 +176,6 @@ function ProductPriceItemsCard({
 
 export default function ProductPriceCard({
   product,
-  parentProduct,
   isDashboard = false,
   className,
 }: {
