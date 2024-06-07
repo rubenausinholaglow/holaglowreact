@@ -178,6 +178,7 @@ export default function FloatingBottomBar({
                   size="lg"
                   type="primary"
                   className="mr-4 pointer-events-auto"
+                  id="tmevent_click_floating_button_callme"
                 >
                   <SvgCalling className="h-5 w-5 mr-4" />
                   Te llamamos
@@ -348,7 +349,6 @@ export default function FloatingBottomBar({
                             className="w-full md:justify-start"
                           >
                             <Button
-                              id="tmevent_click_floating_button_callme"
                               type={
                                 formData.phone !== formData.phonePrefix &&
                                 !showPhoneError &&
