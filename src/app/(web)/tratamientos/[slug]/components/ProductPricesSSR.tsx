@@ -108,10 +108,7 @@ export default function ProductPricesSSR({ product }: { product: Product }) {
               ))}
 
             {isSessionProduct && isEmpty(groupedSessionProducts) && (
-              <ProductSessionPriceCard
-                parentProduct={product}
-                productItems={productItems}
-              />
+              <ProductSessionPriceCard productItems={productItems} />
             )}
 
             {isSessionProduct && !isEmpty(groupedSessionProducts) && (
@@ -123,7 +120,6 @@ export default function ProductPricesSSR({ product }: { product: Product }) {
                   <ProductSessionPriceCard
                     isGroupedSessionProduct
                     key={productIndex}
-                    parentProduct={product}
                     productItems={products}
                   />
                 ))}

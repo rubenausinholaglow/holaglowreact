@@ -1,14 +1,9 @@
 'use client';
 
-import { useEffect, useState } from 'react';
-import CheckHydration from '@utils/CheckHydration';
-import { useCartStore } from 'app/(dashboard)/dashboard/(pages)/budgets/stores/userCartStore';
-import { SvgCircle, SvgPlusSmall } from 'app/icons/Icons';
-import * as icon from 'app/icons/IconsDs';
+import { useState } from 'react';
 import { SvgArrow } from 'app/icons/IconsDs';
 import { useSessionStore } from 'app/stores/globalStore';
-import { CartItem, Product } from 'app/types/product';
-import { getDiscountedPrice } from 'app/utils/common';
+import { Product } from 'app/types/product';
 import useRoutes from 'app/utils/useRoutes';
 import { Button } from 'designSystem/Buttons/Buttons';
 import { Flex } from 'designSystem/Layouts/Layouts';

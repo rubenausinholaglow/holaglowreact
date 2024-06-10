@@ -150,9 +150,7 @@ export default function ProductPrices({
                   if (item.price > 0) {
                     return (
                       <ProductSessionPriceCard
-                        parentProduct={product}
                         productItems={productItems}
-                        isDashboard={isDashboard}
                         key={item.title}
                       />
                     );
