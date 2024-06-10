@@ -10,14 +10,17 @@ export default function ButtonTests() {
       <Container className="py-24">
         <Flex className="w-full gap-4 mb-24 flex-wrap">
           <Button type="primary" size="xl">
-            Test alignment
+            Default
             <SvgArrow className="ml-4" />
           </Button>
           <button>
             <Flex className="bg-hg-secondary rounded-full text-white text-lg py-4 px-6 font-semibold">
-              Test alignment
+              Button-Flex
             </Flex>
           </button>
+          <Flex className="bg-hg-secondary rounded-full text-white text-lg py-4 px-6 font-semibold">
+            FlexItem
+          </Flex>
           <button>
             <Flex className="flex bg-hg-secondary rounded-full text-white text-lg items-center py-4 px-6 font-semibold justify-between">
               Test alignment
