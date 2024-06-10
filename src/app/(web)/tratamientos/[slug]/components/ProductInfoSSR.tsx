@@ -63,6 +63,9 @@ export default function ProductInfoSSR({ product }: { product: Product }) {
 
   return (
     <Container className="mb-12 ">
+      <p>{product.id} - product.id</p>
+      <p>{process.env.NEXT_PUBLIC_HYDRAFACIAL_ID} - dev hydra id</p>
+
       {process.env.NEXT_PUBLIC_HYDRAFACIAL_ID !== product.id && (
         <div className="md:flex gap-8 justify-between items-start bg-derma-secondary400 md:rounded-2xl w-full">
           <Container className="py-6 md:px-6 md:flex md:flex-col md:justify-center md:items-start">

@@ -1,10 +1,8 @@
 import CheckHydration from '@utils/CheckHydration';
 import BlogShareBar from 'app/(web)/blog/components/BlogShareBar';
-import { SvgArrow } from 'app/icons/IconsDs';
 import { Product } from 'app/types/product';
-import { Button } from 'designSystem/Buttons/Buttons';
 import { Container, Flex } from 'designSystem/Layouts/Layouts';
-import { Text, Title } from 'designSystem/Texts/Texts';
+import { Title } from 'designSystem/Texts/Texts';
 import { isEmpty } from 'lodash';
 import dynamic from 'next/dynamic';
 import { headers } from 'next/headers';
@@ -15,10 +13,6 @@ const ProductPriceCard = dynamic(() => import('./ProductPriceCard'), {
 
 const PVCard = dynamic(() => import('./PVCard'), { ssr: false });
 
-const ProductSessionGroupedPriceCard = dynamic(
-  () => import('./ProductSessionGroupedPriceCard'),
-  { ssr: false }
-);
 const ProductSessionPriceCard = dynamic(
   () => import('./ProductSessionPriceCard'),
   { ssr: false }

@@ -122,21 +122,14 @@ const SESSION_PRODUCTS_EXTRA_INFO = [
 
 export default function ProductSessionPriceCard({
   isGroupedSessionProduct = false,
-  parentProduct,
   productItems,
-  isDashboard = false,
 }: {
   isGroupedSessionProduct?: boolean;
-  parentProduct: Product;
   productItems: Product[];
-  isDashboard?: boolean;
 }) {
   const [productIndexToAdd, setProductIndexToAdd] = useState(0);
   const { setSelectedTreatments } = useSessionStore(state => state);
   const ROUTES = useRoutes();
-
-  const { cart } = useCartStore(state => state);
-  const addToCart = useCartStore(state => state.addItemToCart);
 
   //const [pendingDiscount, setPendingDiscount] = useState(false);
   //const applyItemDiscount = useCartStore(state => state.applyItemDiscount);
