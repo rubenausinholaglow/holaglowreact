@@ -8,19 +8,21 @@ export default function ButtonTests() {
   return (
     <MainLayoutSSR hideFooter>
       <Container className="py-24">
-        <Title className="mb-8">Old Buttons</Title>
-        <Flex className="w-full gap-4 mb-24">
+        <Flex className="w-full gap-4 mb-24 flex-wrap">
           <Button type="primary" size="xl">
             Test alignment
             <SvgArrow className="ml-4" />
           </Button>
-        </Flex>
-
-        <Title className="mb-8">New Buttons</Title>
-        <Flex className="w-full gap-4 mb-24">
-          <button className="flex bg-hg-secondary text-white py-4 px-6 font-semibold rounded-full text-lg items-center">
-            Test alignment
-            <SvgArrow className="ml-4" />
+          <button>
+            <Flex className="bg-hg-secondary rounded-full text-white text-lg py-4 px-6 font-semibold">
+              Test alignment
+            </Flex>
+          </button>
+          <button>
+            <Flex className="flex bg-hg-secondary rounded-full text-white text-lg items-center py-4 px-6 font-semibold justify-between">
+              Test alignment
+              <SvgArrow className="ml-4" />
+            </Flex>
           </button>
         </Flex>
       </Container>
