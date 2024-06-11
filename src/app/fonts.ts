@@ -41,29 +41,3 @@ export const gtUltra = localFont({
   ],
   variable: '--font-gtUltra',
 });
-
-export const poppinsTest = localFont({
-  src: [
-    {
-      path: '../../public/fonts/poppinsTest-regular.woff2',
-      weight: '400',
-      style: 'normal',
-    },
-    {
-      path: '../../public/fonts/poppinsTest-medium.woff2',
-      weight: '500',
-      style: 'normal',
-    },
-    {
-      path: '../../public/fonts/poppinsTest-semibold.woff2',
-      weight: '600',
-      style: 'normal',
-    },
-    {
-      path: '../../public/fonts/poppinsTest-bold.woff2',
-      weight: '700',
-      style: 'normal',
-    },
-  ],
-  variable: '--font-poppinsTest',
-});

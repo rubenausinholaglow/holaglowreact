@@ -4,6 +4,8 @@
 
 @config "./../../tailwind.config.js";
 
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap');
+
 :root {
   --foreground-rgb: 0, 0, 0;
   --background-start-rgb: 214, 219, 220;
@@ -85,4 +87,14 @@ input[type='date']::-webkit-calendar-picker-indicator {
 #categorySelector::-webkit-scrollbar,
 #blogCategorySelector::-webkit-scrollbar {
   display: none;
+}
+
+.cta-btn {
+  background-color: #4b42f7;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  color: #fff;
+  border: none;
+  width: fit-content;
 }
