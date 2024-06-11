@@ -12,6 +12,8 @@ import {
   ButtonBack,
   ButtonNext,
   CarouselProvider,
+  Dot,
+  DotGroup,
   Slide,
   Slider,
 } from 'pure-react-carousel';
@@ -184,32 +186,15 @@ export default function Carousel({
 
         {hasDots && !isDashboard && (
           <Flex layout="row-center" className="relative mt-8">
-            <ul className="p-2 spacing flex gap-1.5 text-xs absolute items-center">
+            <DotGroup className="p-2 spacing flex gap-1.5 text-xs absolute items-center">
               {childrens.map((dot, index) => {
-                const isActive = currentSlideIndex === index;
-
                 return (
-                  <li key={index}>
-                    <SvgHolaGlowStar2
-                      onClick={() => setCurrentSlideIndex(index)}
-                      className={
-                        isActive
-                          ? `h-6 w-6 pointer-events-none ${
-                              isDerma
-                                ? 'text-derma-primary500'
-                                : 'text-hg-secondary'
-                            }`
-                          : `h-4 w-4 ${
-                              isDerma
-                                ? 'text-derma-primary300'
-                                : 'text-hg-secondary300'
-                            }`
-                      }
-                    />
-                  </li>
+                  <Dot key={index} slide={index}>
+                    <SvgHolaGlowStar2 />
+                  </Dot>
                 );
               })}
-            </ul>
+            </DotGroup>
           </Flex>
         )}
 
@@ -236,3 +221,18 @@ export default function Carousel({
     </CheckHydration>
   );
 }
+/* 
+        onClick={() => setCurrentSlideIndex(index)}
+        className={
+          isActive
+            ? `h-6 w-6 pointer-events-none ${
+                isDerma
+                  ? 'text-derma-primary500'
+                  : 'text-hg-secondary'
+              }`
+            : `h-4 w-4 ${
+                isDerma
+                  ? 'text-derma-primary300'
+                  : 'text-hg-secondary300'
+              }`
+        } */

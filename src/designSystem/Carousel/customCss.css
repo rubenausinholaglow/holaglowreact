@@ -5,3 +5,12 @@
 .carousel__slider {
   touch-action: pan-y;
 }
+
+.carousel__dot {
+  color: theme('colors.hg.secondary500');
+}
+
+.carousel__dot--selected {
+  color: theme('colors.hg.secondary');
+  transform: scale(120%);
+}
