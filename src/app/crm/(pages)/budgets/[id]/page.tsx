@@ -94,6 +94,7 @@ export default function BudgetDetailPage({ params }: BudgetDetailsProps) {
                 </Text>
                 <Button
                   type="primary"
+                  customStyles="bg-hg-black500"
                   className={
                     budgetDetail.statusBudget !== 1 ? 'opacity-30' : ''
                   }
@@ -105,6 +106,7 @@ export default function BudgetDetailPage({ params }: BudgetDetailsProps) {
                 </Button>
                 <Button
                   type="primary"
+                  customStyles="bg-hg-error"
                   className={
                     budgetDetail.statusBudget !== 3 ? 'opacity-30' : ''
                   }
@@ -116,6 +118,7 @@ export default function BudgetDetailPage({ params }: BudgetDetailsProps) {
                 </Button>
                 <Button
                   type="primary"
+                  customStyles="bg-hg-green"
                   className={
                     budgetDetail.statusBudget !== 4 ? 'opacity-30' : ''
                   }
