@@ -37,6 +37,7 @@ export const PaymentModule = () => {
   const [activePaymentMethod, setActivePaymentMethod] = useState('');
   const [, setOnLoad] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const [showCreateTicketButton, setShowCreateTicketButton] = useState(true);
   const [messageNotification, setMessageNotification] = useState<string | null>(
     null
   );
@@ -274,6 +275,7 @@ export const PaymentModule = () => {
           }
 
           setMessageNotification('Ticket Creado Correctamente');
+          setShowCreateTicketButton(false);
         } else {
           //TODO - ALERT MESSAGE
         }
@@ -404,7 +406,11 @@ export const PaymentModule = () => {
         customStyles="bg-hg-primary"
         onClick={createTicket}
       >
-        {isLoading ? <SvgSpinner height={24} width={24} /> : 'Generar Tiquet'}
+        {isLoading || !showCreateTicketButton ? (
+          <SvgSpinner height={24} width={24} />
+        ) : (
+          'Generar Tiquet'
+        )}
       </Button>
       {messageNotification ? (
         <Notification message={messageNotification} />
