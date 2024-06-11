@@ -280,3 +280,19 @@ export function getUnityTypePassport(id: number): string {
       return '';
   }
 }
+
+export function getAllCategoryNames(products: Product[]) {
+  const categories: string[] = products.reduce(
+    (categoryNames: string[], product) => {
+      const productCategories = product.category.map(category => category.name);
+      return [...categoryNames, ...productCategories];
+    },
+    []
+  );
+
+  const uniqueCategoryNames: string[] = [...new Set(categories)].filter(
+    category => category !== ''
+  );
+
+  return uniqueCategoryNames || [];
+}

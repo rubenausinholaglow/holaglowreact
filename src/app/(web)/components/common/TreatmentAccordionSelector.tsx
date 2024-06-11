@@ -6,12 +6,12 @@ import ProductService from '@services/ProductService';
 import {
   getInvalidProducts,
   getValidTypes,
-  getValidUnityTypes,
   isDisableAddQuantity,
 } from '@utils/agendaUtils';
 import { fetchProduct } from '@utils/fetch';
 import { PacksConfigured } from '@utils/packUtils';
 import useRoutes from '@utils/useRoutes';
+import { getAllCategoryNames } from '@utils/utils';
 import { Quantifier } from 'app/(dashboard)/dashboard/(pages)/budgets/HightLightedProduct/Quantifier';
 import {
   Operation,
@@ -32,7 +32,30 @@ import { Text } from 'designSystem/Texts/Texts';
 import { isEmpty } from 'lodash';
 import { useRouter } from 'next/navigation';
 
+import ProductSearchBar from '../product/ProductSearchBar';
 import CategoryIcon from './CategoryIcon';
+
+function reorderArray(arr: string[]) {
+  const desiredOrder = [
+    'Médico',
+    'Relleno',
+    'Arrugas',
+    'Lifting',
+    'Calidad Piel',
+    'Otros',
+    'Caida del pelo',
+  ];
+
+  const orderMap: { [key: string]: number } = desiredOrder.reduce(
+    (map, item, index) => {
+      map[item] = index;
+      return map;
+    },
+    {} as { [key: string]: number }
+  );
+
+  return arr.slice().sort((a, b) => orderMap[a] - orderMap[b]);
+}
 
 export default function TreatmentAccordionSelector({
   isDashboard = false,
@@ -60,25 +83,11 @@ export default function TreatmentAccordionSelector({
 
   useEffect(() => {
     if (isDashboard && !isEmpty(dashboardProducts)) {
-      const allCategoryNames: string[] = dashboardProducts.reduce(
-        (categoryNames: string[], product) => {
-          let productCategories: string[] = [];
-          if (packInProductCart) {
-            if (validUnityTypes.includes(product.unityType)) {
-              productCategories = product.category.map(
-                category => category.name
-              );
-            }
-          } else if (!product.isPack) {
-            productCategories = product.category.map(category => category.name);
-          }
-          return [...categoryNames, ...productCategories];
-        },
-        []
+      const reorderedArray = reorderArray(
+        getAllCategoryNames(dashboardProducts)
       );
-      const uniqueCategoryNames: string[] = [...new Set(allCategoryNames)];
 
-      setProductCategories(uniqueCategoryNames);
+      setProductCategories(reorderedArray);
     }
   }, [dashboardProducts, treatmentPacks]);
 
@@ -93,25 +102,8 @@ export default function TreatmentAccordionSelector({
         .then(products => {
           if (products.length > 0) {
             setProductsAgenda(products);
-            const allCategoryNames: string[] = products.reduce(
-              (categoryNames: string[], product) => {
-                const productCategories = product.category.map(
-                  category => category.name
-                );
-                return [...categoryNames, ...productCategories];
-              },
-              []
-            );
 
-            const uniqueCategoryNames: string[] = [
-              ...new Set(allCategoryNames),
-            ];
-            const packsIndex = uniqueCategoryNames.indexOf('Packs');
-            if (packsIndex !== -1) {
-              uniqueCategoryNames.splice(packsIndex, 1);
-              uniqueCategoryNames.unshift('Packs');
-            }
-            setProductCategories(uniqueCategoryNames);
+            setProductCategories(getAllCategoryNames(products));
           }
         })
         .catch((err: any) => {
@@ -164,7 +156,6 @@ export default function TreatmentAccordionSelector({
       .sort((a, b) => (a.title > b.title ? 1 : -1));
   }
 
-  const validUnityTypes = getValidUnityTypes(treatmentPacks);
   const validTypes = getValidTypes();
 
   function getProductsByTypePack(): Product[] {
@@ -302,6 +293,7 @@ export default function TreatmentAccordionSelector({
       </Flex>
     );
   };
+
   const renderCheck = (product: Product, index: number) => {
     const commonElement = (
       <div className="border border-hg-black h-[24px] w-[24px] rounded-full shrink-0 ml-auto"></div>
@@ -424,50 +416,63 @@ export default function TreatmentAccordionSelector({
         process.env.NEXT_PUBLIC_CITA_PREVIA_FLOWWWID)
   ) {
     return (
-      <Accordion type="single" collapsible className="w-full">
-        {productCategories
-          .sort((a, b) => {
-            if (a === 'Packs') return -1;
-            if (b === 'Packs') return 1;
-            return 0;
-          })
-          .map(category => {
-            return (
-              <AccordionItem
-                value={category}
-                key={category}
-                className={`transition-all w-full rounded-lg overflow-hidden mb-4 ${
-                  selectedCategory === category
-                    ? 'bg-hg-secondary100'
-                    : 'bg-derma-secondary300'
-                }
+      <>
+        {isDashboard && dashboardProducts && (
+          <ProductSearchBar
+            products={dashboardProducts.filter(product => product.type !== 4)}
+            className="mb-4"
+            isDashboard
+          />
+        )}
+
+        <Accordion type="single" collapsible className="w-full">
+          {productCategories
+            .sort((a, b) => {
+              if (a === 'Packs') return -1;
+              if (b === 'Packs') return 1;
+              return 0;
+            })
+            .filter(category => {
+              return !isDashboard || (isDashboard && category !== 'Packs');
+            })
+            .map(category => {
+              return (
+                <AccordionItem
+                  value={category}
+                  key={category}
+                  className={`transition-all w-full rounded-lg overflow-hidden mb-4 ${
+                    selectedCategory === category
+                      ? 'bg-hg-secondary100'
+                      : 'bg-derma-secondary300'
+                  }
                 ${isDashboard ? 'min-w-[80%]' : ''}
               `}
-              >
-                <AccordionTrigger>
-                  <Flex
-                    className="p-4"
-                    onClick={() =>
-                      setSelectedCategory(
-                        selectedCategory !== category ? category : null
-                      )
-                    }
-                  >
-                    <CategoryIcon category={category} className="mr-4" />
-                    <Text className="font-semibold">{category}</Text>
+                >
+                  <AccordionTrigger>
+                    <Flex
+                      className="p-4"
+                      onClick={() =>
+                        setSelectedCategory(
+                          selectedCategory !== category ? category : null
+                        )
+                      }
+                    >
+                      <CategoryIcon category={category} className="mr-4" />
+                      <Text className="font-semibold">{category}</Text>
 
-                    <SvgAngle
-                      className={`transition-all text-hg-secondary ml-auto ${
-                        selectedCategory === category ? 'rotate-90' : ''
-                      }`}
-                    />
-                  </Flex>
-                </AccordionTrigger>
-                {renderAcordionContent(category)}
-              </AccordionItem>
-            );
-          })}
-      </Accordion>
+                      <SvgAngle
+                        className={`transition-all text-hg-secondary ml-auto ${
+                          selectedCategory === category ? 'rotate-90' : ''
+                        }`}
+                      />
+                    </Flex>
+                  </AccordionTrigger>
+                  {renderAcordionContent(category)}
+                </AccordionItem>
+              );
+            })}
+        </Accordion>
+      </>
     );
   }
 }
