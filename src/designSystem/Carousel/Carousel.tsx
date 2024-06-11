@@ -184,7 +184,7 @@ export default function Carousel({
           </Flex>
         )}
 
-        {hasDots && !isDashboard && (
+        {hasDots && !isDashboard && childrens.length < 9 && (
           <Flex layout="row-center" className="relative mt-8">
             <DotGroup className="p-2 spacing flex gap-1.5 text-xs absolute items-center">
               {childrens.map((dot, index) => {
@@ -221,18 +221,3 @@ export default function Carousel({
     </CheckHydration>
   );
 }
-/* 
-        onClick={() => setCurrentSlideIndex(index)}
-        className={
-          isActive
-            ? `h-6 w-6 pointer-events-none ${
-                isDerma
-                  ? 'text-derma-primary500'
-                  : 'text-hg-secondary'
-              }`
-            : `h-4 w-4 ${
-                isDerma
-                  ? 'text-derma-primary300'
-                  : 'text-hg-secondary300'
-              }`
-        } */
