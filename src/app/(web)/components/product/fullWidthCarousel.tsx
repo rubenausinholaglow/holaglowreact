@@ -20,6 +20,7 @@ export default function FullWidthCarousel({
   isPlaying = false,
   disableLeftMargin = false,
   children,
+  dragEnabled = true,
   isDerma = false,
 }: {
   type?: 'products' | 'professionals';
@@ -31,6 +32,7 @@ export default function FullWidthCarousel({
   isPlaying?: boolean;
   disableLeftMargin?: boolean;
   children?: ReactNode;
+  dragEnabled?: boolean;
   isDerma?: boolean;
 }) {
   const randomId = Math.random().toString().slice(2, 5);
@@ -75,6 +77,7 @@ export default function FullWidthCarousel({
         visibleSlides={slidesToShow}
         isPlaying={isPlaying}
         isFullWidth
+        dragEnabled={dragEnabled}
         isDerma={isDerma}
       >
         {type &&
