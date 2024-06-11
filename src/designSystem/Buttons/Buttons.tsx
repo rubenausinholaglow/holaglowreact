@@ -1,5 +1,4 @@
 import { ReactNode } from 'react';
-import { isIOSSSR, isMacOsSSR, isSafariSSR } from '@utils/isMobileSSR';
 import AnimateOnViewport from 'app/(web)/components/common/AnimateOnViewport';
 import { Flex } from 'designSystem/Layouts/Layouts';
 import Link from 'next/link';
@@ -207,7 +206,7 @@ const ButtonBody = ({
   );
 
   return (
-    <Flex layout="row-center" className={`${styles}`} id={id} {...rest}>
+    <Flex layout="row-center" className={styles} id={id} {...rest}>
       {children}
     </Flex>
   );
