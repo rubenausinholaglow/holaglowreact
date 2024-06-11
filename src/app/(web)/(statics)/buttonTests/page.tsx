@@ -4,11 +4,16 @@ import {
   isChromium,
   isDesktop,
   isIOS,
-  isMacOs,
   isSafari,
 } from 'react-device-detect';
 import MainLayoutSSR from 'app/(web)/components/layout/MainLayoutSSR';
 import { poppinsTest } from 'app/fonts';
+import {
+  isIOSSSR,
+  isMacOsSSR,
+  isMobileSSR,
+  isSafariSSR,
+} from 'app/utils/isMobileSSR';
 import { Button } from 'designSystem/Buttons/Buttons';
 import { Container, Flex } from 'designSystem/Layouts/Layouts';
 
@@ -41,7 +46,10 @@ export default function ButtonTests() {
         <p>is Chrome? - {isChrome.toString()}</p>
         <p>is Chromium? - {isChromium.toString()}</p>
         <p>is Desktop? - {isDesktop.toString()}</p>
-        <p>is MacOs? - {isMacOs.toString()}</p>
+        <p>is MobileSSR? - {isMobileSSR().toString()}</p>
+        <p>is SafariSSR? - {isSafariSSR().toString()}</p>
+        <p>is MacOsSSR? - {isMacOsSSR().toString()}</p>
+        <p>is IOS? - {isIOSSSR().toString()}</p>
       </Container>
     </MainLayoutSSR>
   );

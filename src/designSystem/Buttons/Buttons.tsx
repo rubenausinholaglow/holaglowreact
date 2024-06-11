@@ -1,7 +1,5 @@
-'use client';
-
 import { ReactNode } from 'react';
-import { isSafari } from 'react-device-detect';
+import { isIOSSSR, isMacOsSSR, isSafariSSR } from '@utils/isMobileSSR';
 import AnimateOnViewport from 'app/(web)/components/common/AnimateOnViewport';
 import { Flex } from 'designSystem/Layouts/Layouts';
 import Link from 'next/link';
