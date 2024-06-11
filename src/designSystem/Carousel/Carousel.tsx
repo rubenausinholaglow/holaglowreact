@@ -190,7 +190,7 @@ export default function Carousel({
               {childrens.map((dot, index) => {
                 return (
                   <Dot key={index} slide={index}>
-                    <SvgHolaGlowStar2 />
+                    <SvgHolaGlowStar2 className="h-5 w-5" />
                   </Dot>
                 );
               })}

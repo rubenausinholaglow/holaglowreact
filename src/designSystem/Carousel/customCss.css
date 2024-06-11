@@ -12,5 +12,5 @@
 
 .carousel__dot--selected {
   color: theme('colors.hg.secondary');
-  transform: scale(120%);
+  transform: scale(150%);
 }
