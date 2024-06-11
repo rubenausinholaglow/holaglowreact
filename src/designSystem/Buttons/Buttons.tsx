@@ -1,4 +1,7 @@
+'use client';
+
 import { ReactNode } from 'react';
+import { isSafari } from 'react-device-detect';
 import AnimateOnViewport from 'app/(web)/components/common/AnimateOnViewport';
 import { Flex } from 'designSystem/Layouts/Layouts';
 import Link from 'next/link';
@@ -191,11 +194,13 @@ const ButtonBody = ({
       'bg-white text-hg-black300 hover:bg-hg-black100 hover:text-hg-black300 cursor-default pointer-events-none',
     disabledGrey:
       'bg-hg-black100 text-hg-black300 hover:bg-hg-black100 hover:text-hg-black400 cursor-default pointer-events-none',
-    sm: 'text-xs font-medium h-[32px] px-4',
-    md: 'text-xs font-medium h-[40px] px-4',
-    lg: 'text-md font-semibold h-[48px] px-6',
+    sm: 'text-xs font-medium h-[32px] px-4 leading-none',
+    md: 'text-xs font-medium h-[40px] px-4 leading-none',
+    lg: 'text-md font-semibold h-[48px] px-6 leading-none',
     xl: `${
-      type === 'primary' ? 'h-[64px] text-lg' : 'h-[60px] text-md'
+      type === 'primary'
+        ? 'h-[64px] text-lg leading-none'
+        : 'h-[60px] text-md leading-none'
     } font-semibold px-6`,
   };
 
@@ -206,7 +211,7 @@ const ButtonBody = ({
   );
 
   return (
-    <Flex layout="row-center" className={styles} id={id} {...rest}>
+    <Flex layout="row-center" className={`${styles}`} id={id} {...rest}>
       {children}
     </Flex>
   );

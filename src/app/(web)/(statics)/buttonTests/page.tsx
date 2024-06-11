@@ -1,8 +1,16 @@
+import {
+  isAndroid,
+  isChrome,
+  isChromium,
+  isDesktop,
+  isIOS,
+  isMacOs,
+  isSafari,
+} from 'react-device-detect';
 import MainLayoutSSR from 'app/(web)/components/layout/MainLayoutSSR';
-import { SvgArrow } from 'app/icons/IconsDs';
+import { poppinsTest } from 'app/fonts';
 import { Button } from 'designSystem/Buttons/Buttons';
 import { Container, Flex } from 'designSystem/Layouts/Layouts';
-import { Title } from 'designSystem/Texts/Texts';
 
 export default function ButtonTests() {
   return (
@@ -11,23 +19,29 @@ export default function ButtonTests() {
         <Flex className="w-full gap-4 mb-24 flex-wrap">
           <Button type="primary" size="xl">
             Default
-            <SvgArrow className="ml-4" />
           </Button>
-          <button>
-            <Flex className="bg-hg-secondary rounded-full text-white text-lg py-4 px-6 font-semibold">
-              Button-Flex
-            </Flex>
-          </button>
-          <Flex className="bg-hg-secondary rounded-full text-white text-lg py-4 px-6 font-semibold">
-            FlexItem
-          </Flex>
-          <button>
-            <Flex className="flex bg-hg-secondary rounded-full text-white text-lg items-center py-4 px-6 font-semibold justify-between">
-              Test alignment
-              <SvgArrow className="ml-4" />
-            </Flex>
-          </button>
+
+          <div
+            className={`bg-hg-secondary h-16 px-6 rounded-full text-white ${poppinsTest.className} font-semibold flex items-center text-lg`}
+          >
+            Test PoppinsTest
+          </div>
+
+          <div
+            className={`h-16 px-6 rounded-full text-white font-semibold flex items-center text-lg leading-none ${
+              isSafari ? 'bg-hg-primary' : 'bg-hg-secondary '
+            }`}
+          >
+            Test PoppinsTest
+          </div>
         </Flex>
+        <p>is Safari? - {isSafari.toString()}</p>
+        <p>is IOS? - {isIOS.toString()}</p>
+        <p>is Android? - {isAndroid.toString()}</p>
+        <p>is Chrome? - {isChrome.toString()}</p>
+        <p>is Chromium? - {isChromium.toString()}</p>
+        <p>is Desktop? - {isDesktop.toString()}</p>
+        <p>is MacOs? - {isMacOs.toString()}</p>
       </Container>
     </MainLayoutSSR>
   );
