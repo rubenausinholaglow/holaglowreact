@@ -177,8 +177,10 @@ export default function TableBudgets() {
     <div>
       {budgets ? (
         <>
+          Filtro:{' '}
           <Button
             type="primary"
+            customStyles="bg-hg-black500 mr-4"
             className={filterStatus !== 'Open' ? 'opacity-30' : ''}
             onClick={() => {
               if (filterStatus == 'Open') setFilterStatus('');
@@ -189,6 +191,7 @@ export default function TableBudgets() {
           </Button>
           <Button
             type="primary"
+            customStyles="bg-hg-error mr-4"
             className={filterStatus !== 'Rejected' ? 'opacity-30' : ''}
             onClick={() => {
               if (filterStatus == 'Rejected') setFilterStatus('');
@@ -199,6 +202,7 @@ export default function TableBudgets() {
           </Button>
           <Button
             type="primary"
+            customStyles="bg-hg-green mr-4"
             className={filterStatus !== 'Paid' ? 'opacity-30' : ''}
             onClick={() => {
               if (filterStatus == 'Paid') setFilterStatus('');

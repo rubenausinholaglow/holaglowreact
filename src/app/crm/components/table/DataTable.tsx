@@ -206,9 +206,7 @@ const DataTable: React.FC<DataTableProps> = ({
                   .slice(0, itemsPerPage)
                   .map((rowData, rowIndex) => (
                     <tr
-                      onDoubleClick={() =>
-                        redirectToItem(rowData[columns[0].key])
-                      }
+                      onClick={() => redirectToItem(rowData[columns[0].key])}
                       key={rowIndex}
                       className={rowIndex % 2 === 0 ? '' : 'bg-gray-100'}
                     >
