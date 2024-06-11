@@ -799,7 +799,10 @@ export default function Agenda({
                             {selectedClinic.address}, {selectedClinic.city}
                           </Text>
                           <Text
-                            onClick={() => router.back()}
+                            onClick={() => {
+                              if (!previousAppointment) router.back();
+                              else router.push(ROUTES.checkout.clinics);
+                            }}
                             className="text-xs ml-auto text-hg-secondary font-semibold cursor-pointer"
                           >
                             Cambiar
