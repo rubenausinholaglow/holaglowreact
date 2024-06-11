@@ -38,6 +38,33 @@ export default function ProfessionalsDerma({
         urlPhoto: '/images/derma/home/professionals/Sonsoles.png',
         active: true,
       },
+      {
+        authorDescription: '',
+        collegiateNumber: '282857497',
+        description: '',
+        flowwwId: '',
+        id: '',
+        name: 'Ana Salido Rentería',
+        professionalType: ProfessionalType.Medical,
+        title: 'Médico estético especialista en dermocosmética',
+        tittleAbbreviation: 'Dra',
+        urlPhoto: '/images/derma/home/professionals/Ana.jpg',
+        active: true,
+      },
+      {
+        authorDescription: '',
+        collegiateNumber: '282886988',
+        description: '',
+        flowwwId: '',
+        id: '',
+        name: 'Shirley Pérez Badillo',
+        professionalType: ProfessionalType.Medical,
+        title:
+          'Médico especialista en dermatología con Master en medicina estética',
+        tittleAbbreviation: 'Dra',
+        urlPhoto: '/images/derma/home/professionals/Shirley.jpg',
+        active: true,
+      },
     ];
 
     setProfessionals(professionalsWithCity);
