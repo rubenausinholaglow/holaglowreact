@@ -44,12 +44,14 @@ export default function DermaFooter({
             <Flex layout="row-left" className="w-full gap-4 mb-8">
               <a
                 href="https://www.instagram.com/holaglow.derma/"
+                target="_blank"
                 id={'tmevent_footer'}
               >
                 <SvgInstagram height={24} width={24} className="text-white" />
               </a>
               <a
                 href="https://www.tiktok.com/@holaglow.derma"
+                target="_blank"
                 id={'tmevent_footer'}
               >
                 <SvgTikTok height={24} width={24} className="text-white" />
