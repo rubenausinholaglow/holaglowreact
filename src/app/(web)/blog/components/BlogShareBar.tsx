@@ -1,7 +1,12 @@
 'use client';
 
 import { useState } from 'react';
-import { FacebookShareButton, TwitterShareButton } from 'react-share';
+import {
+  FacebookShareButton,
+  TwitterShareButton,
+  WhatsappShareButton,
+} from 'react-share';
+import { SvgWhatsapp } from 'app/icons/IconsDs';
 import { SvgExport, SvgFacebook, SvgX } from 'app/icons/socialIcons';
 import { Flex } from 'designSystem/Layouts/Layouts';
 import { Text } from 'designSystem/Texts/Texts';
@@ -46,6 +51,9 @@ export default function BlogShareBar({
         <FacebookShareButton url={url} title={title}>
           <SvgFacebook height={24} width={24} />
         </FacebookShareButton>
+        <WhatsappShareButton url={url} title={title}>
+          <SvgWhatsapp height={24} width={24} />
+        </WhatsappShareButton>
         {isCopied ? (
           <Text className="text-xs leading-[10px]">
             !Enlace
