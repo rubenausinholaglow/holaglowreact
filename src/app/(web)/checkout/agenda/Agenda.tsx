@@ -547,7 +547,7 @@ export default function Agenda({
         day.format(format),
         selectedTreatmentsIds,
         selectedClinic!.flowwwId,
-        previousAppointment ? previousAppointment.professionalName : ''
+        ''
       )
         .then(data => {
           callbackGetSlots(data);
