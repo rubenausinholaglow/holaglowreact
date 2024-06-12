@@ -1,9 +1,8 @@
 import { fetchClinics } from '@utils/fetch';
 import { SvgHolaglow } from 'app/icons/IconsDs';
-import { SvgInstagram } from 'app/icons/socialIcons';
+import { SvgInstagram, SvgTikTok } from 'app/icons/socialIcons';
 import { Container, Flex } from 'designSystem/Layouts/Layouts';
 import { Text } from 'designSystem/Texts/Texts';
-import { headers } from 'next/headers';
 
 import FooterFirstBlock from './FooterFirstBlock';
 import FooterSecondBlock from './FooterSecondBlock';
@@ -17,16 +16,8 @@ async function getClinics() {
 export default async function Footer() {
   const clinics = await getClinics();
 
-  const headersList = headers();
-  const path = headersList.get('next-url') || '';
-  const isHome = path === '/homeSSR';
-
   return (
-    <Container
-      className={`${
-        isHome ? 'pb-28' : 'pb-12'
-      } pt-12 md:pt-16 md:pb-16 px-0 md:px-4`}
-    >
+    <Container className="pb-20 pt-12 md:pt-16 px-0 md:px-4">
       <Flex layout="col-left" className="gap-12 md:flex-row">
         <Flex
           layout="col-left"
@@ -60,12 +51,20 @@ export default async function Footer() {
             <br />
             <a href="tel:+34 682 417 208">(+34) 682 417 208</a>
           </Text>
-          <Flex layout="row-center" className="w-full justify-between">
+          <Flex layout="row-center" className="w-full justify-start gap-2">
             <a
               href="https://www.instagram.com/holaglow.clinics/"
+              target="_blank"
               id={'tmevent_footer'}
             >
               <SvgInstagram height={24} width={24} />
+            </a>
+            <a
+              href="https://www.tiktok.com/@holaglow.clinics"
+              target="_blank"
+              id={'tmevent_footer'}
+            >
+              <SvgTikTok height={24} width={24} />
             </a>
           </Flex>
         </Flex>
