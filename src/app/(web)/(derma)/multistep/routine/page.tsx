@@ -52,7 +52,11 @@ export default function Routine() {
                     key={item.value}
                     onClick={() => {
                       setRoutine(routine === item.value ? 0 : item.value);
-                      router.push(ROUTES.derma.multistep.routineProducts);
+                      router.push(
+                        [1, 2, 3].includes(item.value)
+                          ? ROUTES.derma.multistep.routineProducts
+                          : ROUTES.derma.multistep.sunScreen
+                      );
                     }}
                   >
                     {item.title}

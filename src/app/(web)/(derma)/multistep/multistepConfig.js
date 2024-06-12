@@ -78,14 +78,22 @@ export const PAINS_AND_SYMPTOMS = [
       'Nariz agrandada',
     ],
     feedback: {
-      ingredients: [],
+      ingredients: ['Ivermectina', 'Oximetazolina'],
     },
     thankyouImages: [
       '/images/derma/beforeAfter/rosacea/beforeAfter1.jpg',
       '/images/derma/beforeAfter/rosacea/beforeAfter2.jpg',
       '/images/derma/beforeAfter/rosacea/beforeAfter3.jpg',
     ],
-    secondaryConcerns: [],
+    secondaryConcerns: [
+      'Textura de la piel',
+      'Luminosidad',
+      'Poros dilatados',
+      'Patas de gallo',
+      'Tendencia acnéica',
+      'Léntigo solar',
+      'Melasma',
+    ],
     videoUrl: '/videos/derma/rosacea.mp4',
   },
   {
@@ -326,7 +334,6 @@ export const DERMA_INGREDIENTS = [
   {
     name: 'Hidroquinona',
     imgSrc: '/images/derma/landingPrecios/ingredients/hidroquinona.jpg',
-    concentration: '2,5%',
     tags: ['Melasma'],
     concerns: [
       'Mejorar la textura de la piel',
@@ -342,7 +349,7 @@ export const DERMA_INGREDIENTS = [
   {
     name: 'Ácido azelaico',
     imgSrc: '/images/derma/landingPrecios/ingredients/acidoAzelaico.jpg',
-    concentration: '15-20%',
+    feedbackSubtitle: '15-20%',
     tags: ['Melasma', 'Acné', 'Rosácea'],
     concerns: [],
     description:
@@ -351,7 +358,7 @@ export const DERMA_INGREDIENTS = [
   {
     name: 'Vitamina A',
     imgSrc: '/images/derma/landingPrecios/ingredients/vitaminaA.jpg',
-    concentration: '0,006-0,1%',
+    feedbackSubtitle: '0,006-0,1%',
     tags: ['Melasma', 'Acné', 'Antiaging'],
     concerns: [],
     description:
@@ -360,7 +367,7 @@ export const DERMA_INGREDIENTS = [
   {
     name: 'Peróxido de benzoilo',
     imgSrc: '/images/derma/landingPrecios/ingredients/peroxidoDeBenzoilo.jpg',
-    concentration: '2,5%',
+    feedbackSubtitle: '2,5%',
     tags: ['Acné'],
     concerns: [],
     description:
@@ -369,7 +376,7 @@ export const DERMA_INGREDIENTS = [
   {
     name: 'Niacinamida',
     imgSrc: '/images/derma/landingPrecios/ingredients/niacinamida.jpg',
-    concentration: '4%',
+    feedbackSubtitle: '4%',
     tags: [],
     concerns: ['Tendencia acnéica', 'Rosácea'],
     description:
@@ -378,7 +385,7 @@ export const DERMA_INGREDIENTS = [
   {
     name: 'Clindamicina',
     imgSrc: '/images/derma/landingPrecios/ingredients/clindamicina.jpg',
-    concentration: '1%',
+    feedbackSubtitle: '1%',
     tags: ['Acné'],
     concerns: [],
     description:
@@ -387,7 +394,7 @@ export const DERMA_INGREDIENTS = [
   {
     name: 'Eritromicina',
     imgSrc: '/images/derma/landingPrecios/ingredients/eritromicina.jpg',
-    concentration: '2%',
+    feedbackSubtitle: '2%',
     tags: ['Acné', 'Rosácea', 'Antiaging'],
     concerns: [],
     description:
@@ -396,7 +403,7 @@ export const DERMA_INGREDIENTS = [
   {
     name: 'Metronidazol',
     imgSrc: '/images/derma/landingPrecios/ingredients/metronidazol.jpg',
-    concentration: '0,75%',
+    feedbackSubtitle: '0,75%',
     tags: [],
     concerns: ['Rosácea'],
     description:
@@ -405,13 +412,12 @@ export const DERMA_INGREDIENTS = [
   {
     name: 'Ivermectina',
     imgSrc: '/images/derma/landingPrecios/ingredients/ivermectina.jpg',
-    concentration: '1%',
+    feedbackSubtitle: '1% Acaricida y antiinflamatorio',
     tags: [],
     concerns: ['Rosácea'],
     description:
       'Es eficaz principalmente gracias a sus efectos antiinflamatorios y antiparasitarios. Actúa sobre la superpoblación de ácaros Demodex que vive naturalmente en la piel y que puede provocar reacciones inflamatorias en algunos pacientes con rosácea.',
   },
-
   {
     name: 'Vitamina C',
     imgSrc: '/images/derma/landingPrecios/ingredients/vitaminaC.jpg',
@@ -433,6 +439,7 @@ export const DERMA_INGREDIENTS = [
   {
     name: 'Ácido glicólico',
     imgSrc: '/images/derma/landingPrecios/ingredients/acidoGlicolico.jpg',
+    feedbackSubtitle: '5% - 25% Exfoliante',
     tags: ['Acné'],
     concerns: ['Luminosidad', 'Poros dilatados', 'Tendencia acnéica'],
     description: '',
@@ -440,6 +447,7 @@ export const DERMA_INGREDIENTS = [
   {
     name: 'Ácido salicílico',
     imgSrc: '/images/derma/landingPrecios/ingredients/acidoSalicilico.jpg',
+    feedbackSubtitle: '1,5% - 2,5% Exfoliante',
     tags: ['Acné'],
     concerns: ['Tendencia acnéica'],
     description: '',
@@ -455,6 +463,14 @@ export const DERMA_INGREDIENTS = [
     name: 'Nicotinamida',
     concerns: ['Léntigo solar'],
     imgSrc: '/images/derma/landingPrecios/ingredients/nicotinamida.jpg',
+    tags: [''],
+    description: '',
+  },
+  {
+    name: 'Oximetazolina',
+    concerns: [],
+    imgSrc: '/images/derma/landingPrecios/ingredients/oximetazolina.jpg',
+    feedbackSubtitle: '1% Antiinflamatorio',
     tags: [''],
     description: '',
   },
