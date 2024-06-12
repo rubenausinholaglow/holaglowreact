@@ -405,12 +405,9 @@ export const PaymentModule = () => {
         className="w-full mb-8"
         customStyles="bg-hg-primary"
         onClick={createTicket}
+        disabled={!showCreateTicketButton}
       >
-        {isLoading || !showCreateTicketButton ? (
-          <SvgSpinner height={24} width={24} />
-        ) : (
-          'Generar Tiquet'
-        )}
+        {isLoading ? <SvgSpinner height={24} width={24} /> : 'Generar Tiquet'}
       </Button>
       {messageNotification ? (
         <Notification message={messageNotification} />
