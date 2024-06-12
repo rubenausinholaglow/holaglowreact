@@ -2,7 +2,7 @@ import CheckHydration from '@utils/CheckHydration';
 import BlogShareBar from 'app/(web)/blog/components/BlogShareBar';
 import { Product } from 'app/types/product';
 import { Container, Flex } from 'designSystem/Layouts/Layouts';
-import { Text, Title } from 'designSystem/Texts/Texts';
+import { Title } from 'designSystem/Texts/Texts';
 import { isEmpty } from 'lodash';
 import dynamic from 'next/dynamic';
 import { headers } from 'next/headers';
@@ -13,10 +13,6 @@ const ProductPriceCard = dynamic(() => import('./ProductPriceCard'), {
 
 const PVCard = dynamic(() => import('./PVCard'), { ssr: false });
 
-const ProductSessionGroupedPriceCard = dynamic(
-  () => import('./ProductSessionGroupedPriceCard'),
-  { ssr: false }
-);
 const ProductSessionPriceCard = dynamic(
   () => import('./ProductSessionPriceCard'),
   { ssr: false }
@@ -86,13 +82,14 @@ export default function ProductPricesSSR({ product }: { product: Product }) {
             Elige tu experiencia
           </Title>
         )}
+
         <CheckHydration>
-          {!isSessionProduct && (
-            <Flex
-              layout="col-left"
-              className="md:flex-row gap-8 md:items-stretch"
-            >
-              {product.isPack && productItems.length > 1 ? (
+          <Flex
+            layout="col-left"
+            className="md:flex-row gap-8 md:items-stretch"
+          >
+            {!isSessionProduct &&
+              (product.isPack && productItems.length > 1 ? (
                 productItems.map((item: Product, index: number) => (
                   <ProductPriceCard
                     key={item.title}
@@ -108,12 +105,30 @@ export default function ProductPricesSSR({ product }: { product: Product }) {
                   />
                   <PVCard />
                 </>
-              )}
-            </Flex>
-          )}
+              ))}
+
+            {isSessionProduct && isEmpty(groupedSessionProducts) && (
+              <ProductSessionPriceCard productItems={productItems} />
+            )}
+
+            {isSessionProduct && !isEmpty(groupedSessionProducts) && (
+              <Flex
+                layout="col-left"
+                className="w-full gap-4 md:gap-8 md:flex-row"
+              >
+                {groupedSessionProducts?.map((products, productIndex) => (
+                  <ProductSessionPriceCard
+                    isGroupedSessionProduct
+                    key={productIndex}
+                    productItems={products}
+                  />
+                ))}
+              </Flex>
+            )}
+          </Flex>
         </CheckHydration>
 
-        {isSessionProduct && isEmpty(groupedSessionProducts) && (
+        {/* {isSessionProduct && isEmpty(groupedSessionProducts) && (
           <Flex layout="col-left" className="md:flex-row md:gap-8">
             <Flex
               layout="col-left"
@@ -142,6 +157,7 @@ export default function ProductPricesSSR({ product }: { product: Product }) {
             </Flex>
           </Flex>
         )}
+
         {isSessionProduct && !isEmpty(groupedSessionProducts) && (
           <Flex
             layout="col-left"
@@ -178,7 +194,7 @@ export default function ProductPricesSSR({ product }: { product: Product }) {
               </Flex>
             ))}
           </Flex>
-        )}
+        )} */}
         <Flex layout="row-center" className="pt-4">
           <BlogShareBar
             title={product.title}
