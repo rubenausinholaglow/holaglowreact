@@ -178,7 +178,7 @@ export default function Agenda({
           dateToCheck.format(format),
           selectedTreatmentsIds,
           selectedClinic!.flowwwId,
-          previousAppointment ? previousAppointment.professionalName : ''
+          ''
         ).then(data => {
           setLoadingMonthFirstTime(false);
           callbackMonthAvailability(data?.dayAvailabilities, dateToCheck);
