@@ -20,8 +20,6 @@ import CustomMap from './CustomMap';
 import FullScreenLoading from './FullScreenLayout';
 
 export default function ClinicsSelector({ clinics }: { clinics: Clinic[] }) {
-  const mapContainerRef = useRef(null);
-
   const [selectedAccordion, setSelectedAccordion] = useState<string>('3');
   const [selectedClinic, setSelectedClinic] = useState<Clinic>();
   const [mapHeight, setMapHeight] = useState(0);
