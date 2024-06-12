@@ -8,6 +8,7 @@ export function isMobileSSR() {
 
   return userAgentObject.isMobile;
 }
+
 export function isTabletSSR() {
   const userAgentObject = getSelectorsByUserAgent(
     headers().get('user-agent') ?? ''
