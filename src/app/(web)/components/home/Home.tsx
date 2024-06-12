@@ -1,3 +1,4 @@
+import FloatingBottomBar from 'app/(web)/components/home/FloatingBottomBar';
 import GoToTreatments from 'app/(web)/components/home/GoToTreatments';
 import HomeHero from 'app/(web)/components/home/Hero';
 import ValuesCarousel from 'app/(web)/components/home/ValuesCarousel';
