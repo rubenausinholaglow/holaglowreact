@@ -39,14 +39,14 @@ export default function HeroDerma() {
               Analizamos tu piel y te enviamos a casa una rutina facial diseñada
               para ti por un médico
             </Text>
-            <Text className="text-hg-black500 mb-8 md:text-lg max-w-[600px] text-center">
+            <Text className="text-hg-black500 mb-2 text-sm md:text-md max-w-[600px] text-center">
               Descubre tu pre-diagnóstico
             </Text>
             <Button
               size="xl"
               type="derma"
               href={ROUTES.derma.multistep.start}
-              className="lg:mb-16"
+              className="mb-8 lg:mb-16"
             >
               Empezar análisis
             </Button>
@@ -58,7 +58,7 @@ export default function HeroDerma() {
             alt="analizamos tu piel"
             height={500}
             width={420}
-            className="w-full -mt-20 md:hidden"
+            className="w-full -mt-16 md:hidden"
             priority
           />
         )}
