@@ -20,13 +20,13 @@ export default function HeroDerma() {
     <div style={{ marginTop: `-${HEADER_HEIGHT_CLASS}` }}>
       <div className="bg-white pb-8 relative">
         <Container>
-          <Flex layout="col-center" className="pt-24 md:pt-36 relative z-10">
+          <Flex layout="col-center" className="pt-20 md:pt-36 relative z-10">
             <Title size="2xl" className="text-derma-primary text-center">
               Tu rutina facial para
             </Title>
             <Title
               size="2xl"
-              className="text-derma-primary500 text-center relative h-12 lg:h-20 overflow-hidden mb-6"
+              className="text-derma-primary500 text-center relative h-10 lg:h-20 overflow-hidden mb-6"
             >
               <span className="block animate-pains">
                 <span className="block">acné</span>
@@ -35,9 +35,12 @@ export default function HeroDerma() {
                 <span className="block">antiaging</span>
               </span>
             </Title>
-            <Text className="text-hg-black500 mb-8 md:text-lg max-w-[600px] text-center">
+            <Text className="text-hg-black500 mb-4 md:text-lg max-w-[600px] text-center">
               Analizamos tu piel y te enviamos a casa una rutina facial diseñada
               para ti por un médico
+            </Text>
+            <Text className="text-hg-black500 mb-8 md:text-lg max-w-[600px] text-center">
+              Descubre tu pre-diagnóstico
             </Text>
             <Button
               size="xl"
