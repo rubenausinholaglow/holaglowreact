@@ -1,63 +1,49 @@
+import { isMobile } from 'react-device-detect';
 import { Clinic } from '@interface/clinic';
-import { isMobileSSR } from '@utils/isMobileSSR';
-import ROUTES from '@utils/routes';
+import CheckHydration from '@utils/CheckHydration';
 import SimpleAccordion from 'designSystem/Accordion/SimpleAccordion';
 import { Flex } from 'designSystem/Layouts/Layouts';
-import { isEmpty } from 'lodash';
 
 export default function FooterSecondBlock({ clinics }: { clinics: Clinic[] }) {
   return (
-    <Flex
-      layout="col-left"
-      className="gap-6 w-full md:w-1/3 text-xl font-semibold px-4 md:px-0 pb-6"
-    >
-      <a href={ROUTES.aboutUs} id={'tmevent_nav_menu_click'}>
-        <p className="font-semibold">Sobre nosotros</p>
-      </a>
+    <CheckHydration>
+      <Flex
+        layout="col-left"
+        className="gap-6 w-full md:w-1/4 text-xl font-semibold px-4 md:px-0 pb-6"
+      >
+        <SimpleAccordion trigger="Clínicas" isOpen={!isMobile}>
+          <a href="/clinicas" id={'tmevent_footer'}>
+            <ul className="text-xs pt-4 font-normal flex flex-col gap-2">
+              {clinics &&
+                clinics.map(clinic => <li key={clinic.city}>{clinic.city}</li>)}
+            </ul>
+          </a>
+        </SimpleAccordion>
 
-      {!isEmpty(clinics) && (
-        <SimpleAccordion trigger="Clínicas" isOpen={!isMobileSSR()}>
-          <ul className="text-sm pt-4 font-normal flex flex-col">
-            {clinics.map(clinic => (
-              <li key={clinic.city}>
-                <a
-                  className="py-2 block"
-                  href={ROUTES.clinics}
-                  id={'tmevent_nav_menu_click'}
-                >
-                  {clinic.city}
-                </a>
-              </li>
-            ))}
+        <SimpleAccordion trigger="Nosotrxs" isOpen={!isMobile}>
+          <ul className="text-xs pt-4 font-normal flex flex-col gap-2">
+            <a href="/quienes-somos" id={'tmevent_footer'}>
+              <li>Quiénes somos</li>
+            </a>
+            <a href="/quienes-somos" id={'tmevent_footer'}>
+              <li>Equipo médico</li>
+            </a>
           </ul>
         </SimpleAccordion>
-      )}
-      <a href={ROUTES.blog} id={'tmevent_nav_menu_click'}>
-        <p className="font-semibold">Blog</p>
-      </a>
-
-      <SimpleAccordion trigger="Privacidad" isOpen={!isMobileSSR()}>
-        <ul className="text-xs pt-4 font-normal flex flex-col gap-2">
-          <li>
-            <a
-              className="py-2 block"
-              href={ROUTES.statics.privacyPolicy}
-              id={'tmevent_nav_menu_click'}
-            >
-              Política de privacidad
+        <SimpleAccordion trigger="Privacidad" isOpen={!isMobile}>
+          <ul className="text-xs pt-4 font-normal flex flex-col gap-2">
+            <a href="/politica-de-privacidad" id={'tmevent_footer'}>
+              <li>Política de privacidad</li>
             </a>
-          </li>
-          <li>
-            <a
-              className="py-2 block"
-              href={ROUTES.statics.termsAndConditions}
-              id={'tmevent_nav_menu_click'}
-            >
-              Términos y condiciones
+            <a href="/aviso-legal" id={'tmevent_footer'}>
+              <li>Términos y condiciones</li>
             </a>
-          </li>
-        </ul>
-      </SimpleAccordion>
-    </Flex>
+            <a href="/condiciones-black-friday" id={'tmevent_footer'}>
+              <li>Condiciones Black Friday</li>
+            </a>
+          </ul>
+        </SimpleAccordion>
+      </Flex>
+    </CheckHydration>
   );
 }
