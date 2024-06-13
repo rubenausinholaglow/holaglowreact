@@ -346,6 +346,10 @@ const RegistrationForm: React.FC<RegistrationFormProps> = ({
               phone.length === country.country.dialCode.length + 1
                 ? setShowPhoneError(null)
                 : setShowPhoneError(!utils.validatePhoneInput(phone));
+
+              if (country.inputValue.length === 0) {
+                handleFieldChange('', 'phone');
+              }
             }}
           />
           {showPhoneError !== null && (
