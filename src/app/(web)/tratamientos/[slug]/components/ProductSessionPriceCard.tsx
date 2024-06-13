@@ -1,9 +1,14 @@
 'use client';
 
 import { useState } from 'react';
+import {
+  Operation,
+  Quantifier,
+} from 'app/(dashboard)/dashboard/(pages)/budgets/HightLightedProduct/Quantifier';
+import { useCartStore } from 'app/(dashboard)/dashboard/(pages)/budgets/stores/userCartStore';
 import { SvgArrow } from 'app/icons/IconsDs';
 import { useSessionStore } from 'app/stores/globalStore';
-import { Product } from 'app/types/product';
+import { CartItem, Product } from 'app/types/product';
 import useRoutes from 'app/utils/useRoutes';
 import { Button } from 'designSystem/Buttons/Buttons';
 import { Flex } from 'designSystem/Layouts/Layouts';
@@ -125,6 +130,12 @@ export default function ProductSessionPriceCard({
   const [productIndexToAdd, setProductIndexToAdd] = useState(0);
   const { setSelectedTreatments } = useSessionStore(state => state);
   const ROUTES = useRoutes();
+  const {
+    productHighlighted,
+    addItemToCart,
+    getQuantityOfProduct,
+    removeSingleProduct,
+  } = useCartStore(state => state);
 
   //const [pendingDiscount, setPendingDiscount] = useState(false);
   //const applyItemDiscount = useCartStore(state => state.applyItemDiscount);
@@ -207,18 +218,39 @@ export default function ProductSessionPriceCard({
           </ul>
         )}
 
-        <Button
-          type="primary"
-          className=""
-          size="lg"
-          onClick={() =>
-            setSelectedTreatments([productItems[productIndexToAdd]])
-          }
-          href={ROUTES.checkout.type}
-        >
-          Reservar cita
-          <SvgArrow height={16} width={16} className="ml-2" />
-        </Button>
+        {productHighlighted ? (
+          <>
+            <Quantifier
+              handleUpdateQuantity={function handleUpdateQuantity(
+                operation: Operation
+              ): void {
+                if (operation == 'increase') {
+                  addItemToCart(productItems[productIndexToAdd] as CartItem);
+                } else {
+                  removeSingleProduct(
+                    productItems[productIndexToAdd] as CartItem
+                  );
+                }
+              }}
+              quantity={getQuantityOfProduct(productItems[productIndexToAdd])}
+            />
+          </>
+        ) : (
+          <>
+            <Button
+              type="primary"
+              className=""
+              size="lg"
+              onClick={() =>
+                setSelectedTreatments([productItems[productIndexToAdd]])
+              }
+              href={ROUTES.checkout.type}
+            >
+              Reservar cita
+              <SvgArrow height={16} width={16} className="ml-2" />
+            </Button>
+          </>
+        )}
       </Flex>
     </Flex>
   );
