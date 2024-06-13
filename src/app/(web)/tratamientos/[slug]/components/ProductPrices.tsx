@@ -28,9 +28,11 @@ export default function ProductPrices({
   >([]);
 
   useEffect(() => {
-    if (product.upgrades) {
+    if (product.upgrades && !isDashboard) {
       product.upgrades = product.upgrades.sort((x, y) => x.order - y.order);
+
       const allProducts = product.upgrades.map(item => item.product);
+
       setProductITems(allProducts);
     }
   }, [product]);
@@ -146,16 +148,7 @@ export default function ProductPrices({
                 layout="col-left"
                 className="gap-4 p-3 w-full md:flex-row md:gap-12"
               >
-                {productItems.map((item: Product, index: number) => {
-                  if (item.price > 0) {
-                    return (
-                      <ProductSessionPriceCard
-                        productItems={productItems}
-                        key={item.title}
-                      />
-                    );
-                  }
-                })}
+                <ProductSessionPriceCard productItems={productItems} />
               </Flex>
             </Flex>
           </Flex>
