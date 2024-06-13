@@ -66,14 +66,16 @@ export default function SkinColorFeedback() {
                 <div className="px-8 md:px-4 w-full">
                   <CheckHydration>
                     <div className="relative w-full h-32">
-                      <div
-                        className="bg-white rounded-full h-10 w-10 absolute bg-gradient-radial from-derma-primary100 to-derma-primary500 to-50% border border-white -translate-x-1/2"
-                        style={{
-                          left: DisplayPositions['skinSensibility'].filter(
-                            item => item.value === skinSensibility
-                          )[0].position,
-                        }}
-                      />
+                      {skinSensibility && (
+                        <div
+                          className="bg-white rounded-full h-10 w-10 absolute bg-gradient-radial from-derma-primary100 to-derma-primary500 to-50% border border-white -translate-x-1/2"
+                          style={{
+                            left: DisplayPositions['skinSensibility'].filter(
+                              item => item.value === skinSensibility
+                            )[0].position,
+                          }}
+                        />
+                      )}
                       <Image
                         alt="sensibilidad"
                         src="/images/derma/multistep/feedback/lineasSensibilidadPiel.svg"
@@ -109,38 +111,43 @@ export default function SkinColorFeedback() {
                   </CheckHydration>
 
                   <div className="relative w-full h-32">
-                    <div
-                      className="bg-white rounded-full h-10 w-10 absolute border border-white -translate-x-1/2"
-                      style={{
-                        left: DisplayPositions['skinColor'].filter(
-                          item => item.value === skinColor
-                        )[0].position,
-                        background: `radial-gradient(circle, rgba(255,255,255,.2) 0%, ${
-                          DisplayPositions.skinColor.filter(
+                    {skinColor && (
+                      <div
+                        className="bg-white rounded-full h-10 w-10 absolute border border-white -translate-x-1/2"
+                        style={{
+                          left: DisplayPositions['skinColor'].filter(
                             item => item.value === skinColor
-                          )[0].color
-                        } 50%)`,
-                      }}
-                    />
+                          )[0].position,
+                          background: `radial-gradient(circle, rgba(255,255,255,.2) 0%, ${
+                            DisplayPositions.skinColor.filter(
+                              item => item.value === skinColor
+                            )[0].color
+                          } 50%)`,
+                        }}
+                      />
+                    )}
 
                     <Image
                       alt="color de piel"
                       src="/images/derma/multistep/feedback/lineasTonoPiel.svg"
                       fill
                     />
-                    <div
-                      className="w-24 absolute bottom-8 text-xs text-center -translate-x-1/2"
-                      style={{
-                        left: DisplayPositions['skinColor'].filter(
-                          item => item.value === skinColor
-                        )[0].position,
-                      }}
-                    >
-                      {
-                        SKIN_COLORS.filter(item => item.value === skinColor)[0]
-                          .title
-                      }
-                    </div>
+                    {skinColor && (
+                      <div
+                        className="w-24 absolute bottom-8 text-xs text-center -translate-x-1/2"
+                        style={{
+                          left: DisplayPositions['skinColor'].filter(
+                            item => item.value === skinColor
+                          )[0].position,
+                        }}
+                      >
+                        {
+                          SKIN_COLORS.filter(
+                            item => item.value === skinColor
+                          )[0].title
+                        }
+                      </div>
+                    )}
                   </div>
                 </div>
               </Flex>
