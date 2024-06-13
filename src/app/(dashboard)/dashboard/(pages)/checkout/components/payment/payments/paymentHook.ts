@@ -57,5 +57,5 @@ export const usePaymentHook = () => {
 
 
 
-  return { createPayment, deletePayment }
+  return { createPayment, deletePayment, manageWallet }
 }

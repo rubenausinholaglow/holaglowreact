@@ -79,6 +79,19 @@ export default function CheckoutTotal() {
               </Text>
             </Flex>
           </Flex>
+          <Flex className="w-full gap-2">
+            <Text className="text-hg-black400 text-sm"> </Text>
+            <SvgArrow
+              height={24}
+              width={24}
+              className={`ml-auto transition-transform border border-hg-black rounded-full cursor-pointer p-1 ${
+                showCartDiscount
+                  ? 'rotate-90 bg-hg-secondary100 border-none'
+                  : 'rotate-0'
+              }`}
+              onClick={() => setShowCartDiscount(!showCartDiscount)}
+            />
+          </Flex>
         </Flex>
       </Flex>
       {showCartDiscount && (

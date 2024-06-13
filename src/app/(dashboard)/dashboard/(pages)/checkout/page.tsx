@@ -61,7 +61,7 @@ const Page = () => {
     [totalPriceInitial, totalPrice];
 
   useEffect(() => {
-    if (storedBudgetId && storedBudgetId != '') setShowPaymentButtons(true);
+    //if (storedBudgetId && storedBudgetId != '') setShowPaymentButtons(true);
   }, []);
 
   useEffect(() => {
@@ -77,7 +77,7 @@ const Page = () => {
         user?.flowwwToken.substring(0, user?.flowwwToken.length - 32) || '',
       discountAmount: '',
       FlowwwId: '',
-      priceDiscount: Number(priceDiscount.toFixed(2)),
+      priceDiscount: Number(priceDiscount > 0 ? priceDiscount.toFixed(2) : 0),
       percentageDiscount: percentageDiscount / 100,
       manualPrice: Number(manualPrice.toFixed(2)),
       totalPrice: Number(totalPrice.toFixed(2)),

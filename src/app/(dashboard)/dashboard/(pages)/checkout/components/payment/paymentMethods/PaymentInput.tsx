@@ -52,7 +52,7 @@ export default function PaymentInput(props: Props) {
   const { control, handleSubmit } = useForm();
   const cart = useCartStore(state => state.cart);
   const totalAmount = usePaymentList(state => state.totalAmount);
-  const { addPaymentToList, paymentRequest } = usePaymentList();
+  const { addPaymentToList } = usePaymentList();
   const [showAlma, setShowAlma] = useState(false);
   const [showPepper, setshowPepper] = useState(false);
   const [showFrakmenta, setShowFrakmenta] = useState(false);
@@ -61,6 +61,7 @@ export default function PaymentInput(props: Props) {
   const [messageNotification, setMessageNotification] = useState<string | null>(
     null
   );
+  const applyCartDiscount = useCartStore(state => state.applyCartDiscount);
   const [showContactModal, setShowContactModal] = useState(false);
   const [paymentStripe, setPaymentStripe] = useState(false);
   const { isModalOpen } = useGlobalStore(state => state);
@@ -69,7 +70,7 @@ export default function PaymentInput(props: Props) {
   const { remoteControl, storedBudgetId, setCurrentUser, user, walletClient } =
     useGlobalPersistedStore(state => state);
 
-  const { createPayment } = usePaymentHook();
+  const { createPayment, manageWallet } = usePaymentHook();
 
   const [errorMessage, setErrorMessage] = useState<string | undefined>(
     undefined
@@ -129,11 +130,7 @@ export default function PaymentInput(props: Props) {
           parseFloat(totalAmount.toFixed(2))
       );
     }
-    if (props.paymentBank == PaymentBank.OnlineAdvancePayment) {
-      setInputValue('49');
-      setMaxValue(49);
-    }
-  }, [walletClient, props.paymentBank]);
+  }, [walletClient, props.paymentMethod]);
 
   const sendPaymentCreated = async (
     paymentId: string,
@@ -224,16 +221,15 @@ export default function PaymentInput(props: Props) {
     setIsLoading(false);
   }
   const handleSubmitForm = async (data: any) => {
-    let amount = parseFloat(data.number);
-    if (props.paymentBank == PaymentBank.OnlineAdvancePayment) {
-      if (
-        paymentRequest.filter(x => x.bank == PaymentBank.OnlineAdvancePayment)
-          .length > 0
-      ) {
-        return;
-      }
-      amount = parseFloat(inputValue);
+    const amount = parseFloat(data.number);
+
+    if (props.paymentMethod == PaymentMethod.Wallet) {
+      manageWallet(PaymentMethod.Wallet, amount);
+      const finalAmount = cartTotalWithDiscountFixed - amount;
+      applyCartDiscount(finalAmount, '€');
+      return;
     }
+
     if (isLoading || amount == 0) return;
     if (
       showAlma ||

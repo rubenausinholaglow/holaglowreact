@@ -105,7 +105,7 @@ export default function ProductDiscountForm({
   const handleInvalidateCode = () => {
     setIsValid(null);
     setValue('');
-    applyCartDiscount(0, '€');
+    setPromoCode(undefined);
   };
 
   useEffect(() => {
@@ -160,9 +160,9 @@ export default function ProductDiscountForm({
                 {isLoading ? <SvgSpinner /> : 'Validar Código'}
               </Button>
             ) : (
-              storedBudgetId.length == 0 && (
-                <Button onClick={handleInvalidateCode}>Invalidar Código</Button>
-              )
+              <Button onClick={e => handleInvalidateCode()}>
+                Invalidar Código
+              </Button>
             )}
           </>
         )}

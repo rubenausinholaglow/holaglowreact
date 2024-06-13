@@ -10,7 +10,6 @@ import { getPaymentBankText, getPaymentMethodText } from 'app/utils/utils';
 import { Button } from 'designSystem/Buttons/Buttons';
 import { Flex } from 'designSystem/Layouts/Layouts';
 import { Text } from 'designSystem/Texts/Texts';
-import { isEmpty } from 'lodash';
 
 import { usePaymentHook } from './payments/paymentHook';
 import { usePaymentList } from './payments/usePaymentList';
@@ -29,7 +28,7 @@ interface Props {
 
 export default function PaymentItem({ paymentTicketRequest, status }: Props) {
   const { removePayment } = usePaymentList(state => state);
-  const financialBanks = [1, 2, 9, 11];
+  const financialBanks = [1, 2, 9];
   const [isDeleteEnabled, setDeleteEnabled] = useState<boolean>(true);
   const [textPayment, setTextPayment] = useState<string>('');
   const [messageNotification, setMessageNotification] = useState<string | null>(
