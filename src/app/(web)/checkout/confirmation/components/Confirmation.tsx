@@ -151,7 +151,7 @@ export default function Confirmation({
 
   return (
     <Container className="px-0 md:px-4 mt-12 mb-4 md:mt-16">
-      <div className="md:w-1/2 md:pr-8">
+      <div className={`${isDashboard ? '' : 'md:w-1/2 md:pr-8 bg-red-300'}`}>
         <SvgCheck
           height={88}
           width={88}
@@ -162,63 +162,76 @@ export default function Confirmation({
           } rounded-full p-3 mx-auto mb-8`}
         />
       </div>
-      <div className="md:grid grid-cols-2 gap-16">
-        <div className="w-full">
-          <Flex layout="col-left" className="w-full items-center px-4 md:px-0">
-            {appointment || isDashboard ? (
-              <>
-                <Text
-                  className={`${
-                    isDerma
-                      ? 'text-derma-primary font-gtUltraThin'
-                      : 'text-hg-secondary font-semibold'
-                  } text-center mb-4`}
-                  size="xl"
-                >
-                  ¡Gracias por confirmar tu cita!
-                </Text>
-                <Text className="text-center hidden text-hg-black500 md:block mb-4">
-                  Te esperamos el día elegido en tu clínica Holaglow. No dudes
-                  en contactar con nosotros antes si tienes cualquier duda. ¡Qué
-                  ganas de verte!
-                </Text>
-              </>
-            ) : (
-              <>
-                <Title
-                  size="xldr"
-                  className={`${
-                    isDerma ? 'text-derma-primary' : ''
-                  } text-center mb-4 font-light`}
-                >
-                  {isReagenda
-                    ? 'Cita reagendada correctamente'
-                    : selectedTreatments.length > 0 &&
-                      selectedTreatments[0] &&
-                      selectedTreatments[0].price > 0 &&
-                      !isDerma
-                    ? 'Pago recibido.'
-                    : '¡Recibido!'}
-                </Title>
-                {!isDerma && (
-                  <Text className="text-center text-hg-black500 hidden md:block">
-                    Nos alegramos de que confíes en nosotros para acompañarte,
-                    aconsejarte y ayudarte a conseguir el efecto glow que
-                    deseas. Nuestro propósito es que te mires bonito para que te
-                    sientas aún mejor. ¡Qué ganas de verte!
+      <div
+        className={`${
+          isDashboard
+            ? 'flex  justify-center '
+            : 'md:grid md:grid-cols-2 md:gap-16'
+        } `}
+      >
+        {!isDashboard && (
+          <div className="w-full">
+            <Flex
+              layout="col-left"
+              className="w-full items-center px-4 md:px-0"
+            >
+              {appointment ? (
+                <>
+                  <Text
+                    className={`${
+                      isDerma
+                        ? 'text-derma-primary font-gtUltraThin'
+                        : 'text-hg-secondary font-semibold'
+                    } text-center mb-4`}
+                    size="xl"
+                  >
+                    ¡Gracias por confirmar tu cita!
                   </Text>
-                )}
-                {isDerma && (
-                  <Text className="text-center text-hg-black500 hidden md:block">
-                    Tu médico analizará tu caso y te haremos llegar la rutina
-                    personalizada
+                  <Text className="text-center hidden text-hg-black500 md:block mb-4">
+                    Te esperamos el día elegido en tu clínica Holaglow. No dudes
+                    en contactar con nosotros antes si tienes cualquier duda.
+                    ¡Qué ganas de verte!
                   </Text>
-                )}
-              </>
-            )}
-          </Flex>
-        </div>
-        <div className="row-span-2 w-full px-4 md:px-0">
+                </>
+              ) : (
+                <>
+                  <Title
+                    size="xldr"
+                    className={`${
+                      isDerma ? 'text-derma-primary' : ''
+                    } text-center mb-4 font-light`}
+                  >
+                    {isReagenda
+                      ? 'Cita reagendada correctamente'
+                      : selectedTreatments.length > 0 &&
+                        selectedTreatments[0] &&
+                        selectedTreatments[0].price > 0 &&
+                        !isDerma
+                      ? 'Pago recibido.'
+                      : '¡Recibido!'}
+                  </Title>
+                  {!isDerma && (
+                    <Text className="text-center text-hg-black500 hidden md:block">
+                      Nos alegramos de que confíes en nosotros para acompañarte,
+                      aconsejarte y ayudarte a conseguir el efecto glow que
+                      deseas. Nuestro propósito es que te mires bonito para que
+                      te sientas aún mejor. ¡Qué ganas de verte!
+                    </Text>
+                  )}
+                  {isDerma && (
+                    <Text className="text-center text-hg-black500 hidden md:block">
+                      Tu médico analizará tu caso y te haremos llegar la rutina
+                      personalizada
+                    </Text>
+                  )}
+                </>
+              )}
+            </Flex>
+          </div>
+        )}
+        <div
+          className={` ${isDashboard ? '' : 'row-span-2 w-full'}  px-4 md:px-0`}
+        >
           <div className="mb-8">
             {isDerma ? (
               <AppointmentResume isDerma />
