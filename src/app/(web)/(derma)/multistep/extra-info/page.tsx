@@ -73,7 +73,7 @@ export default function ExtraInfo() {
                   <Text className="text-derma-tertiary">Atrás</Text>
                 </Button>
                 <NextMultistepButton
-                  nextUrl={ROUTES.derma.multistep.output.pictures}
+                  nextUrl={ROUTES.derma.multistep.pictures}
                   isDisabled={false}
                 />
               </Flex>

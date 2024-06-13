@@ -67,8 +67,11 @@ export default function Pictures() {
               title="Sube las fotos de tu rostro"
             >
               <Text className="mt-2 text-hg-black500 text-sm">
-                Necesitamos 3 fotos de tu rostro para que el médico pueda hacer
-                un diagnóstico correcto y diseñar tu rutina personalizada.
+                Necesitamos 3 fotos de tu rostro para que nuestro médico pueda
+                hacer un diagnóstico correcto y diseñar tu rutina personalizada{' '}
+              </Text>
+              <Text className="mt-2 text-hg-black500 text-sm font-semibold">
+                Solo tu médico verá las fotos
               </Text>
             </DermaStepHeader>
 

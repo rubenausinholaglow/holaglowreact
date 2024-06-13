@@ -111,7 +111,7 @@ export default function SkinTypeFeedback() {
                   <Button
                     type="derma"
                     size="lg"
-                    href={ROUTES.derma.multistep.routine}
+                    href={ROUTES.derma.multistep.allergy}
                   >
                     Continuar
                   </Button>
