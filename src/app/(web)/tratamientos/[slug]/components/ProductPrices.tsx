@@ -43,7 +43,9 @@ export default function ProductPrices({
         productItems.length > 1 &&
           productItems
             .map((item: Product) => item.title)
-            .every((item: string) => item.includes(product.title)) &&
+            .every((item: string) =>
+              item.toLowerCase().includes(product.title.toLowerCase())
+            ) &&
           product.title.indexOf('Pack Wellaging') < 0 &&
           product.title.indexOf('Armonización facial') < 0
       );
@@ -160,34 +162,11 @@ export default function ProductPrices({
             className="w-full gap-4 md:gap-12 md:flex-row"
           >
             {groupedSessionProducts?.map((products, productIndex) => (
-              <Flex
-                layout="col-left"
-                className="w-full md:flex-row md:gap-8"
-                key={`productGroup-${productIndex}`}
-              >
-                <Flex
-                  layout="col-left"
-                  className="bg-white p-3 rounded-2xl w-full shadow-centered-secondary "
-                >
-                  <Text className="p-3 font-semibold md:text-lg">
-                    {products[0].title}
-                  </Text>
-
-                  <Flex layout="col-left" className="gap-4 w-full">
-                    {products.map((item: Product, index: number) => {
-                      if (item.price > 0) {
-                        return (
-                          <ProductSessionGroupedPriceCard
-                            key={`product-card-${index}`}
-                            product={item}
-                          />
-                        );
-                      }
-                      return null;
-                    })}
-                  </Flex>
-                </Flex>
-              </Flex>
+              <ProductSessionPriceCard
+                isGroupedSessionProduct
+                key={productIndex}
+                productItems={products}
+              />
             ))}
           </Flex>
         )}
