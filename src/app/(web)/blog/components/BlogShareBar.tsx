@@ -6,6 +6,7 @@ import {
   TwitterShareButton,
   WhatsappShareButton,
 } from 'react-share';
+import { isMobile } from 'app/(web)/components/layout/Breakpoint';
 import { SvgWhatsapp } from 'app/icons/IconsDs';
 import { SvgExport, SvgFacebook, SvgX } from 'app/icons/socialIcons';
 import { Flex } from 'designSystem/Layouts/Layouts';
@@ -40,6 +41,25 @@ export default function BlogShareBar({
     }, 2000);
   };
 
+  async function handleNativeShare() {
+    const shareData = {
+      title: 'MDN',
+      text: 'Learn web development on MDN!',
+      url: 'https://developer.mozilla.org',
+    };
+
+    if (navigator.share) {
+      try {
+        await navigator.share(shareData);
+      } catch (error) {
+        console.error('Error sharing', error);
+      }
+    } else {
+      console.log('Web Share API is not supported in your browser.');
+      // Fallback logic (e.g., show a message or use another sharing method)
+    }
+  }
+
   return (
     <Flex className={` p-4 rounded-2xl justify-between ${className}`}>
       <Text className="mr-8 md:mr-16">Comparte</Text>
@@ -54,6 +74,13 @@ export default function BlogShareBar({
         <WhatsappShareButton url={url} title={title}>
           <SvgWhatsapp height={24} width={24} />
         </WhatsappShareButton>
+
+        <SvgExport
+          height={24}
+          width={24}
+          onClick={isMobile ? handleNativeShare : handleCopyToClipboard}
+        />
+
         {isCopied ? (
           <Text className="text-xs leading-[10px]">
             !Enlace
