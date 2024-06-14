@@ -46,8 +46,6 @@ export default function PsrpPage({
     isModalOpen,
   } = useGlobalStore(state => state);
 
-  console.log(filteredProducts);
-
   const [isHydrated, setIsHydrated] = useState(true);
   const [isMobileFiltersVisible, setIsMobileFiltersVisible] = useState(false);
   const [showDesktopFilters, setShowDesktopFilters] = useState(false);
@@ -86,6 +84,7 @@ export default function PsrpPage({
         });
         return exists;
       });
+
       if (
         filterToApply &&
         productFilters.category.indexOf(filterToApply) == -1 &&
@@ -99,14 +98,15 @@ export default function PsrpPage({
       if (slug === 'packs') {
         setSeoMetaData(metadataPacks.title, metadataPacks.description);
       }
+
       setProductFilters(productFilters);
+      processFilters();
     }
   }, [slug, stateProducts]);
 
   useEffect(() => {
     if (filteredProducts && filteredProducts.length > 0) {
-      console.log('per aqui');
-      //processFilters();
+      processFilters();
       setIsHydrated(true);
     }
   }, [productFilters, dashboardProducts]);
@@ -339,7 +339,6 @@ export default function PsrpPage({
                 <li className="-mb-2 md:mb-0 md:pt-10">
                   <PVBanner />
                 </li>
-                FILTEREDPRODUCTS
                 {filteredProducts.map(product => {
                   if (product.visibility) {
                     return (
@@ -375,14 +374,14 @@ export default function PsrpPage({
       }
     } else {
       if (isEmpty(filteredProducts)) {
-        /* setFilteredProducts(stateProducts);
+        setFilteredProducts(stateProducts);
         setFilteredProducts(
           applyFilters({ products: stateProducts, filters: productFilters })
-        ); */
+        );
       } else {
-        /* setFilteredProducts(
+        setFilteredProducts(
           applyFilters({ products: filteredProducts, filters: productFilters })
-        ); */
+        );
       }
     }
   }
