@@ -57,7 +57,10 @@ export default function ProductPrices({
       const groupedArray: { [key: string]: Product[] } = {};
 
       productItems.forEach((product: Product) => {
-        const title = product.title.replace(/ x[36]$/, '');
+        const title = product.title
+          .replace(/ x[36]$/, '')
+          .replace(' básico', '')
+          .toLowerCase();
 
         if (!groupedArray[title]) {
           groupedArray[title] = [];

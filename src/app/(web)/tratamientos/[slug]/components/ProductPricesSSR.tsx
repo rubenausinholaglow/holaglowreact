@@ -25,7 +25,10 @@ export default function ProductPricesSSR({ product }: { product: Product }) {
     const groupedArray: { [key: string]: Product[] } = {};
 
     productItems.forEach((product: Product) => {
-      const title = product.title.replace(/ x[36]$/, '');
+      const title = product.title
+        .replace(/ x[36]$/, '')
+        .replace(' básico', '')
+        .toLowerCase();
 
       if (!groupedArray[title]) {
         groupedArray[title] = [];
@@ -52,7 +55,7 @@ export default function ProductPricesSSR({ product }: { product: Product }) {
       .map((item: Product) => item.title)
       .every(
         (item: string) =>
-          item.includes(product.title) &&
+          item.toLowerCase().includes(product.title.toLowerCase()) &&
           product.title.indexOf('Pack Wellaging') < 0 &&
           product.title.indexOf('Armonización facial') < 0
       );
