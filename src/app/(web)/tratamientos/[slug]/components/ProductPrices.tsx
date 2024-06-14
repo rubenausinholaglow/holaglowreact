@@ -170,6 +170,7 @@ export default function ProductPrices({
             {groupedSessionProducts?.map((products, productIndex) => (
               <ProductSessionPriceCard
                 isGroupedSessionProduct
+                isDashboard={isDashboard}
                 key={productIndex}
                 productItems={products}
               />
