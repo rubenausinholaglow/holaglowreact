@@ -1,11 +1,8 @@
 'use client';
 
 import { useState } from 'react';
-import {
-  Operation,
-  Quantifier,
-} from 'app/(dashboard)/dashboard/(pages)/budgets/HightLightedProduct/Quantifier';
 import { useCartStore } from 'app/(dashboard)/dashboard/(pages)/budgets/stores/userCartStore';
+import { SvgPlusSmall } from 'app/icons/Icons';
 import { SvgArrow } from 'app/icons/IconsDs';
 import { useSessionStore } from 'app/stores/globalStore';
 import { CartItem, Product } from 'app/types/product';
@@ -118,6 +115,51 @@ const SESSION_PRODUCTS_EXTRA_INFO = [
     description:
       'Recomendado para maximizar los resultados visibles del tratamiento con varias sesiones y conseguir un resultado más duradero.',
   },
+  {
+    id: 'ea24b967-41c7-41d9-b1b3-35ef4079bab4',
+    title: 'Peeling Químico Basico x3',
+    description: 'Regenera la piel de tu rostro para corregir marcas y manchas',
+  },
+  {
+    id: 'ebad09db-2075-4136-8a63-b0da09ee1608',
+    title: 'Peeling Químico Basico x2',
+    description: 'Regenera la piel de tu rostro para corregir marcas y manchas',
+  },
+  {
+    id: 'c3f5837f-7dcc-4fcf-94dc-db5613241ea9',
+    title: 'Peeling Químico Basico',
+    description: 'Regenera la piel de tu rostro para corregir marcas y manchas',
+  },
+  {
+    id: '02b4094e-ba17-4472-9ffe-b1c268a0edc0',
+    title: 'Peeling Químico Medio x2',
+    description: 'Regenera la piel de tu rostro para corregir marcas y manchas',
+  },
+  {
+    id: 'eff63a2a-d205-4039-a2bc-902c33c47af0',
+    title: 'Peeling Químico Medio x3',
+    description: 'Regenera la piel de tu rostro para corregir marcas y manchas',
+  },
+  {
+    id: '0679d14b-436b-47f0-aafb-6163268a31e7',
+    title: 'Peeling Químico Medio',
+    description: 'Regenera la piel de tu rostro para corregir marcas y manchas',
+  },
+  {
+    id: '4600dfd3-edd6-4bb3-a355-25e32c54a01e',
+    title: 'Peeling Químico Profundo x2',
+    description: 'Regenera la piel de tu rostro para corregir marcas y manchas',
+  },
+  {
+    id: '1c2d022e-851f-4c5f-bfea-ec7c61c012a8',
+    title: 'Peeling Químico Profundo x3',
+    description: 'Regenera la piel de tu rostro para corregir marcas y manchas',
+  },
+  {
+    id: 'bbfdf8de-0486-4233-a2e4-7fe502f80904',
+    title: 'Peeling Químico Profundo',
+    description: 'Regenera la piel de tu rostro para corregir marcas y manchas',
+  },
 ];
 
 export default function ProductSessionPriceCard({
@@ -220,20 +262,19 @@ export default function ProductSessionPriceCard({
 
         {productHighlighted ? (
           <>
-            <Quantifier
-              handleUpdateQuantity={function handleUpdateQuantity(
-                operation: Operation
-              ): void {
-                if (operation == 'increase') {
-                  addItemToCart(productItems[productIndexToAdd] as CartItem);
-                } else {
-                  removeSingleProduct(
-                    productItems[productIndexToAdd] as CartItem
-                  );
-                }
+            <Button
+              size="sm"
+              type="tertiary"
+              className="mt-auto"
+              customStyles="bg-hg-primary"
+              onClick={e => {
+                e.stopPropagation();
+                addItemToCart(productItems[productIndexToAdd] as CartItem);
               }}
-              quantity={getQuantityOfProduct(productItems[productIndexToAdd])}
-            />
+            >
+              <p className="mr-2">Añadir </p>
+              <SvgPlusSmall height={20} width={20} />
+            </Button>
           </>
         ) : (
           <>
