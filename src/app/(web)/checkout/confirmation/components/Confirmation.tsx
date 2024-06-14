@@ -151,7 +151,7 @@ export default function Confirmation({
 
   return (
     <Container className="px-0 md:px-4 mt-12 mb-4 md:mt-16">
-      <div className={`${isDashboard ? '' : 'md:w-1/2 md:pr-8 bg-red-300'}`}>
+      <div className={`${isDashboard ? '' : 'md:w-1/2 md:pr-8'}`}>
         <SvgCheck
           height={88}
           width={88}
