@@ -1,12 +1,12 @@
 'use client';
 
 import { useState } from 'react';
+import { isMobile } from 'react-device-detect';
 import {
   FacebookShareButton,
   TwitterShareButton,
   WhatsappShareButton,
 } from 'react-share';
-import { isMobile } from 'app/(web)/components/layout/Breakpoint';
 import { SvgWhatsapp } from 'app/icons/IconsDs';
 import { SvgExport, SvgFacebook, SvgX } from 'app/icons/socialIcons';
 import { Flex } from 'designSystem/Layouts/Layouts';
