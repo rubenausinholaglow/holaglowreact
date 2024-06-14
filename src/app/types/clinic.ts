@@ -37,6 +37,7 @@ export interface Professional {
   flowwwId: string;
   authorDescription: string;
   city?: string;
+  active: boolean;
 }
 
 export enum ProfessionalType {
