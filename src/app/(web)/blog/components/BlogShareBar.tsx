@@ -46,7 +46,7 @@ export default function BlogShareBar({
   async function handleNativeShare() {
     const shareData = {
       title: title,
-      text: 'Learn web development on MDN!',
+      text: text,
       url: url,
     };
 
