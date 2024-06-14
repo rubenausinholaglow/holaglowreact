@@ -163,9 +163,11 @@ const SESSION_PRODUCTS_EXTRA_INFO = [
 ];
 
 export default function ProductSessionPriceCard({
+  isDashboard = false,
   isGroupedSessionProduct = false,
   productItems,
 }: {
+  isDashboard?: boolean;
   isGroupedSessionProduct?: boolean;
   productItems: Product[];
 }) {
@@ -263,7 +265,7 @@ export default function ProductSessionPriceCard({
           </ul>
         )}
 
-        {productHighlighted ? (
+        {isDashboard ? (
           <>
             <Button
               size="sm"

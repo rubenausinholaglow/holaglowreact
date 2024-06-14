@@ -153,7 +153,10 @@ export default function ProductPrices({
                 layout="col-left"
                 className="gap-4 p-3 w-full md:flex-row md:gap-12"
               >
-                <ProductSessionPriceCard productItems={productItems} />
+                <ProductSessionPriceCard
+                  isDashboard={isDashboard}
+                  productItems={productItems}
+                />
               </Flex>
             </Flex>
           </Flex>
