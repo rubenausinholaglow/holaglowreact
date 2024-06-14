@@ -16,10 +16,12 @@ export default function BlogShareBar({
   className = '',
   url,
   title,
+  text,
 }: {
   className?: string;
   url: string;
   title: string;
+  text: string;
 }) {
   const [isCopied, setIsCopied] = useState(false);
 
@@ -43,9 +45,9 @@ export default function BlogShareBar({
 
   async function handleNativeShare() {
     const shareData = {
-      title: 'MDN',
+      title: title,
       text: 'Learn web development on MDN!',
-      url: 'https://developer.mozilla.org',
+      url: url,
     };
 
     if (navigator.share) {
@@ -56,7 +58,6 @@ export default function BlogShareBar({
       }
     } else {
       console.log('Web Share API is not supported in your browser.');
-      // Fallback logic (e.g., show a message or use another sharing method)
     }
   }
 
@@ -75,12 +76,6 @@ export default function BlogShareBar({
           <SvgWhatsapp height={24} width={24} />
         </WhatsappShareButton>
 
-        <SvgExport
-          height={24}
-          width={24}
-          onClick={isMobile ? handleNativeShare : handleCopyToClipboard}
-        />
-
         {isCopied ? (
           <Text className="text-xs leading-[10px]">
             !Enlace
@@ -88,7 +83,11 @@ export default function BlogShareBar({
             copiado!
           </Text>
         ) : (
-          <SvgExport height={24} width={24} onClick={handleCopyToClipboard} />
+          <SvgExport
+            height={24}
+            width={24}
+            onClick={isMobile ? handleNativeShare : handleCopyToClipboard}
+          />
         )}
       </Flex>
     </Flex>
