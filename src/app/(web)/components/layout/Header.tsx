@@ -111,7 +111,6 @@ export default function Header({
             </Link>
 
             <Navigation className="hidden lg:block" />
-
             <Flex layout="row-center" className="lg:absolute right-0 gap-4">
               {!hideAppointmentButton && (
                 <CheckHydration>
@@ -131,7 +130,7 @@ export default function Header({
                     <SvgArrow
                       height={16}
                       width={16}
-                      className="pointer-events-none hidden md:block"
+                      className="pointer-events-none hidden md:block ml-2 "
                     />
                   </Button>
                 </CheckHydration>
