@@ -153,7 +153,7 @@ function ProductPriceItemsCard({
           </Button>
         )}
 
-        {productHighlighted && (
+        {isDashboard && (
           <div className="pt-1 mt-2">
             <Quantifier
               handleUpdateQuantity={function handleUpdateQuantity(

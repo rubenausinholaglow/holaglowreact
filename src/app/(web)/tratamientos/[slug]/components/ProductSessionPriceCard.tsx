@@ -163,9 +163,11 @@ const SESSION_PRODUCTS_EXTRA_INFO = [
 ];
 
 export default function ProductSessionPriceCard({
+  isDashboard = false,
   isGroupedSessionProduct = false,
   productItems,
 }: {
+  isDashboard?: boolean;
   isGroupedSessionProduct?: boolean;
   productItems: Product[];
 }) {
@@ -252,15 +254,18 @@ export default function ProductSessionPriceCard({
             {SESSION_PRODUCTS_EXTRA_INFO.filter(
               item => item.id === productItems[productIndexToAdd].id
             )[0]?.bullets?.map(bullet => (
-              <li key={bullet} className="flex w-full gap-2">
+              <li key={bullet} className="flex w-full gap-2 justify-sta">
                 <div className="h-1 w-1 shrink-0 bg-hg-black400 rounded-full mt-2" />
-                <p dangerouslySetInnerHTML={{ __html: bullet }} />
+                <p
+                  className="text-start"
+                  dangerouslySetInnerHTML={{ __html: bullet }}
+                />
               </li>
             ))}
           </ul>
         )}
 
-        {productHighlighted ? (
+        {isDashboard ? (
           <>
             <Button
               size="sm"
