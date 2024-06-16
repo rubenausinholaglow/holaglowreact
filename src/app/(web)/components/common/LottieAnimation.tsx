@@ -11,8 +11,6 @@ export default function LottieAnimation({
   const containerRef = useRef<HTMLDivElement>(null);
   const [animationData, setAnimationData] = useState(null);
 
-  console.log(animation);
-
   useEffect(() => {
     const fetchAnimationData = async () => {
       try {

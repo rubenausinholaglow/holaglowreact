@@ -10,15 +10,15 @@ import {
 } from '@utils/agendaUtils';
 import { fetchProducts } from '@utils/fetch';
 import ROUTES from '@utils/routes';
+import {
+  applyFilters,
+  INITIAL_FILTERS,
+} from 'app/(web)/tratamientos/utils/filters';
 import { Quantifier } from 'app/(dashboard)/dashboard/(pages)/budgets/HightLightedProduct/Quantifier';
 import {
   Operation,
   useCartStore,
 } from 'app/(dashboard)/dashboard/(pages)/budgets/stores/userCartStore';
-import {
-  applyFilters,
-  INITIAL_FILTERS,
-} from 'app/(web)/tratamientos/utils/filters';
 import { SvgArrow, SvgCross, SvgSearch } from 'app/icons/IconsDs';
 import { useSessionStore } from 'app/stores/globalStore';
 import { Flex } from 'designSystem/Layouts/Layouts';

@@ -29,7 +29,7 @@
       "@payment/*": ["./app/(dashboard)/dashboard/(pages)/checkout/payment/*"]
     },
     "checkJs": true,
-    "types": ["node"]
+    "types": ["node", "jest", "@testing-library/jest-dom"]
   },
   "include": [
     "next-env.d.ts",

@@ -1,5 +1,5 @@
 import { ReactNode } from 'react';
-import { HOLAGLOW_COLORS } from 'app/utils/colors';
+import { HOLAGLOW_COLORS } from '@utils/colors';
 import dynamic from 'next/dynamic';
 import { twMerge } from 'tailwind-merge';
 

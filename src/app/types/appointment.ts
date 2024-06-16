@@ -24,9 +24,8 @@ export interface Appointment {
   externalReference: string;
   paymentId: string;
   paid: boolean;
-  appointmentEvents? : AppointmentEvents[];
+  appointmentEvents?: AppointmentEvents[];
 }
-
 
 export enum AppointmentEventType {
   NoShow,
@@ -35,9 +34,9 @@ export enum AppointmentEventType {
   Finished,
 }
 export interface AppointmentEvents {
-  id :string;
-  date : Date;
-  appointmentEventType : AppointmentEventType;
+  id: string;
+  date: Date;
+  appointmentEventType: AppointmentEventType;
 }
 
 export enum Status {
@@ -80,40 +79,38 @@ export interface RescheduleAppointmentRequest {
 }
 
 export interface UserCheckin {
-  id? : string;
+  id?: string;
   name: string;
   hour: string;
   professional: string;
 }
 
-
 export interface AppointmentNextResponse {
-  id : string;
+  id: string;
   flowwwId: string;
   clinicFlowwwId: string;
   clinicId: string;
-  clinicProfessionalId : string;
-  clinicProfessionalName : string;
-  userId : string;
-  firstName : string;
-  boxId: string;  
+  clinicProfessionalId: string;
+  clinicProfessionalName: string;
+  userId: string;
+  firstName: string;
+  boxId: string;
   startTime: string;
 }
 
-export interface AppointmentsPerClinicResponse
-{
-    id: string;
-    firstName: string;
-    lastName: string;
-    phone: string;
-    flowwwToken: string;
-    appointmentStatus: Status;
-    appointmentEvents: AppointmentEvents[];
-    startTime: string;
-    email: string;
-    boxId: string; 
-    clinicFlowwwId: string
-    productType : ProductType;
-    productsTitle : string;
-    comment : string;
+export interface AppointmentsPerClinicResponse {
+  id: string;
+  firstName: string;
+  lastName: string;
+  phone: string;
+  flowwwToken: string;
+  appointmentStatus: Status;
+  appointmentEvents: AppointmentEvents[];
+  startTime: string;
+  email: string;
+  boxId: string;
+  clinicFlowwwId: string;
+  productType: ProductType;
+  productsTitle: string;
+  comment: string;
 }

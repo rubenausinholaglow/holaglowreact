@@ -2,10 +2,10 @@
 
 import { useEffect, useState } from 'react';
 import { Product } from '@interface/product';
+import { applyFilters } from 'app/(web)/tratamientos/utils/filters';
 import AnimateOnViewport from 'app/(web)/components/common/AnimateOnViewport';
 import CategorySelectorSSR from 'app/(web)/components/common/CategorySelectorSSR';
 import FullWidthCarousel from 'app/(web)/components/product/fullWidthCarousel';
-import { applyFilters } from 'app/(web)/tratamientos/utils/filters';
 import { useGlobalStore } from 'app/stores/globalStore';
 import { Container } from 'designSystem/Layouts/Layouts';
 
