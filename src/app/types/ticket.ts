@@ -4,6 +4,7 @@ import { PaymentTicketRequest, ProductTicketRequest } from './payment';
 
 export interface Ticket {
   promoCode: string;
+  promoCodeMGM: string;
   reference: string;
   userId: string;
   clientFlowwwToken: string;

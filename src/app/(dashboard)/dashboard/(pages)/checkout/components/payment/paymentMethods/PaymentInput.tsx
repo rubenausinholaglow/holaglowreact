@@ -7,8 +7,10 @@ import React, { useEffect, useState } from 'react';
 import DatePicker from 'react-datepicker';
 import { Controller, useForm } from 'react-hook-form';
 import Bugsnag from '@bugsnag/js';
+import { CartItem } from '@interface/product';
 import FinanceService from '@services/FinanceService';
 import { messageService } from '@services/MessageService';
+import ProductService from '@services/ProductService';
 import UserService from '@services/UserService';
 import { useCartStore } from 'app/(dashboard)/dashboard/(pages)/budgets/stores/userCartStore';
 import TextInputField from 'app/(dashboard)/dashboard/components/TextInputField';
@@ -61,7 +63,7 @@ export default function PaymentInput(props: Props) {
   const [messageNotification, setMessageNotification] = useState<string | null>(
     null
   );
-  const applyCartDiscount = useCartStore(state => state.applyCartDiscount);
+
   const [showContactModal, setShowContactModal] = useState(false);
   const [paymentStripe, setPaymentStripe] = useState(false);
   const { isModalOpen } = useGlobalStore(state => state);
@@ -70,7 +72,7 @@ export default function PaymentInput(props: Props) {
   const { remoteControl, storedBudgetId, setCurrentUser, user, walletClient } =
     useGlobalPersistedStore(state => state);
 
-  const { createPayment, manageWallet } = usePaymentHook();
+  const { createPayment } = usePaymentHook();
 
   const [errorMessage, setErrorMessage] = useState<string | undefined>(
     undefined
@@ -198,7 +200,6 @@ export default function PaymentInput(props: Props) {
   async function addPayment(number: any) {
     setIsLoading(true);
     const amount = parseFloat(number);
-
     const paymentRequestApi = {
       amount: amount,
       userId: user?.id || '',
@@ -222,14 +223,6 @@ export default function PaymentInput(props: Props) {
   }
   const handleSubmitForm = async (data: any) => {
     const amount = parseFloat(data.number);
-
-    if (props.paymentMethod == PaymentMethod.Wallet) {
-      manageWallet(PaymentMethod.Wallet, amount);
-      const finalAmount = cartTotalWithDiscountFixed - amount;
-      applyCartDiscount(finalAmount, '€');
-      return;
-    }
-
     if (isLoading || amount == 0) return;
     if (
       showAlma ||

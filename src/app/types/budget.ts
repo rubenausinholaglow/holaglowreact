@@ -1,3 +1,4 @@
+import { User } from './appointment';
 import { Product } from './product';
 
 export interface Budget {
@@ -15,6 +16,8 @@ export interface Budget {
   referenceId: string;
   professionalId: string;
   manualPrice: number;
+  user?: User;
+  budgetComments? : string[] 
   products: BudgetProduct[];
 }
 

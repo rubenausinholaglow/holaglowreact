@@ -79,7 +79,7 @@ const Page = () => {
       FlowwwId: '',
       priceDiscount: Number(priceDiscount > 0 ? priceDiscount.toFixed(2) : 0),
       percentageDiscount: percentageDiscount / 100,
-      manualPrice: Number(manualPrice.toFixed(2)),
+      manualPrice: Number(manualPrice) > 0 ? Number(manualPrice.toFixed(2)) : 0,
       totalPrice: Number(totalPrice.toFixed(2)),
       totalPriceWithIva: Number(totalPrice.toFixed(2)),
       clinicInfoId: storedClinicId,

@@ -92,7 +92,7 @@ interface GlobalPersistStore {
   extraInfo: boolean;
   promoCode : PromoCodeResponse | undefined;
   walletClient: Wallet | undefined;
-
+  advancedPaymentProduct : Product | undefined;
 }
 
 interface GlobalPersistActions {
@@ -118,6 +118,7 @@ interface GlobalPersistActions {
   setExtraInfo: (value?: boolean) => void;
   setPromoCode: (value?: PromoCodeResponse) => void;
   setWalletClient: (value?: Wallet) => void;
+  setAdvancedPaymentProduct: (value?: Product) => void;
 }
 
 export const useSessionStore = create(
@@ -233,6 +234,8 @@ export const useGlobalPersistedStore = create(
       dashboardProducts: [],
       clinics: [],
       user: undefined,
+      promoProduct : undefined,
+      advancedPaymentProduct : undefined,
       setStateProducts: (value: Product[]) => {
         set({ stateProducts: value });
       },
@@ -313,6 +316,9 @@ export const useGlobalPersistedStore = create(
       walletClient : undefined,
       setWalletClient : value => {
         set({walletClient : value})
+      },
+      setAdvancedPaymentProduct : value => {
+        set({advancedPaymentProduct : value})
       }
     }),
     {

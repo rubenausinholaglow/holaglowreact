@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { CartItem } from '@interface/product';
 import { ValidatePromoCodeRequest } from '@interface/wallet';
 import Notification from 'app/(dashboard)/dashboard/components/ui/Notification';
 import { usePromoUserHook } from 'app/(dashboard)/dashboard/hooks/usePromoUserHook';
@@ -26,15 +27,12 @@ export default function ProductDiscountForm({
   const [isLoading, setIsLoading] = useState<boolean | null>(null);
 
   const { priceDiscount } = useCartStore(state => state);
-  const { setPromoCode, storedBudgetId, promoCode, user } =
+  const { setPromoCode, promoCode, user, advancedPaymentProduct } =
     useGlobalPersistedStore(state => state);
 
-  const applyItemDiscount = useCartStore(state => state.applyItemDiscount);
-  const applyCartDiscount = useCartStore(state => state.applyCartDiscount);
+  const addItemToCart = useCartStore(state => state.addItemToCart);
+  const cart = useCartStore(state => state.cart);
 
-  const cartItemDiscount = (data: any) => {
-    applyItemDiscount(data.cartUniqueId, data.Value, data.DiscountType);
-  };
   const { validatePromoCode } = usePromoUserHook();
   const [messageNotification, setMessageNotification] = useState<string | null>(
     null
@@ -56,25 +54,22 @@ export default function ProductDiscountForm({
     { name: '100%', type: '%', value: 100, show: showPercentage },
   ];
 
-  function handleAddDiscount(data: any) {
+  async function handleAddDiscount(data: any) {
     if (priceDiscount > 0 && data.type === 'total') return;
-
     if (data.name === 'MGM') {
       setIsMGM(!isMGM);
       return;
     }
-
-    if (data.type === 'total') {
-      applyCartDiscount(data.value, data.type);
+    if (
+      cart.filter(
+        item =>
+          item.id.toUpperCase() === advancedPaymentProduct!.id.toUpperCase()
+      ).length > 0
+    ) {
+      return;
     }
-    if (data.type === '%') {
-      const discount = {
-        cartUniqueId: cartUniqueId,
-        Value: data.value,
-        DiscountType: '%',
-      };
-      cartItemDiscount(discount);
-    }
+    const product = advancedPaymentProduct!;
+    addItemToCart(product as CartItem);
   }
 
   const handleValidate = async () => {

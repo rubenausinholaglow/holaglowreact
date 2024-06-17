@@ -216,6 +216,8 @@ export const PaymentModule = () => {
       referenceId: '',
       statusBudget: StatusBudget.Open,
       professionalId: storedClinicProfessionalId,
+      user: user ? user : undefined,
+      budgetComments: [],
       products: cart.map(CartItem => ({
         productId: CartItem.id,
         price: CartItem.price,
@@ -226,7 +228,8 @@ export const PaymentModule = () => {
     };
 
     const ticket: Ticket = {
-      promoCode: promoCode?.code || '',
+      promoCode: '',
+      promoCodeMGM: promoCode?.code || '',
       reference: '',
       userId: user?.id || '',
       clientFlowwwToken: user?.flowwwToken || '',
@@ -243,6 +246,7 @@ export const PaymentModule = () => {
       })),
       products: cart.map(CartItem => ({
         id: CartItem.id,
+        price: CartItem.price.toString(),
       })),
     };
     try {
