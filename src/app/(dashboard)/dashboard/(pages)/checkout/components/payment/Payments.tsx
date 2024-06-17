@@ -27,7 +27,7 @@ import { useRouter } from 'next/navigation';
 
 import PaymentItem, { StatusPayment } from './PaymentItem';
 import PaymentClient from './paymentMethods/PaymentClient';
-import { paymentItems } from './paymentMethods/PaymentItems';
+import { PaymentItems, paymentItems } from './paymentMethods/PaymentItems';
 import PepperWidget from './paymentMethods/PepperWidget';
 import { usePaymentList } from './payments/usePaymentList';
 
@@ -306,6 +306,21 @@ export const PaymentModule = () => {
     frakmentaOnline: ['frakmenta.svg'],
   };
 
+  const renderTextMethod = (method: PaymentItems) => {
+    return (
+      <Text>
+        {method.label}
+        {method.key == 'wallet' && (
+          <>
+            <span className="font-semibold text-hg-secondary">
+              {walletAmount >= 0 ? ': ' + walletAmount + '€' : ''}
+            </span>
+          </>
+        )}
+      </Text>
+    );
+  };
+
   return (
     <>
       {paymentItems.length > 0 && (
@@ -335,17 +350,7 @@ export const PaymentModule = () => {
                     className="shrink-0 hidden group-data-[state=open]:block"
                   />
                   <div className="border border-hg-black h-[24px] w-[24px] rounded-full shrink-0 group-data-[state=open]:hidden"></div>
-                  <Text>
-                    {method.label}
-                    {method.key == 'wallet' && (
-                      <>
-                        <span className="font-semibold text-hg-secondary">
-                          {walletAmount >= 0 ? ': ' + walletAmount + '€' : ''}
-                        </span>
-                      </>
-                    )}
-                  </Text>
-
+                  {renderTextMethod(method)}
                   <Flex className="ml-auto gap-2">
                     {PAYMENT_ICONS[method.key as keyof typeof PAYMENT_ICONS] &&
                       PAYMENT_ICONS[

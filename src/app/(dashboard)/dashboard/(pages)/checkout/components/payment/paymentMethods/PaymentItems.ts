@@ -1,6 +1,13 @@
 import { PaymentBank, PaymentMethod } from 'app/types/payment';
 
-export const paymentItems = [
+export interface PaymentItems {
+  key: string;
+  label: string;
+  paymentBank: PaymentBank;
+  paymentMethod: PaymentMethod;
+}
+
+export const paymentItems: PaymentItems[] = [
   {
     key: 'alma',
     label: 'Financiación Alma',
