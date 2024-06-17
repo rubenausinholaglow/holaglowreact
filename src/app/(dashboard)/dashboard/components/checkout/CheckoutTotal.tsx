@@ -49,9 +49,6 @@ export default function CheckoutTotal() {
   const productsPriceTotalWithDiscountsFixed =
     Math.ceil(productsPriceTotalWithDiscounts * 100) / 100;*/
 
-  const handleApplyDiscount = () => {
-    applyCartDiscount(0, '€');
-  };
   return (
     <div>
       <Flex layout="col-left" className="p-4">
@@ -123,7 +120,7 @@ export default function CheckoutTotal() {
                 <Flex
                   layout="row-left"
                   className="bg-hg-primary text-hg-tertiary rounded-full px-2 py-[2px] font-semibold mr-2"
-                  onClick={() => handleApplyDiscount()}
+                  onClick={() => applyCartDiscount(0, '€')}
                 >
                   <Text size="xs">- {priceDiscount}€</Text>
                   <SvgClose height={12} width={12} className="ml-1" />

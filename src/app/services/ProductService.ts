@@ -70,7 +70,7 @@ export default class ProductService {
     try {
       const url = `${apiUrl}Product/${id}?Dashboard=${isDashboard.toString()}`;
 
-      const res = await fetch(url, { cache:'no-store'});
+      const res = await fetch(url);
       if (res.ok) {
         const data = await res.json();
         return data;

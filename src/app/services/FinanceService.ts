@@ -117,7 +117,7 @@ export default class FinanceService {
 
       if (!res.ok) {
         Bugsnag.notify('Error creating Payment ' + res);
-        throw new Error('Erro creating Payment');
+        throw new Error('Error creating Payment');
       }
       const data = await res.text();
       return data;

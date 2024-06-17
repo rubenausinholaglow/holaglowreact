@@ -1,7 +1,6 @@
 'use client';
 import { useEffect, useState } from 'react';
 import Bugsnag from '@bugsnag/js';
-import { PaymentMethod } from '@interface/payment';
 import { budgetService } from '@services/BudgetService';
 import { messageService } from '@services/MessageService';
 import { ERROR_POST } from '@utils/textConstants';
@@ -46,7 +45,6 @@ const Page = () => {
     storedBudgetId,
     setBudgetId,
     storedClinicProfessionalId,
-    setPromoCode,
   } = useGlobalPersistedStore(state => state);
   const router = useRouter();
   const { setTreatmentPacks } = useSessionStore(state => state);
@@ -61,7 +59,7 @@ const Page = () => {
     [totalPriceInitial, totalPrice];
 
   useEffect(() => {
-    //if (storedBudgetId && storedBudgetId != '') setShowPaymentButtons(true);
+    if (storedBudgetId && storedBudgetId != '') setShowPaymentButtons(true);
   }, []);
 
   useEffect(() => {
