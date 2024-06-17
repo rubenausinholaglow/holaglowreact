@@ -96,8 +96,7 @@ export const useCartStore = create(
         );
         set(() => ({ cart: updatedCart }));
       },
-      applyCartDiscount: (value: number, discountType: '%' | '€' | 'total') => {
-        
+      applyCartDiscount: (value: number, discountType: '%' | '€' | 'total') => {   
         const roundedValue = Number(value.toFixed(2));
         set(state => ({
           

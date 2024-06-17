@@ -5,7 +5,6 @@ import { useCartStore } from 'app/(dashboard)/dashboard/(pages)/budgets/stores/u
 import ProductDiscountForm from 'app/(dashboard)/dashboard/(pages)/checkout/components/ProductDiscountForm';
 import { SvgClose } from 'app/icons/Icons';
 import { SvgArrow } from 'app/icons/IconsDs';
-import { useGlobalPersistedStore } from 'app/stores/globalStore';
 import { applyDiscountToCart } from 'app/utils/utils';
 import { Flex } from 'designSystem/Layouts/Layouts';
 import { Text } from 'designSystem/Texts/Texts';
@@ -13,7 +12,6 @@ import { Text } from 'designSystem/Texts/Texts';
 export default function CheckoutTotal() {
   const {
     cart,
-    totalPrice,
     priceDiscount,
     percentageDiscount,
     manualPrice,
