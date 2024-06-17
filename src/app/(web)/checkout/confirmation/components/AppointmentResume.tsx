@@ -454,14 +454,6 @@ export default function AppointmentResume({
         className="w-full mt-auto pb-[2px] pl-[2px] pr-[2px]"
       >
         <AccordionItem {...accordionItemProps}>
-          <AccordionTrigger className="">
-            <Flex className="w-full justify-between p-4">
-              <Flex className="gap-2 text-sm">
-                <SvgBag height={16} width={16} /> Resumen del pedido
-              </Flex>
-            </Flex>
-          </AccordionTrigger>
-
           <div className="md:border-t border-derma-secondary400 md:pt-2 py-4 ">
             <Flex
               layout="col-left"
