@@ -20,6 +20,7 @@ import { Container, Flex } from 'designSystem/Layouts/Layouts';
 import { Text, Title } from 'designSystem/Texts/Texts';
 import Image from 'next/image';
 
+import GuaranteedResults from '../../precios/components/GuaranteedResults';
 import OptionsPrices from '../../precios/components/OptionsPrices';
 import OptionsPricesSelectButton from '../../precios/components/OptionsPricesSelectButton';
 import { DERMA_INGREDIENTS, PAINS_AND_SYMPTOMS } from '../multistepConfig';
@@ -91,44 +92,27 @@ export default function ThankYouMultiStep() {
           <Container className="mb-8">
             <Flex
               layout="col-center"
-              className="w-full gap-4 md:items-start pb-4 md:flex-row md:gap-12"
+              className="w-full gap-4 md:items-start pb-4"
             >
-              <div className="md:w-1/2">
-                <Image
-                  alt="Dra. Sonsoles Espi"
-                  src="/images/derma/multistep/Sonsoles.png"
-                  height={192}
-                  width={192}
-                  className="mx-auto w-24 mb-4 md:ml-0"
-                />
-                <Title
-                  size="xl"
-                  className="text-derma-primary font-light md:text-left"
-                >
-                  {user?.name}, tu prediagnóstico por la Dra. Sonsoles Espí
-                </Title>
-              </div>
-              <div className="shrink-0 rounded-3xl overflow-hidden mb-8 md:w-1/3 md:-order-1">
-                <video
-                  autoPlay
-                  controls
-                  loop
-                  playsInline
-                  src={filteredPain?.videoUrl}
-                  className="w-full h-full block object-center md:rounded-xl"
-                />
-              </div>
-            </Flex>
-            <Flex layout="col-center" className="w-full md:items-start pb-4">
-              <Title size="xl" className="text-derma-primary font-light mb-2">
-                Aquí tienes tu rutina para {filteredPain?.name.toLowerCase()}
+              <Image
+                alt="Dra. Sonsoles Espi"
+                src="/images/derma/multistep/Sonsoles.png"
+                height={192}
+                width={192}
+                className="mx-auto w-24 mb-4 md:ml-0"
+              />
+              <Title size="xl" className="text-derma-primary font-light">
+                ¡Aquí tienes, {user?.name}!
               </Title>
               <Text className="text-center md:text-left mb-4">
                 Tenemos un pack preparado para ti
               </Text>
               <OptionsPrices pain={filteredPain} />
-            </Flex>
 
+              <div className="bg-derma-secondary300">
+                <GuaranteedResults />
+              </div>
+            </Flex>
             <Flex
               layout="col-left"
               className="mt-6 w-full gap-4 md:items-start"

@@ -30,7 +30,6 @@ export const PAINS_AND_SYMPTOMS = [
       'Rosácea',
       'Melasma',
     ],
-    videoUrl: '/videos/derma/melasma.mp4',
   },
   {
     name: 'Acné',
@@ -62,7 +61,6 @@ export const PAINS_AND_SYMPTOMS = [
       'Melasma',
       'Rosácea',
     ],
-    videoUrl: '/videos/derma/acne.mp4',
   },
   {
     name: 'Rosácea',
@@ -94,7 +92,6 @@ export const PAINS_AND_SYMPTOMS = [
       'Léntigo solar',
       'Melasma',
     ],
-    videoUrl: '/videos/derma/rosacea.mp4',
   },
   {
     name: 'Antiaging',
@@ -122,7 +119,6 @@ export const PAINS_AND_SYMPTOMS = [
       'Tendencia acnéica',
       'Léntigo solar',
     ],
-    videoUrl: '/videos/derma/antiaging.mp4',
   },
 ];
 
