@@ -7,6 +7,7 @@ import { Dispatch, SetStateAction, useEffect, useState } from 'react';
 import { PhoneInput } from 'react-international-phone';
 import TextArea from '@dashboardComponents/ui/TextArea';
 import ScheduleService from '@services/ScheduleService';
+import ROUTES from '@utils/routes';
 import * as errorsConfig from '@utils/textConstants';
 import useRoutes from '@utils/useRoutes';
 import { useRegistration, validFormData } from '@utils/userUtils';
@@ -209,7 +210,9 @@ const RegistrationForm: React.FC<RegistrationFormProps> = ({
     if (validFormData(formData, errors) && isValidDni) {
       setErrors([]);
       if (redirectToReagenda && redirectToReagenda != '') {
-        router.push('/reagenda?fromAgenda=true&token=' + redirectToReagenda);
+        router.push(
+          ROUTES.reagenda + '?fromAgenda=true&token=' + redirectToReagenda
+        );
       } else {
         await handleRegistration();
       }
