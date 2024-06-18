@@ -38,9 +38,6 @@ export default function FooterSecondBlock({ clinics }: { clinics: Clinic[] }) {
             <a href="/aviso-legal" id={'tmevent_footer'}>
               <li>Términos y condiciones</li>
             </a>
-            <a href="/condiciones-black-friday" id={'tmevent_footer'}>
-              <li>Condiciones Black Friday</li>
-            </a>
           </ul>
         </SimpleAccordion>
       </Flex>
