@@ -23,7 +23,6 @@ export default function MainLayoutSSR({
           <Header hideAppointmentButton={hideAppointmentButton} />
         )}
         {children}
-
         <FloatingBottomBar />
         {!hideFooter && <FooterSSR />}
       </main>
