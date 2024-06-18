@@ -7,8 +7,6 @@ import { v4 as createUniqueId } from 'uuid';
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
 
-
-
 function calculateUpdatedCart(cart: CartItem[], product: Product): CartItem[] {
   const updatedCart: CartItem[] = [...cart];
   updatedCart.push({
