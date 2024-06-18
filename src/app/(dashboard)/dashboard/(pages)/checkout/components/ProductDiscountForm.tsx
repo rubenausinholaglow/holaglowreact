@@ -42,7 +42,7 @@ export default function ProductDiscountForm({
     {
       name: 'MGM',
       type: 'total',
-      value: 50,
+      value: 0,
       show: !showPercentage && !enableWEB,
     },
     {
