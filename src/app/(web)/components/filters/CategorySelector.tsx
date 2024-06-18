@@ -46,11 +46,7 @@ export default function CategorySelector({
     );
   }, [stateProducts]);
 
-  console.log(productFilters);
-
   useEffect(() => {
-    console.log('hola!');
-
     setFilteredProducts(
       applyFilters({ products: filteredProducts, filters: productFilters })
     );
