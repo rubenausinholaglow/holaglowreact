@@ -1,14 +1,16 @@
+import Bugsnag from "@bugsnag/js";
 import { CreatePayment } from "@interface/initializePayment";
 import { PaymentMethod, PaymentTicketRequest } from "@interface/payment";
 import FinanceService from "@services/FinanceService";
-import { useGlobalPersistedStore } from "app/stores/globalStore";
+import { useGlobalPersistedStore, useSessionStore } from "app/stores/globalStore";
 import { isEmpty } from "lodash";
 
 import { usePaymentList } from "./usePaymentList";
 
 export const usePaymentHook = () => {
   const { addPaymentToList } = usePaymentList();
-  const {user, walletClient, setWalletClient} = useGlobalPersistedStore(state => state);
+  const { user } = useGlobalPersistedStore(state => state);
+  const { walletClient, setWalletClient} = useSessionStore(state => state);
 
   const createPayment = async (paymentRequestApi: CreatePayment) : Promise<PaymentTicketRequest> => {
     try {
@@ -28,8 +30,10 @@ export const usePaymentHook = () => {
       } else {
         return {} as PaymentTicketRequest;
       }
-    } catch (error) {
+    } catch (error : any) {
+      Bugsnag.notify('Error createPayment', error);
       return {} as PaymentTicketRequest;
+
     }
   };
 
@@ -39,9 +43,11 @@ export const usePaymentHook = () => {
             manageWallet(payment.method, payment.amount, false);
             return true;
           }
+        }).catch(error => {
+          Bugsnag.notify('Error deletePayment', error);
+          return false;
         });
-
-    return true;
+        return false;
   }
 
   const manageWallet = async (method: PaymentMethod, amount : number, create = true) : Promise<boolean> => {

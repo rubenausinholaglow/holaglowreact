@@ -18,6 +18,7 @@ import { SvgArrow } from 'app/icons/IconsDs';
 import {
   useGlobalPersistedStore,
   useGlobalStore,
+  useSessionStore,
 } from 'app/stores/globalStore';
 import { ClientUpdate } from 'app/types/client';
 import { PaymentCreatedData } from 'app/types/FrontEndMessages';
@@ -67,9 +68,9 @@ export default function PaymentInput(props: Props) {
   const { isModalOpen } = useGlobalStore(state => state);
 
   const [maxValue, setMaxValue] = useState(0);
-  const { remoteControl, storedBudgetId, setCurrentUser, user, walletClient } =
+  const { remoteControl, storedBudgetId, setCurrentUser, user } =
     useGlobalPersistedStore(state => state);
-
+  const { walletClient } = useSessionStore(state => state);
   const { createPayment } = usePaymentHook();
 
   const [errorMessage, setErrorMessage] = useState<string | undefined>(
@@ -115,13 +116,13 @@ export default function PaymentInput(props: Props) {
   const cartTotalWithDiscountFixed =
     Math.ceil(cartTotalWithDiscount * 100) / 100;
 
-  useEffect(() => {
-    const fetchWalletBalance = async () => {
-      if (walletClient && walletClient.amountBalance > 0) {
-        setMaxValue(walletClient.amountBalance);
-      }
-    };
+  function fetchWalletBalance() {
+    if (walletClient && walletClient.amountBalance > 0) {
+      setMaxValue(walletClient.amountBalance);
+    }
+  }
 
+  useEffect(() => {
     if (props.paymentMethod == PaymentMethod.Wallet) {
       fetchWalletBalance();
     } else {
@@ -577,7 +578,7 @@ export default function PaymentInput(props: Props) {
                 walletClient &&
                 (walletClient.amountBalance == undefined ||
                   walletClient.amountBalance == 0) ? (
-                  <div className="w-full">{ValidateMGM()}</div>
+                  <div className="w-full">{renderMgmForm()}</div>
                 ) : (
                   <>
                     {' '}
@@ -698,12 +699,12 @@ export default function PaymentInput(props: Props) {
   );
 }
 
-const ValidateMGM = () => {
+const renderMgmForm = () => {
   return (
     <ProductDiscountForm
       isCheckout={true}
       showPercentage={false}
-      enableWEB={false}
+      enableMGM={true}
     />
   );
 };

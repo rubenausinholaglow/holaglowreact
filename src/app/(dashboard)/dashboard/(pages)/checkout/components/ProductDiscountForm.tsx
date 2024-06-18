@@ -4,7 +4,11 @@ import { ValidatePromoCodeRequest } from '@interface/wallet';
 import Notification from 'app/(dashboard)/dashboard/components/ui/Notification';
 import { usePromoUserHook } from 'app/(dashboard)/dashboard/hooks/usePromoUserHook';
 import { SvgSpinner } from 'app/icons/Icons';
-import { useGlobalPersistedStore } from 'app/stores/globalStore';
+import {
+  useGlobalPersistedStore,
+  useGlobalStore,
+  useSessionStore,
+} from 'app/stores/globalStore';
 import { Button } from 'designSystem/Buttons/Buttons';
 import { Flex } from 'designSystem/Layouts/Layouts';
 
@@ -14,21 +18,26 @@ export default function ProductDiscountForm({
   cartUniqueId,
   isCheckout,
   showPercentage = false,
-  enableWEB = true,
+  enableMGM = false,
 }: {
   cartUniqueId?: string;
   isCheckout: boolean;
   showPercentage?: boolean;
-  enableWEB?: boolean;
+  enableMGM?: boolean;
 }) {
   const [isMGM, setIsMGM] = useState<boolean>(false);
-  const [value, setValue] = useState('');
-  const [isValid, setIsValid] = useState<boolean | null>(null);
+  const [codeDiscount, setCodeDiscount] = useState('');
+  const [isValidPromoCode, setIsValidPromoCode] = useState<boolean | null>(
+    null
+  );
   const [isLoading, setIsLoading] = useState<boolean | null>(null);
 
   const { priceDiscount } = useCartStore(state => state);
-  const { setPromoCode, promoCode, user, advancedPaymentProduct } =
-    useGlobalPersistedStore(state => state);
+  const { user, advancedPaymentProduct } = useGlobalPersistedStore(
+    state => state
+  );
+
+  const { setPromoCode, promoCode } = useSessionStore(state => state);
 
   const addItemToCart = useCartStore(state => state.addItemToCart);
   const cart = useCartStore(state => state.cart);
@@ -38,18 +47,24 @@ export default function ProductDiscountForm({
     null
   );
 
-  const DiscountTypes = [
+  interface DiscountType {
+    name: string;
+    type: 'total' | '%';
+    value: number;
+    show: boolean;
+  }
+  const DiscountTypes: DiscountType[] = [
     {
       name: 'MGM',
       type: 'total',
       value: 0,
-      show: !showPercentage && !enableWEB,
+      show: !showPercentage && enableMGM,
     },
     {
       name: 'WEB',
       type: 'total',
       value: 49,
-      show: !showPercentage && enableWEB,
+      show: !showPercentage && !enableMGM,
     },
     { name: '100%', type: '%', value: 100, show: showPercentage },
   ];
@@ -75,82 +90,81 @@ export default function ProductDiscountForm({
   const handleValidate = async () => {
     setIsLoading(true);
     const promoRequest: ValidatePromoCodeRequest = {
-      code: value,
+      code: codeDiscount,
       userId: user?.id || '',
     };
 
     await validatePromoCode(promoRequest).then(response => {
       if (response.code != undefined) {
         setPromoCode(response);
-        setIsValid(true);
+        setIsValidPromoCode(true);
       } else {
-        setIsValid(false);
+        setIsValidPromoCode(false);
         setMessageNotification(response.errorMessage!);
       }
+      setIsLoading(false);
     });
-
-    setIsLoading(false);
   };
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (isValid) return;
-    setValue(e.target.value);
+    if (isValidPromoCode) return;
+    setCodeDiscount(e.target.value);
   };
 
   const handleInvalidateCode = () => {
-    setIsValid(null);
-    setValue('');
+    setIsValidPromoCode(null);
+    setCodeDiscount('');
     setPromoCode(undefined);
   };
 
   useEffect(() => {
     if (promoCode != undefined && promoCode.code.length > 0) {
       setIsMGM(true);
-      setValue(promoCode.code);
-      setIsValid(true);
+      setCodeDiscount(promoCode.code);
+      setIsValidPromoCode(true);
     } else {
       setIsMGM(false);
-      setValue('');
-      setIsValid(null);
+      setCodeDiscount('');
+      setIsValidPromoCode(null);
     }
   }, [promoCode]);
 
   return (
     <Flex layout={isCheckout ? 'col-left' : 'row-left'}>
       <div className="flex gap-2">
-        {enableWEB &&
-          DiscountTypes.map(({ name, type, value, show }, index) => (
+        {!enableMGM &&
+          DiscountTypes.map((discount, index) => (
             <>
-              {show && (
+              {discount.show && (
                 <Button
                   key={index}
                   size="sm"
                   isSubmit
                   type="tertiary"
-                  onClick={() => handleAddDiscount({ name, type, value })}
+                  onClick={() => handleAddDiscount(discount)}
                 >
-                  <Flex className="gap-2 p-2 rounded-xl">{name}</Flex>
+                  <Flex className="gap-2 p-2 rounded-xl">{discount.name}</Flex>
                 </Button>
               )}
             </>
           ))}
-        {!enableWEB && (
+        {enableMGM && (
           <>
             <input
               name="DiscountCode"
               type="text"
               placeholder="Código"
               className={` m-1 rounded-xl border-2 border-black w-[30%] text-center ${
-                isValid === null
+                isValidPromoCode === null
                   ? ''
-                  : isValid
+                  : isValidPromoCode
                   ? 'bg-green-600 text-white'
                   : 'bg-red-600 text-white'
               }`}
-              value={value}
+              value={codeDiscount}
               onChange={handleInputChange}
             />
-            {isValid === null || !isValid ? (
+            {isValidPromoCode === null || !isValidPromoCode ? (
               <Button onClick={handleValidate}>
                 {isLoading ? <SvgSpinner /> : 'Validar Código'}
               </Button>

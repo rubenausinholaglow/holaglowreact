@@ -47,6 +47,8 @@ interface SessionStore {
   dermaPhone: string;
   treatmentPacks: PackUnitiesScheduled[];
   isCallMeTriggered: boolean;
+  promoCode : PromoCodeResponse | undefined;
+  walletClient: Wallet | undefined;
 }
 interface SessionActions {
   setAnalyticsMetrics: (analyticsMetrics: AnalyticsMetrics) => void;
@@ -67,6 +69,8 @@ interface SessionActions {
   setDermaPhone: (phone: string) => void;
   setTreatmentPacks: (treatment: PackUnitiesScheduled[]) => void;
   setIsCallMeTriggered: (value: boolean) => void;
+  setPromoCode: (value?: PromoCodeResponse) => void;
+  setWalletClient: (value?: Wallet) => void;
 }
 
 interface GlobalPersistStore {
@@ -90,8 +94,6 @@ interface GlobalPersistStore {
   activePayment: PaymentBank;
   isCallCenter: boolean;
   extraInfo: boolean;
-  promoCode : PromoCodeResponse | undefined;
-  walletClient: Wallet | undefined;
   advancedPaymentProduct : Product | undefined;
 }
 
@@ -116,8 +118,6 @@ interface GlobalPersistActions {
   setActivePayment: (value?: PaymentBank) => void;
   setIsCallCenter: (value?: boolean) => void;
   setExtraInfo: (value?: boolean) => void;
-  setPromoCode: (value?: PromoCodeResponse) => void;
-  setWalletClient: (value?: Wallet) => void;
   setAdvancedPaymentProduct: (value?: Product) => void;
 }
 
@@ -161,6 +161,8 @@ export const useSessionStore = create(
       dermaPhone: '',
       treatmentPacks: [],
       isCallMeTriggered: false,
+      promoCode: undefined,
+      walletClient: undefined,
       setAppointmentUrl: value => {
         set({ appointmentUrl: value });
       },
@@ -215,7 +217,14 @@ export const useSessionStore = create(
       setIsCallMeTriggered: value => {
         set({ isCallMeTriggered: value });
       },
+      setPromoCode: value => {
+        set({ promoCode: value });
+      },
+      setWalletClient: value => {
+        set({ walletClient: value });
+      },
     }),
+  
     {
       name: 'session-storage',
       version: 27,
@@ -308,14 +317,6 @@ export const useGlobalPersistedStore = create(
       extraInfo: false,
       setExtraInfo: value => {
         set({ extraInfo: value });
-      },
-      promoCode : undefined,
-      setPromoCode : value => {
-        set({promoCode : value})
-      },
-      walletClient : undefined,
-      setWalletClient : value => {
-        set({walletClient : value})
       },
       setAdvancedPaymentProduct : value => {
         set({advancedPaymentProduct : value})

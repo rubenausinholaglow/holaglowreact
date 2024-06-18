@@ -1,13 +1,13 @@
 import { useState } from "react";
 import { PromoCodeResponse, ValidatePromoCodeRequest, Wallet } from "@interface/wallet";
 import FinanceService from "@services/FinanceService";
-import { useGlobalPersistedStore } from "app/stores/globalStore";
+import { useSessionStore } from "app/stores/globalStore";
 
 
 
 export const usePromoUserHook = () => {
     const [wallet, setWallet] = useState<Wallet | undefined>(undefined);
-    const { setWalletClient, setPromoCode } = useGlobalPersistedStore(state => state);
+    const { setWalletClient, setPromoCode } = useSessionStore(state => state);
 
     const validatePromoCode = async (validatePromoCode: ValidatePromoCodeRequest) : Promise<PromoCodeResponse> => {
         const promo = await FinanceService.validatePromoCode(validatePromoCode);
@@ -25,16 +25,16 @@ export const usePromoUserHook = () => {
         return promo;
     }
 
-    const getWalletBalance = async (id : string) : Promise<Wallet> => {
-        const wallet = await FinanceService.getWalletBalance(id);
-        setWallet(wallet);
-        setWalletClient(wallet);
-        return wallet;
+    const fetchWalletBalance  = async (id : string) : Promise<Wallet> => {
+        const fetchedWallet = await FinanceService.getWalletBalance(id);
+        setWallet(fetchedWallet);
+        setWalletClient(fetchedWallet );
+        return fetchedWallet;
     }
     
     return {
         wallet,
         validatePromoCode,
-        getWalletBalance
+        fetchWalletBalance 
     }
 }

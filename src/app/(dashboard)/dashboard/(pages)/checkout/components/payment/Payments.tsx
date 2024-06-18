@@ -9,7 +9,10 @@ import Notification from 'app/(dashboard)/dashboard/components/ui/Notification';
 import { useMessageSocket } from 'app/(dashboard)/dashboard/components/useMessageSocket';
 import { SvgSpinner } from 'app/icons/Icons';
 import { SvgCheck, SvgRadioChecked, SvgTimer } from 'app/icons/IconsDs';
-import { useGlobalPersistedStore } from 'app/stores/globalStore';
+import {
+  useGlobalPersistedStore,
+  useSessionStore,
+} from 'app/stores/globalStore';
 import { StatusBudget, TicketBudget } from 'app/types/budget';
 import { MessageType } from 'app/types/messageSocket';
 import { Ticket } from 'app/types/ticket';
@@ -57,9 +60,9 @@ export const PaymentModule = () => {
     storedClinicProfessionalId,
     storedBudgetId,
     storedAppointmentId,
-    promoCode,
-    walletClient,
   } = useGlobalPersistedStore(state => state);
+
+  const { promoCode, walletClient } = useSessionStore(state => state);
 
   const { addPaymentToList, removePayment } = usePaymentList();
 
@@ -119,7 +122,7 @@ export const PaymentModule = () => {
   };
 
   useEffect(() => {
-    if (walletClient && walletClient.amountBalance >= 0) {
+    if (walletClient) {
       setWalletAmount(walletClient.amountBalance);
     }
   }, [walletClient, paymentList]);

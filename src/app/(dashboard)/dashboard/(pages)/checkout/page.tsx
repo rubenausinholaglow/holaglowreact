@@ -49,7 +49,7 @@ const Page = () => {
   const router = useRouter();
   const { setTreatmentPacks } = useSessionStore(state => state);
 
-  const { getWalletBalance } = usePromoUserHook();
+  const { fetchWalletBalance } = usePromoUserHook();
 
   useEffect(() => {
     if (storedBudgetId && totalPriceInitial != totalPriceToShow) {
@@ -92,7 +92,7 @@ const Page = () => {
       })),
     };
     try {
-      getWalletBalance(user!.id);
+      fetchWalletBalance(user!.id);
       if (storedBudgetId.length > 0) {
         setBudgetModified(false);
         budget.id = storedBudgetId;
