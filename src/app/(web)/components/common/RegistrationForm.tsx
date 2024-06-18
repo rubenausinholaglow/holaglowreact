@@ -360,6 +360,7 @@ const RegistrationForm: React.FC<RegistrationFormProps> = ({
         />
         <div className="relative">
           <PhoneInput
+            placeholder="Número de teléfono"
             disableDialCodeAndPrefix
             defaultCountry="es"
             preferredCountries={['es']}
