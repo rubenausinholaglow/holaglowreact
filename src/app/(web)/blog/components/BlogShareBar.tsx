@@ -7,6 +7,7 @@ import {
   TwitterShareButton,
   WhatsappShareButton,
 } from 'react-share';
+import Bugsnag from '@bugsnag/js';
 import { SvgWhatsapp } from 'app/icons/IconsDs';
 import { SvgExport, SvgFacebook, SvgX } from 'app/icons/socialIcons';
 import { Flex } from 'designSystem/Layouts/Layouts';
@@ -54,10 +55,10 @@ export default function BlogShareBar({
       try {
         await navigator.share(shareData);
       } catch (error) {
-        console.error('Error sharing', error);
+        Bugsnag.notify('Error sharing', error as any);
       }
     } else {
-      console.log('Web Share API is not supported in your browser.');
+      Bugsnag.notify('Web Share API is not supported in your browser.');
     }
   }
 
