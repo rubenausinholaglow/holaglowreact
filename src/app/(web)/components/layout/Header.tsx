@@ -111,7 +111,8 @@ export default function Header({
             </Link>
 
             <Navigation className="hidden lg:block" />
-            <Flex layout="row-center" className="lg:absolute right-0 gap-4">
+
+            <Flex layout="row-center" className="lg:absolute right-0">
               {!hideAppointmentButton && (
                 <CheckHydration>
                   <Button
@@ -130,7 +131,7 @@ export default function Header({
                     <SvgArrow
                       height={16}
                       width={16}
-                      className="pointer-events-none hidden md:block ml-2 "
+                      className="ml-2 pointer-events-none hidden md:block"
                     />
                   </Button>
                 </CheckHydration>
@@ -139,7 +140,7 @@ export default function Header({
               <SvgMenu
                 height={24}
                 width={24}
-                className="lg:hidden"
+                className="ml-2 lg:hidden"
                 onClick={() => {
                   setIsMobileNavVisible(true);
                 }}

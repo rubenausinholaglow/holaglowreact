@@ -116,7 +116,6 @@ export default function BlogPost({ params }: { params: { slug: string } }) {
                     className="my-12 bg-hg-primary100"
                     url={`https://www.holaglow.com${route}`}
                     title={post.title}
-                    text={post.summary}
                   />
 
                   <BlogRelatedPosts
@@ -135,7 +134,6 @@ export default function BlogPost({ params }: { params: { slug: string } }) {
                 className="my-12 bg-hg-primary100"
                 url={`https://www.holaglow.com${route}`}
                 title={post.title}
-                text={post.summary}
               />
 
               <BlogRelatedPosts

@@ -1,14 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import { isMobile } from 'react-device-detect';
-import {
-  FacebookShareButton,
-  TwitterShareButton,
-  WhatsappShareButton,
-} from 'react-share';
-import Bugsnag from '@bugsnag/js';
-import { SvgWhatsapp } from 'app/icons/IconsDs';
+import { FacebookShareButton, TwitterShareButton } from 'react-share';
 import { SvgExport, SvgFacebook, SvgX } from 'app/icons/socialIcons';
 import { Flex } from 'designSystem/Layouts/Layouts';
 import { Text } from 'designSystem/Texts/Texts';
@@ -17,12 +10,10 @@ export default function BlogShareBar({
   className = '',
   url,
   title,
-  text,
 }: {
   className?: string;
   url: string;
   title: string;
-  text: string;
 }) {
   const [isCopied, setIsCopied] = useState(false);
 
@@ -44,24 +35,6 @@ export default function BlogShareBar({
     }, 2000);
   };
 
-  async function handleNativeShare() {
-    const shareData = {
-      title: title,
-      text: text,
-      url: url,
-    };
-
-    if (navigator.share) {
-      try {
-        await navigator.share(shareData);
-      } catch (error) {
-        Bugsnag.notify('Error sharing', error as any);
-      }
-    } else {
-      Bugsnag.notify('Web Share API is not supported in your browser.');
-    }
-  }
-
   return (
     <Flex className={` p-4 rounded-2xl justify-between ${className}`}>
       <Text className="mr-8 md:mr-16">Comparte</Text>
@@ -73,10 +46,6 @@ export default function BlogShareBar({
         <FacebookShareButton url={url} title={title}>
           <SvgFacebook height={24} width={24} />
         </FacebookShareButton>
-        <WhatsappShareButton url={url} title={title}>
-          <SvgWhatsapp height={24} width={24} />
-        </WhatsappShareButton>
-
         {isCopied ? (
           <Text className="text-xs leading-[10px]">
             !Enlace
@@ -84,11 +53,7 @@ export default function BlogShareBar({
             copiado!
           </Text>
         ) : (
-          <SvgExport
-            height={24}
-            width={24}
-            onClick={isMobile ? handleNativeShare : handleCopyToClipboard}
-          />
+          <SvgExport height={24} width={24} onClick={handleCopyToClipboard} />
         )}
       </Flex>
     </Flex>

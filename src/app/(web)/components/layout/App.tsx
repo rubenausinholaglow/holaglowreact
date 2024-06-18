@@ -12,6 +12,8 @@ import { fetchClinics, fetchProducts, fetchPromos } from 'app/utils/fetch';
 import { ModalBackground } from 'designSystem/Modals/Modal';
 import { isEmpty } from 'lodash';
 
+import { Breakpoint, DeviceSize } from './Breakpoint';
+
 export default function Html({ children }: { children: ReactNode }) {
   function getAnalyticsMetrics() {
     const queryString = window.location.search;
@@ -78,11 +80,11 @@ export default function Html({ children }: { children: ReactNode }) {
     promo,
     setPromos,
   } = useGlobalPersistedStore(state => state);
-  const { analyticsMetrics, setAnalyticsMetrics } = useSessionStore(
-    state => state
-  );
+  const { setDeviceSize, analyticsMetrics, setAnalyticsMetrics } =
+    useSessionStore(state => state);
 
   useEffect(() => {
+    setDeviceSize(DeviceSize());
     getAnalyticsMetrics();
   }, []);
 
@@ -145,6 +147,7 @@ export default function Html({ children }: { children: ReactNode }) {
           setShowModalBackground(false);
         }}
       />
+      <Breakpoint />
       {children}
 
       <SpeedInsights />
