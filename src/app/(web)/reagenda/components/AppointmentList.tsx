@@ -34,7 +34,7 @@ export default function AppointmentList({
     const queryString = window.location.search;
     const params = new URLSearchParams(queryString);
     token = params.get('token') ?? '';
-    setFromAgenda(params.get('fromAgenda') != '' ?? false);
+    setFromAgenda(params.get('fromAgenda') == 'true');
     setCurrentToken(token);
     showPast = params.get('showPast') == 'true';
 
