@@ -69,7 +69,7 @@ export default function ProductDiscountForm({
     { name: '100%', type: '%', value: 100, show: showPercentage },
   ];
 
-  async function handleAddDiscount(data: any) {
+  async function handleAddDiscount(data: DiscountType) {
     if (priceDiscount > 0 && data.type === 'total') return;
     if (data.name === 'MGM') {
       setIsMGM(!isMGM);
