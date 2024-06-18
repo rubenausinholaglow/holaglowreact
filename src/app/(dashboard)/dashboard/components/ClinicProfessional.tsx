@@ -35,11 +35,11 @@ export const ClinicProfessional = () => {
     const fetchProfessionals = async () => {
       try {
         const professionalType = ProfessionalType.All;
-        const professionalsData = await clinicService.getProfessionalsByClinic(
+        let professionalsData = await clinicService.getProfessionalsByClinic(
           storedClinicId,
           professionalType
         );
-
+        professionalsData = professionalsData.filter(x => x.active);
         if (typeof professionalsData === 'string') {
           setError(professionalsData);
         } else {

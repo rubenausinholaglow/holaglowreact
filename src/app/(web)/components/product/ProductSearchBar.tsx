@@ -2,13 +2,25 @@
 
 import { useEffect, useState } from 'react';
 import { Product } from '@interface/product';
+import {
+  getInvalidProducts,
+  getValidTypes,
+  getValidUnityTypes,
+  isDisableAddQuantity,
+} from '@utils/agendaUtils';
 import { fetchProducts } from '@utils/fetch';
 import ROUTES from '@utils/routes';
+import { Quantifier } from 'app/(dashboard)/dashboard/(pages)/budgets/HightLightedProduct/Quantifier';
+import {
+  Operation,
+  useCartStore,
+} from 'app/(dashboard)/dashboard/(pages)/budgets/stores/userCartStore';
 import {
   applyFilters,
   INITIAL_FILTERS,
 } from 'app/(web)/tratamientos/utils/filters';
 import { SvgArrow, SvgCross, SvgSearch } from 'app/icons/IconsDs';
+import { useSessionStore } from 'app/stores/globalStore';
 import { Flex } from 'designSystem/Layouts/Layouts';
 import { Text } from 'designSystem/Texts/Texts';
 
@@ -20,42 +32,104 @@ const NO_RESULTS_SLUGS = [
   'proyeccion-pomulos',
 ];
 
-function ProductSearchItem(product: Product, index: number) {
-  return (
-    <li
-      key={product.id}
-      className={`py-2 ${index === 0 ? '' : 'border-t border-hg-black400'}`}
-    >
-      <a
-        href={`${ROUTES.treatments}/${product.extraInformation.slug}`}
-        className="flex w-full"
-      >
-        <div className="mr-auto pr-4">
-          <Text className="text-sm font-semibold">{product.title}</Text>
-          <Text className="text-hg-secondary">{product.price} €</Text>
-        </div>
-        <SvgArrow className="shrink-0 h-4 w-4" />
-      </a>
-    </li>
-  );
-}
-
 export default function ProductSearchBar({
   className = '',
   isMobileNavigation = false,
   products,
   setIsSearchBarOpened,
+  isDashboard = false,
 }: {
   className?: string;
   isMobileNavigation?: boolean;
   products: Product[];
   setIsSearchBarOpened?: (value: boolean) => void;
+  isDashboard?: boolean;
 }) {
+  const cart = useCartStore(state => state.cart);
+  const { selectedTreatments, setSelectedTreatments, treatmentPacks } =
+    useSessionStore(state => state);
+
   const [searchQuery, setSearchQuery] = useState('');
   const [showResults, setShowResults] = useState(false);
   const [initialProducts, setInitialProducts] = useState(products);
   const [searchBarProducts, setSearchBarProducts] = useState(products);
   const [noResultsProducts, setNoResultsProducts] = useState<Product[]>([]);
+
+  function getQuantityOfProduct(product: Product): number {
+    return selectedTreatments.filter(treatment => treatment.id === product.id)
+      .length;
+  }
+
+  function renderSelectorQuantity(product: Product, index: number) {
+    const disable = isDisableAddQuantity(
+      selectedTreatments,
+      product,
+      cart,
+      treatmentPacks
+    );
+
+    return (
+      <div className="ml-auto">
+        <Quantifier
+          handleUpdateQuantity={function handleUpdateQuantity(
+            operation: Operation
+          ): void {
+            if (operation == 'increase') {
+              setSelectedTreatments([...selectedTreatments, product]);
+            } else {
+              const isSelected = selectedTreatments.some(
+                selectedProduct => selectedProduct.id === product.id
+              );
+              if (isSelected) {
+                const firstProductIndex = selectedTreatments.findIndex(
+                  item => item.id === product.id
+                );
+                const updatedTreatments = [...selectedTreatments];
+                updatedTreatments.splice(firstProductIndex, 1);
+                setSelectedTreatments(updatedTreatments);
+              }
+            }
+          }}
+          quantity={getQuantityOfProduct(product)}
+          disableAddQuantity={disable}
+        />
+      </div>
+    );
+  }
+
+  function ProductSearchItem(
+    product: Product,
+    index: number,
+    isDashboard?: boolean
+  ) {
+    return (
+      <li
+        key={product.id}
+        className={`py-2 ${index === 0 ? '' : 'border-t border-hg-black400'}`}
+      >
+        {isDashboard ? (
+          <Flex className="w-full">
+            <div className="mr-auto pr-4">
+              <Text className="text-sm font-semibold">{product.title}</Text>
+              <Text className="text-hg-secondary">{product.price} €</Text>
+            </div>
+            {renderSelectorQuantity(product, index)}
+          </Flex>
+        ) : (
+          <a
+            href={`${ROUTES.treatments}/${product.extraInformation?.slug}`}
+            className="flex w-full"
+          >
+            <div className="mr-auto pr-4">
+              <Text className="text-sm font-semibold">{product.title}</Text>
+              <Text className="text-hg-secondary">{product.price} €</Text>
+            </div>
+            <SvgArrow className="shrink-0 h-4 w-4" />
+          </a>
+        )}
+      </li>
+    );
+  }
 
   useEffect(() => {
     async function initProducts() {
@@ -64,7 +138,7 @@ export default function ProductSearchBar({
       setInitialProducts(products);
       setNoResultsProducts(
         products.filter((product: Product) =>
-          NO_RESULTS_SLUGS.includes(product.extraInformation.slug)
+          NO_RESULTS_SLUGS.includes(product.extraInformation?.slug)
         )
       );
     }
@@ -74,7 +148,7 @@ export default function ProductSearchBar({
     } else {
       setNoResultsProducts(
         products.filter(product =>
-          NO_RESULTS_SLUGS.includes(product.extraInformation.slug)
+          NO_RESULTS_SLUGS.includes(product.extraInformation?.slug)
         )
       );
     }
@@ -161,7 +235,7 @@ export default function ProductSearchBar({
             <ul className="flex flex-col px-4 w-full">
               {searchBarProducts.map((product, index) => {
                 if (product.visibility) {
-                  return ProductSearchItem(product, index);
+                  return ProductSearchItem(product, index, isDashboard);
                 }
               })}
             </ul>
@@ -173,7 +247,7 @@ export default function ProductSearchBar({
             </Text>
             <ul className="flex flex-col px-4 w-full">
               {noResultsProducts.map((product, index) =>
-                ProductSearchItem(product, index)
+                ProductSearchItem(product, index, isDashboard)
               )}
             </ul>
           </>

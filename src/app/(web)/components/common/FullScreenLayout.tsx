@@ -11,7 +11,7 @@ export default function FullScreenLoading({
 
   return (
     <div
-      className={`absolute flex inset-0 justify-center items-center ${className}`}
+      className={`absolute flex inset-0 justify-center items-center bg-white/50 backdrop-blur-sm ${className}`}
     >
       <SvgSpinner className={classes} />
     </div>

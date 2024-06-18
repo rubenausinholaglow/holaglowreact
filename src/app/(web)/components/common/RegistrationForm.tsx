@@ -46,6 +46,7 @@ const RegistrationForm: React.FC<RegistrationFormProps> = ({
   className = '',
   splitSurnames = false,
   showBirthday = false,
+  hideCheckboxes = false,
   isDerma,
 }: {
   redirect?: boolean;
@@ -63,6 +64,7 @@ const RegistrationForm: React.FC<RegistrationFormProps> = ({
   className?: string;
   splitSurnames?: boolean;
   showBirthday?: boolean;
+  hideCheckboxes?: boolean;
   isDerma: boolean;
 }) => {
   const routes = useRoutes();
@@ -344,6 +346,10 @@ const RegistrationForm: React.FC<RegistrationFormProps> = ({
               phone.length === country.country.dialCode.length + 1
                 ? setShowPhoneError(null)
                 : setShowPhoneError(!utils.validatePhoneInput(phone));
+
+              if (country.inputValue.length === 0) {
+                handleFieldChange('', 'phone');
+              }
             }}
           />
           {showPhoneError !== null && (
@@ -434,80 +440,83 @@ const RegistrationForm: React.FC<RegistrationFormProps> = ({
             }}
           />
         )}
-        <Flex layout="col-left" className="my-2 mb-4">
-          <Flex
-            layout="row-left"
-            className={
-              !formData.termsAndConditionsAccepted ? 'animate-shake' : ''
-            }
-          >
-            <label
-              htmlFor="termsAndConditionsAccepted"
-              className="flex items-center cursor-pointer"
+        {!hideCheckboxes && (
+          <Flex layout="col-left" className="my-2 mb-4">
+            <Flex
+              layout="row-left"
+              className={
+                !formData.termsAndConditionsAccepted ? 'animate-shake' : ''
+              }
             >
-              <input
-                type="checkbox"
-                id="termsAndConditionsAccepted"
-                checked={formData.termsAndConditionsAccepted}
-                onChange={event =>
-                  handleFieldChange(
-                    event.target.checked,
-                    'termsAndConditionsAccepted'
-                  )
-                }
-                className="hidden"
-              />
-              {formData.termsAndConditionsAccepted ? (
-                <SvgCheckSquareActive className="mr-2" />
-              ) : (
-                <SvgCheckSquare className="mr-2" />
-              )}
-              <span className="text-sm text-gray-700">
-                Acepto términos y condiciones
-              </span>
-            </label>
-          </Flex>
-          <Flex layout="row-left" className="mt-2">
-            <label
-              htmlFor="receiveCommunications"
-              className="flex items-center cursor-pointer"
-            >
-              <input
-                type="checkbox"
-                id="receiveCommunications"
-                checked={formData.receiveCommunications}
-                onChange={event =>
-                  handleFieldChange(
-                    event.target.checked,
-                    'receiveCommunications'
-                  )
-                }
-                className="hidden"
-              />
-              {formData.receiveCommunications ? (
-                <SvgCheckSquareActive className="mr-2" />
-              ) : (
-                <SvgCheckSquare className="mr-2" />
-              )}
-              <span className="text-sm text-gray-700">
-                Quiero que me informéis de vuestras ofertas
-              </span>
-            </label>
-          </Flex>
-          {errors.includes(errorsConfig.ERROR_TERMS_CONDITIONS_UNACCEPTED) &&
-            !formData.termsAndConditionsAccepted && (
-              <Flex className="text-hg-error text-left text-sm py-2 px-3 bg-hg-error100 mt-2 w-full rounded-md">
-                <Image
-                  src="/images/forms/error.svg"
-                  alt="error"
-                  height={16}
-                  width={16}
-                  className="mr-2"
+              <label
+                htmlFor="termsAndConditionsAccepted"
+                className="flex items-center cursor-pointer"
+              >
+                <input
+                  type="checkbox"
+                  id="termsAndConditionsAccepted"
+                  checked={formData.termsAndConditionsAccepted}
+                  onChange={event =>
+                    handleFieldChange(
+                      event.target.checked,
+                      'termsAndConditionsAccepted'
+                    )
+                  }
+                  className="hidden"
                 />
-                {errorsConfig.ERROR_TERMS_CONDITIONS_UNACCEPTED}
-              </Flex>
-            )}
-        </Flex>
+                {formData.termsAndConditionsAccepted ? (
+                  <SvgCheckSquareActive className="mr-2" />
+                ) : (
+                  <SvgCheckSquare className="mr-2" />
+                )}
+                <span className="text-sm text-gray-700">
+                  Acepto términos y condiciones
+                </span>
+              </label>
+            </Flex>
+            <Flex layout="row-left" className="mt-2">
+              <label
+                htmlFor="receiveCommunications"
+                className="flex items-center cursor-pointer"
+              >
+                <input
+                  type="checkbox"
+                  id="receiveCommunications"
+                  checked={formData.receiveCommunications}
+                  onChange={event =>
+                    handleFieldChange(
+                      event.target.checked,
+                      'receiveCommunications'
+                    )
+                  }
+                  className="hidden"
+                />
+                {formData.receiveCommunications ? (
+                  <SvgCheckSquareActive className="mr-2" />
+                ) : (
+                  <SvgCheckSquare className="mr-2" />
+                )}
+                <span className="text-sm text-gray-700">
+                  Quiero que me informéis de vuestras ofertas
+                </span>
+              </label>
+            </Flex>
+            {errors.includes(errorsConfig.ERROR_TERMS_CONDITIONS_UNACCEPTED) &&
+              !formData.termsAndConditionsAccepted && (
+                <Flex className="text-hg-error text-left text-sm py-2 px-3 bg-hg-error100 mt-2 w-full rounded-md">
+                  <Image
+                    src="/images/forms/error.svg"
+                    alt="error"
+                    height={16}
+                    width={16}
+                    className="mr-2"
+                  />
+                  {errorsConfig.ERROR_TERMS_CONDITIONS_UNACCEPTED}
+                </Flex>
+              )}
+          </Flex>
+        )}
+
         {hasContinueButton && (
           <Button
             disabled={isDisabled}

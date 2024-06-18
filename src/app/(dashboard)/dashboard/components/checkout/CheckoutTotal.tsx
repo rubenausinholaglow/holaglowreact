@@ -44,10 +44,7 @@ export default function CheckoutTotal() {
     manualPrice,
     productsPriceTotalWithDiscounts
   );
-  /*const cartTotalWithDiscountFixed =
-    Math.ceil(cartTotalWithDiscount * 100) / 100;
-  const productsPriceTotalWithDiscountsFixed =
-    Math.ceil(productsPriceTotalWithDiscounts * 100) / 100;*/
+
   return (
     <div>
       <Flex layout="col-left" className="p-4">
