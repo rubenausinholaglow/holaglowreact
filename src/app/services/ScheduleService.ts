@@ -218,7 +218,7 @@ export default class ScheduleService {
   }
   static async getAppointmentsPerClinic(
     clinicId: string,
-    boxId: string,
+    boxId: string
   ): Promise<AppointmentsPerClinicResponse[]> {
     try {
       let url = `${process.env.NEXT_PUBLIC_SCHEDULE_API}Appointment/PerClinic?clinicId=${clinicId}`;
@@ -446,6 +446,31 @@ export default class ScheduleService {
     } catch (err: any) {
       Bugsnag.notify('Error scheduleBulk', err);
       return '';
+    }
+  }
+  static async GetPvAppointmentIfExists(
+    phone: string
+  ): Promise<Appointment | undefined> {
+    try {
+      const url =
+        `${process.env.NEXT_PUBLIC_SCHEDULE_API}appointment/GetPvAppointmentIfExists?phone=` +
+        encodeURIComponent(phone);
+
+      const res = await fetch(url, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
+      if (res.ok) {
+        const data = await res.json();
+        return data;
+      } else {
+        return undefined;
+      }
+    } catch (err: any) {
+      Bugsnag.notify('Error next', err);
+      return undefined;
     }
   }
   static async next(token: string): Promise<Appointment[]> {
