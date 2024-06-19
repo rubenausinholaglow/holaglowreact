@@ -9,12 +9,10 @@ export default function Page({
   searchParams: { [key: string]: string | string[] | undefined };
 }) {
   return (
-    <App>
-      <MainLayout isDashboard>
-        <Container className="mt-4">
-          <Reagenda isDashboard={true} />
-        </Container>
-      </MainLayout>
-    </App>
+    <MainLayout isDashboard>
+      <Container className="mt-4">
+        <Reagenda isDashboard={true} />
+      </Container>
+    </MainLayout>
   );
 }

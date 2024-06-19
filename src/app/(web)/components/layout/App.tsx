@@ -146,7 +146,6 @@ export default function Html({ children }: { children: ReactNode }) {
         }}
       />
       {children}
-
       <SpeedInsights />
     </body>
   );

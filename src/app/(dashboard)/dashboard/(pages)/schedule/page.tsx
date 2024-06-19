@@ -341,65 +341,59 @@ export default function Page() {
   };
 
   return (
-    <App>
-      <MainLayout isDashboard>
-        <Container className="mt-4">
-          {!isLoading && (
-            <>
-              {!selectedClinic && (
-                <>
-                  <Title className="font-semibold mb-8">
-                    Selecciona clínica
-                  </Title>
+    <MainLayout isDashboard>
+      <Container className="mt-4">
+        {!isLoading && (
+          <>
+            {!selectedClinic && (
+              <>
+                <Title className="font-semibold mb-8">Selecciona clínica</Title>
 
-                  <CheckoutClinicSelector isDashboard className="mb-8" />
-                </>
-              )}
+                <CheckoutClinicSelector isDashboard className="mb-8" />
+              </>
+            )}
 
-              {selectedClinic && (
-                <>
-                  <Title className="font-semibold mb-8">
-                    {cart.length == 0
-                      ? 'Selecciona tratamiento'
-                      : 'Tratamientos'}
-                  </Title>
-                  <Flex layout="col-left" className="w-full">
-                    {!isEmpty(dashboardProducts) && !isLoading ? (
-                      <>
-                        {cart.length > 0 && (
-                          <>
-                            {renderProductsDashboard(cart, true)}
-                            {renderProductsDashboard(cart)}
-                          </>
-                        )}
-                        <TreatmentAccordionSelector
-                          isDashboard
-                          packInProductCart={packInProductCart}
-                        />
-                      </>
-                    ) : (
-                      <SvgSpinner className="w-full mb-4" />
-                    )}
-                  </Flex>
+            {selectedClinic && (
+              <>
+                <Title className="font-semibold mb-8">
+                  {cart.length == 0 ? 'Selecciona tratamiento' : 'Tratamientos'}
+                </Title>
+                <Flex layout="col-left" className="w-full">
+                  {!isEmpty(dashboardProducts) && !isLoading ? (
+                    <>
+                      {cart.length > 0 && (
+                        <>
+                          {renderProductsDashboard(cart, true)}
+                          {renderProductsDashboard(cart)}
+                        </>
+                      )}
+                      <TreatmentAccordionSelector
+                        isDashboard
+                        packInProductCart={packInProductCart}
+                      />
+                    </>
+                  ) : (
+                    <SvgSpinner className="w-full mb-4" />
+                  )}
+                </Flex>
 
-                  <Button
-                    onClick={() => {
-                      if (selectedTreatments.length > 0) {
-                        router.push(
-                          `${ROUTES.dashboard.checkIn.agenda}?isCheckin=false`
-                        );
-                      }
-                    }}
-                    disabled={selectedTreatments.length == 0}
-                  >
-                    Continuar
-                  </Button>
-                </>
-              )}
-            </>
-          )}
-        </Container>
-      </MainLayout>
-    </App>
+                <Button
+                  onClick={() => {
+                    if (selectedTreatments.length > 0) {
+                      router.push(
+                        `${ROUTES.dashboard.checkIn.agenda}?isCheckin=false`
+                      );
+                    }
+                  }}
+                  disabled={selectedTreatments.length == 0}
+                >
+                  Continuar
+                </Button>
+              </>
+            )}
+          </>
+        )}
+      </Container>
+    </MainLayout>
   );
 }
