@@ -17,7 +17,7 @@ export default class ProductService {
       const url = getAgendaProducts
         ? `${urlApi}Product?getAgendaProducts=true`
         : `${urlApi}Product`;
-      const res = await fetch(url, {cache : 'no-store'});
+      const res = await fetch(url);
       if (res.ok) {
         const data = await res.json();
         return data;
