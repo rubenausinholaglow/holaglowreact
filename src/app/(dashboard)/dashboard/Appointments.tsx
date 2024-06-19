@@ -563,6 +563,9 @@ const AppointmentsListComponent: React.FC<{
                       AppointmentEventType.Finished
                     )}
               </Text>
+              <Text className="w-[7%] shrink-0 p-2">
+                {isHeader ? 'Puntos' : appointment.totalPoints}
+              </Text>
             </>
           )}
           {!isHeader && (
@@ -738,6 +741,7 @@ const AppointmentsListComponent: React.FC<{
       ) : (
         <></>
       )}
+      <div></div>
     </div>
   );
 };

@@ -116,4 +116,5 @@ export interface AppointmentsPerClinicResponse
     productType : ProductType;
     productsTitle : string;
     comment : string;
+    totalPoints : string;
 }
