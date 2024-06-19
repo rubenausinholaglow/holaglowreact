@@ -168,7 +168,6 @@ export default function Page({
         true,
         false
       );
-      product.title = 'Reserva Anticipo Web';
       product.price = Number(product.price) * -1;
       setAdvancedPaymentProduct(product);
     }

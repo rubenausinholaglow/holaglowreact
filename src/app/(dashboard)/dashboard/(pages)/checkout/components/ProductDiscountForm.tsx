@@ -170,7 +170,7 @@ export default function ProductDiscountForm({
               </Button>
             ) : (
               <Button onClick={e => handleInvalidateCode()}>
-                Invalidar Código
+                Desvalidar Código
               </Button>
             )}
           </>
