@@ -74,58 +74,53 @@ const Page = () => {
   }
 
   return (
-    <App>
-      <MainLayout isDashboard hideContactButtons hideProfessionalSelector>
-        <div>
-          {!selectedClinic && isCallCenter && (
-            <>
-              <Title className="font-semibold mb-8">Selecciona clínica</Title>
+    <MainLayout isDashboard hideContactButtons hideProfessionalSelector>
+      <div>
+        {!selectedClinic && isCallCenter && (
+          <>
+            <Title className="font-semibold mb-8">Selecciona clínica</Title>
 
-              <CheckoutClinicSelector isDashboard className="mb-8" />
-            </>
-          )}
-        </div>
-        {((user?.firstName && !isCallCenter) ||
-          (isCallCenter && selectedClinic)) && (
-          <div className="mt-8">
-            <Title className="text-xl mb-4">Tu glow, tus normas</Title>
-            <Title className="font-bold text-5xl mb-8">
-              ¡Hola{' '}
-              <Underlined color={HOLAGLOW_COLORS['primary']}>
-                {user?.firstName}
-              </Underlined>
-              !
-            </Title>
-            <div className="grid grid-cols-3 mb-12">
-              {menuItems.map(item => (
-                <>
-                  {(item.visible == true ||
-                    (isCallCenter && item.visible == false)) && (
-                    <>
-                      <DashboardMenuItem
-                        key={item.title}
-                        iconSrc={item.iconSrc}
-                        altText={item.altText}
-                        title={item.title}
-                        link={
-                          item.link.includes('flowwwToken')
-                            ? item.link.replace(
-                                'flowwwToken',
-                                user!.flowwwToken
-                              )
-                            : item.link
-                        }
-                        target={item.target}
-                      />
-                    </>
-                  )}
-                </>
-              ))}
-            </div>
-          </div>
+            <CheckoutClinicSelector isDashboard className="mb-8" />
+          </>
         )}
-      </MainLayout>
-    </App>
+      </div>
+      {((user?.firstName && !isCallCenter) ||
+        (isCallCenter && selectedClinic)) && (
+        <div className="mt-8">
+          <Title className="text-xl mb-4">Tu glow, tus normas</Title>
+          <Title className="font-bold text-5xl mb-8">
+            ¡Hola{' '}
+            <Underlined color={HOLAGLOW_COLORS['primary']}>
+              {user?.firstName}
+            </Underlined>
+            !
+          </Title>
+          <div className="grid grid-cols-3 mb-12">
+            {menuItems.map(item => (
+              <>
+                {(item.visible == true ||
+                  (isCallCenter && item.visible == false)) && (
+                  <>
+                    <DashboardMenuItem
+                      key={item.title}
+                      iconSrc={item.iconSrc}
+                      altText={item.altText}
+                      title={item.title}
+                      link={
+                        item.link.includes('flowwwToken')
+                          ? item.link.replace('flowwwToken', user!.flowwwToken)
+                          : item.link
+                      }
+                      target={item.target}
+                    />
+                  </>
+                )}
+              </>
+            ))}
+          </div>
+        </div>
+      )}
+    </MainLayout>
   );
 };
 export default Page;
