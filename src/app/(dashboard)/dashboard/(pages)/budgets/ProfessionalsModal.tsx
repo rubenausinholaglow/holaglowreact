@@ -2,6 +2,8 @@
 
 import { useEffect, useRef, useState } from 'react';
 import { isMobile } from 'react-device-detect';
+import { Professional } from '@interface/clinic';
+import clinicService from '@services/ClinicService';
 import DynamicIcon from 'app/(web)/components/common/DynamicIcon';
 import { SvgAdd, SvgArrow } from 'app/icons/IconsDs';
 import {
@@ -16,6 +18,7 @@ import {
 } from 'designSystem/Dialog/Dialog';
 import { Flex } from 'designSystem/Layouts/Layouts';
 import { Title } from 'designSystem/Texts/Texts';
+import { isEmpty } from 'lodash';
 import Image from 'next/image';
 
 import { PROFESSIONALS_BY_CITY } from './professionalsData';
@@ -23,7 +26,10 @@ import { PROFESSIONALS_BY_CITY } from './professionalsData';
 export function ProfessionalDashboardCarousel() {
   const [isHydrated, setIsHydrated] = useState(false);
   const professionalsCarouselRef = useRef<HTMLDivElement>(null);
-  const [professionalsByCity, setProfessionalsByCity] = useState<object[]>([]);
+  const [professionalsByCity, setProfessionalsByCity] = useState<
+    Professional[]
+  >([]);
+  const [professionalsExtraData, setProfessionalsExtraData] = useState([]);
   const { storedClinicId } = useGlobalPersistedStore(state => state);
 
   useEffect(() => {
@@ -31,16 +37,32 @@ export function ProfessionalDashboardCarousel() {
   }, []);
 
   useEffect(() => {
-    if (isHydrated) {
-      setProfessionalsByCity(
-        storedClinicId
-          ? (PROFESSIONALS_BY_CITY.filter(
-              (item: any) => item.cityId === storedClinicId
-            )[0] as any)
-          : PROFESSIONALS_BY_CITY[0].professionals
+    const fetchProfessionals = async () => {
+      const professionalsByCity = await clinicService.getProfessionalsByClinic(
+        storedClinicId,
+        1
       );
+
+      setProfessionalsByCity(professionalsByCity as Professional[]);
+    };
+
+    if (isHydrated) {
+      fetchProfessionals();
     }
   }, [isHydrated]);
+
+  useEffect(() => {
+    if (!isEmpty(professionalsByCity)) {
+      console.log(professionalsByCity);
+      const customProfessionalDataByCountry = PROFESSIONALS_BY_CITY.filter(
+        (item: any) => item.cityId === storedClinicId
+      );
+
+      setProfessionalsExtraData(
+        customProfessionalDataByCountry[0].professionals as []
+      );
+    }
+  }, [professionalsByCity]);
 
   function handleSlideForwards() {
     if (professionalsCarouselRef.current) {
@@ -64,6 +86,10 @@ export function ProfessionalDashboardCarousel() {
         backButton.click();
       }
     }
+  }
+
+  if (isEmpty(professionalsByCity)) {
+    return <></>;
   }
 
   return (
@@ -108,8 +134,12 @@ export function ProfessionalDashboardCarousel() {
                 </ul>
               </Flex>
 
-              <ul className="grid grid-cols-2 grid-rows-2 gap-4 w-full text-hg-black500">
-                {professional.bullets.map((bullet: any) => (
+              {/* <ul className="grid grid-cols-2 grid-rows-2 gap-4 w-full text-hg-black500">
+
+
+
+                {professionalsExtraData.filter(item => professional.id === item.id)[0].bullets
+                .map((bullet: any) => (
                   <li
                     key={bullet.icon}
                     className="flex gap-2 justify-left items-center rounded-2xl bg-hg-secondary700 font-semibold text-white p-4"
@@ -123,7 +153,7 @@ export function ProfessionalDashboardCarousel() {
                     {bullet.text}
                   </li>
                 ))}
-              </ul>
+              </ul> */}
             </div>
 
             <div className="p-6 bg-derma-secondary300">
@@ -132,12 +162,12 @@ export function ProfessionalDashboardCarousel() {
               </Title>
 
               <ul className="flex flex-col gap-4">
-                {professional.experience.map((experience: any) => (
+                {/* {professional.experience.map((experience: any) => (
                   <li key={experience} className="flex justify-start text-left">
                     <SvgAdd className="shrink-0 mr-2 h-5 w-5 text-hg-black400" />
                     <div>{experience}</div>
                   </li>
-                ))}
+                ))} */}
               </ul>
             </div>
 
@@ -159,7 +189,9 @@ export function ProfessionalDashboardCarousel() {
                     : ''
                 }`}
               >
-                {professional.resultsImages.map((image: string) => (
+                <p>hola</p>
+                <p>adeu</p>
+                {/* {professional.resultsImages.map((image: string) => (
                   <div className="px-4" key={image}>
                     <div className="overflow-hidden relative aspect-square">
                       <div className="relative aspect-square">
@@ -177,29 +209,31 @@ export function ProfessionalDashboardCarousel() {
                       </div>
                     </div>
                   </div>
-                ))}
+                ))} */}
               </Carousel>
             </div>
           </div>
         ))}
       </Carousel>
 
-      <div className="sticky bottom-0 left-0 right-0 w-full bg-white p-4">
-        <Flex layout="row-right" className="gap-4 justify-end">
-          <div
-            className="bg-hg-secondary text-white rounded-full w-10 h-10 flex items-center justify-center ml-auto cursor-pointer"
-            onClick={() => handleSlideBackwards()}
-          >
-            <SvgArrow className="rotate-180" />
-          </div>
-          <div
-            className="bg-hg-secondary text-white rounded-full w-10 h-10 flex items-center justify-center cursor-pointer"
-            onClick={() => handleSlideForwards()}
-          >
-            <SvgArrow />
-          </div>
-        </Flex>
-      </div>
+      {professionalsByCity.length > 1 && (
+        <div className="sticky bottom-0 left-0 right-0 w-full bg-white p-4">
+          <Flex layout="row-right" className="gap-4 justify-end">
+            <div
+              className="bg-hg-secondary text-white rounded-full w-10 h-10 flex items-center justify-center ml-auto cursor-pointer"
+              onClick={() => handleSlideBackwards()}
+            >
+              <SvgArrow className="rotate-180" />
+            </div>
+            <div
+              className="bg-hg-secondary text-white rounded-full w-10 h-10 flex items-center justify-center cursor-pointer"
+              onClick={() => handleSlideForwards()}
+            >
+              <SvgArrow />
+            </div>
+          </Flex>
+        </div>
+      )}
     </div>
   );
 }
@@ -219,7 +253,7 @@ export default function ProfessionalsModal() {
     if (isHydrated) {
       if (professionalsModalRef.current && !hasSeenDashboardProfessionals) {
         professionalsModalRef.current.click();
-        setHasSeenDashboardProfessionals(true);
+        //setHasSeenDashboardProfessionals(true);
       }
     }
   }, [isHydrated]);
