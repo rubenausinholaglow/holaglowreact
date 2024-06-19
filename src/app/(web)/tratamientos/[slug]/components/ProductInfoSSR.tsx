@@ -87,7 +87,7 @@ const CONFIG: PropsProductConfig[] = [
         products:
           '1 vial de hidroxiapatita cálcica + 2 viales de ácido hialurónico',
         duration: '45 minutos',
-        price: 'desde 869 €',
+        price: 'desde 849 €',
       },
       {
         title: 'Pack Lifting Plus',
