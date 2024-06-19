@@ -11,7 +11,7 @@ export default function FooterIntro() {
     >
       <SvgHolaglow className="text-hg-secondary mb-8" height={25} width={100} />
       <Text size="xs" className="text-hg-secondary700 font-semibold mb-3">
-        Centro de medicina estética
+        Centro de medicina estética (a mi no me peta)
       </Text>
       <Text size="xs" className="text-hg-secondary700 mb-12">
         La información de este sitio web, incluidos los artículos escritos por
