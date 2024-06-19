@@ -15,7 +15,7 @@ export interface Budget {
   priceDiscount: number;
   percentageDiscount: number;
   totalPrice: number;
-  totalPriceWithIva: number;
+  totalPriceWithIVA: number;
   clinicInfoId: string;
   referenceId: string;
   professionalId: string;
@@ -50,4 +50,6 @@ export enum StatusBudget {
   Finish = 2,
   Rejected = 3,
   Paid = 4,
+  Accepted = 5,
+  Contacted = 6,
 }

@@ -40,7 +40,7 @@ export default function TableBudgets() {
     { label: 'Comercial', key: 'professional.name', format: 'string' },
     {
       label: 'Importe',
-      key: 'totalPrice',
+      key: 'totalWithEuro',
       format: 'string',
     },
     { label: 'Servicios', key: 'services', format: 'string' },
@@ -55,14 +55,16 @@ export default function TableBudgets() {
     'totalPrice',
     'statusBudget',
     'products.product',
-    'products.title',
   ];
   const queryToExecute = [
     `
       id
       creationDate
-      totalPrice
+      totalPriceWithIVA
       statusBudget
+      manualPrice
+      priceDiscount
+      percentageDiscount
       user {
         firstName
         lastName
@@ -76,6 +78,9 @@ export default function TableBudgets() {
         product {
           title
         }
+        priceDiscount
+        percentageDiscount
+        price
       }
       clinicInfo {
         flowwwId
@@ -142,6 +147,7 @@ export default function TableBudgets() {
     numberPerPage?: number,
     sortedBy?: string
   ) => {
+    debugger;
     if (!nextPage) {
       setCursors(prev => prev.slice(0, -1));
     }
@@ -188,6 +194,17 @@ export default function TableBudgets() {
             }}
           >
             Pendiente
+          </Button>
+          <Button
+            type="primary"
+            customStyles="bg-hg-black500 mr-4"
+            className={filterStatus !== 'Open' ? 'opacity-30' : ''}
+            onClick={() => {
+              if (filterStatus == 'Contacted') setFilterStatus('');
+              else setFilterStatus('Contacted');
+            }}
+          >
+            En seguimiento
           </Button>
           <Button
             type="primary"
