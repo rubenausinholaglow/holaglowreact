@@ -12,11 +12,11 @@ export const PROFESSIONALS_BY_CITY = [
         bullets: [
           {
             icon: 'SvgUsers',
-            text: '+750 pacientes atendidos',
+            text: '+4000 pacientes atendidos',
           },
           {
             icon: 'SvgInjection',
-            text: '+3500 tratamientos aplicados',
+            text: '+8500 tratamientos aplicados',
           },
           {
             icon: 'SvgMedal',
@@ -28,10 +28,12 @@ export const PROFESSIONALS_BY_CITY = [
           },
         ],
         experience: [
-          'bla bla bla, primera experiencia',
-          'bla bla bla, segunda experiencia esta un poco más larga',
-          'bla bla bla, aquí me estoy qeudando sin ideas',
-          'bla bla bla, prou ja ja ja',
+          'Licenciada en medicina por la  Universidad de Zaragoza',
+          'Master en medicina estética nutrición y antienvejecimiento AMIR 2019-2020',
+          'Directora médica clínicas Holaglow',
+          'Curso individual de técnicas de infiltración de rellenos faciales con AH por Dr. Carla Barber',
+          'Hands On total face con 11 viales de ácido hialurónico por Dr. Iratxe Díaz',
+          'Curso de medicina estética avanzada por Dr. Moises Amselem',
         ],
         resultsImages: [
           'https://budgetimages.blob.core.windows.net/images/antes-y-despues/aumento-labios/13.jpg',
@@ -41,34 +43,34 @@ export const PROFESSIONALS_BY_CITY = [
         ],
       },
       {
-        name: 'Farah SIN DATOS',
+        name: 'Farah Anani',
         urlPhoto:
-          'https://budgetimages.blob.core.windows.net/images/professionals/Sonsoles.png',
+          'https://budgetimages.blob.core.windows.net/images/professionals/Alicia.png',
         title: 'Directora Médica',
-        collegiateNumber: '505015795',
+        collegiateNumber: '60020',
         bullets: [
           {
             icon: 'SvgUsers',
-            text: '+750 pacientes atendidos',
+            text: '+1500 pacientes atendidos',
           },
           {
             icon: 'SvgInjection',
-            text: '+3500 tratamientos aplicados',
+            text: '+2500 tratamientos aplicados',
           },
           {
             icon: 'SvgMedal',
-            text: '98% de clientes satisfechos',
+            text: '97% de clientes satisfechos',
           },
           {
             icon: 'SvgShieldTick',
-            text: '4,9 valoración',
+            text: '4,7 valoración',
           },
         ],
         experience: [
-          'bla bla bla, primera experiencia',
-          'bla bla bla, segunda experiencia esta un poco más larga',
-          'bla bla bla, aquí me estoy qeudando sin ideas',
-          'bla bla bla, prou ja ja ja',
+          'Diplomada en Enfermería por la Blanquerna, Universidad Ramon Llull',
+          'Graduada en Medicina y Cirugía por la UIC',
+          'Master en Medicina y Ginecología Cosmética y Estética y del Envejecimiento Fisiológico por la UB',
+          'Apasionada de la medicina estética y especialista en armonización facial y cuidado de la piel',
         ],
         resultsImages: [
           'https://budgetimages.blob.core.windows.net/images/antes-y-despues/aumento-labios/13.jpg',
@@ -92,11 +94,11 @@ export const PROFESSIONALS_BY_CITY = [
         bullets: [
           {
             icon: 'SvgUsers',
-            text: '+700 pacientes atendidos',
+            text: '+2500 pacientes atendidos',
           },
           {
             icon: 'SvgInjection',
-            text: '+3900 tratamientos aplicados',
+            text: '+5000 tratamientos aplicados',
           },
           {
             icon: 'SvgMedal',
@@ -104,14 +106,17 @@ export const PROFESSIONALS_BY_CITY = [
           },
           {
             icon: 'SvgShieldTick',
-            text: '4,8 valoración',
+            text: '4,9 valoración',
           },
         ],
         experience: [
-          'bla bla bla, primera experiencia',
-          'bla bla bla, segunda experiencia esta un poco más larga',
-          'bla bla bla, aquí me estoy qeudando sin ideas',
-          'bla bla bla, prou ja ja ja',
+          'Graduada en Medicina y Cirugía: Universidad de Zaragoza',
+          'MIR Nefrologia 2018-2022',
+          'Hospital Clínico universitario lozano blesa zaragoza',
+          'Master class “Toxina botulínica” ',
+          'Masterclass “Inductores Colágeno e Hybrid fillers” ',
+          'AS Lips Masterclass: Aumento de labios',
+          'Especialista en tratamiento de labios y rinomodelación',
         ],
         resultsImages: [
           'https://budgetimages.blob.core.windows.net/images/antes-y-despues/relleno-ojeras/1.jpg',
@@ -125,19 +130,19 @@ export const PROFESSIONALS_BY_CITY = [
     cityId: 'b6ccdd94-d44c-43ec-ac83-f3fc77c351c8',
     professionals: [
       {
-        name: 'Fatima Lopez',
+        name: 'Fátima Lopez',
         urlPhoto:
           'https://budgetimages.blob.core.windows.net/images/professionals/Alicia.png',
         title: 'Médico estético',
-        collegiateNumber: '464626841',
+        collegiateNumber: '460606962',
         bullets: [
           {
             icon: 'SvgUsers',
-            text: '+550 pacientes atendidos',
+            text: '+2500 pacientes atendidos',
           },
           {
             icon: 'SvgInjection',
-            text: '+3200 tratamientos aplicados',
+            text: '+5000 tratamientos aplicados',
           },
           {
             icon: 'SvgMedal',
@@ -149,10 +154,48 @@ export const PROFESSIONALS_BY_CITY = [
           },
         ],
         experience: [
-          'bla bla bla, primera experiencia',
-          'bla bla bla, segunda experiencia esta un poco más larga',
-          'bla bla bla, aquí me estoy qeudando sin ideas',
-          'bla bla bla, prou ja ja ja',
+          'Licenciada en Medicina por la Universidad de Córdoba (UCO)',
+          'Máster Técnicas Avanzadas en Medicina Estética, Cosmética y Regenerativa (Universidad Pablo de Olavide, Sevilla)',
+          'Experta en dermocosmética',
+          'Formación One to One con Dra. Paula Rosso y Dr. José Vicente Lajo (formadores internacionales)',
+          'Especialista en armonización facial ',
+          'Formación de Anatomía con disección de cadáveres, Teoxane',
+        ],
+        resultsImages: [
+          'https://budgetimages.blob.core.windows.net/images/antes-y-despues/arrugas-expresion-frente-entrecejo-patas-gallo/1.jpg',
+          'https://budgetimages.blob.core.windows.net/images/antes-y-despues/arrugas-expresion-frente-entrecejo-patas-gallo/2.jpg',
+          'https://budgetimages.blob.core.windows.net/images/antes-y-despues/arrugas-expresion-frente-entrecejo-patas-gallo/3.jpg',
+          'https://budgetimages.blob.core.windows.net/images/antes-y-despues/arrugas-expresion-frente-entrecejo-patas-gallo/4.jpg',
+        ],
+      },
+      {
+        name: 'Leidy González',
+        urlPhoto:
+          'https://budgetimages.blob.core.windows.net/images/professionals/Alicia.png',
+        title: 'Médico estético',
+        collegiateNumber: '464626114',
+        bullets: [
+          {
+            icon: 'SvgUsers',
+            text: '+2000 pacientes atendidos',
+          },
+          {
+            icon: 'SvgInjection',
+            text: '+4200 tratamientos aplicados',
+          },
+          {
+            icon: 'SvgMedal',
+            text: '97% de clientes satisfechos',
+          },
+          {
+            icon: 'SvgShieldTick',
+            text: '4,8 valoración',
+          },
+        ],
+        experience: [
+          'Master de Medicina Estética por la Universidad de Valencia, Fundación ADEIT',
+          '+10 años de experiencia en medicina de urgencias y alta complejidad',
+          'Especialista en labios y armonización facial ',
         ],
         resultsImages: [
           'https://budgetimages.blob.core.windows.net/images/antes-y-despues/arrugas-expresion-frente-entrecejo-patas-gallo/1.jpg',
