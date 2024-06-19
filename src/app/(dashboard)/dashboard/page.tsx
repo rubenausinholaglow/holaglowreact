@@ -362,7 +362,7 @@ export default function Page({
     setErrors(errors);
   };
 
-  return <p>Test crash</p>;
+  return <App>Test crash</App>;
 
   if (remoteControl)
     return (
