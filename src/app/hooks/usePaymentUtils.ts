@@ -5,9 +5,9 @@ import FinanceService from "@services/FinanceService";
 import { useGlobalPersistedStore, useSessionStore } from "app/stores/globalStore";
 import { isEmpty } from "lodash";
 
-import { usePaymentList } from "./usePaymentList";
+import { usePaymentList } from "../(dashboard)/dashboard/(pages)/checkout/components/payment/payments/usePaymentList";
 
-export const usePaymentHook = () => {
+export const usePaymentUtils = () => {
   const { addPaymentToList } = usePaymentList();
   const { user } = useGlobalPersistedStore(state => state);
   const { walletClient, setWalletClient} = useSessionStore(state => state);

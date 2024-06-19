@@ -5,7 +5,7 @@ import { useSessionStore } from "app/stores/globalStore";
 
 
 
-export const usePromoUserHook = () => {
+export const usePromoUser = () => {
     const [wallet, setWallet] = useState<Wallet | undefined>(undefined);
     const { setWalletClient, setPromoCode } = useSessionStore(state => state);
 

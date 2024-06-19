@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { messageService } from '@services/MessageService';
 import Notification from 'app/(dashboard)/dashboard/components/ui/Notification';
+import { usePaymentUtils } from 'app/hooks/usePaymentUtils';
 import { SvgSpinner } from 'app/icons/Icons';
 import { SvgCross } from 'app/icons/IconsDs';
 import { useGlobalPersistedStore } from 'app/stores/globalStore';
@@ -11,7 +12,6 @@ import { Button } from 'designSystem/Buttons/Buttons';
 import { Flex } from 'designSystem/Layouts/Layouts';
 import { Text } from 'designSystem/Texts/Texts';
 
-import { usePaymentHook } from './payments/paymentHook';
 import { usePaymentList } from './payments/usePaymentList';
 
 export enum StatusPayment {
@@ -39,7 +39,7 @@ export default function PaymentItem({ paymentTicketRequest, status }: Props) {
     state => state
   );
 
-  const { deletePayment } = usePaymentHook();
+  const { deletePayment } = usePaymentUtils();
 
   if (status === undefined) {
     status = StatusPayment.Waiting;

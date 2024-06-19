@@ -2,11 +2,10 @@ import { useEffect, useState } from 'react';
 import { CartItem } from '@interface/product';
 import { ValidatePromoCodeRequest } from '@interface/wallet';
 import Notification from 'app/(dashboard)/dashboard/components/ui/Notification';
-import { usePromoUserHook } from 'app/(dashboard)/dashboard/hooks/usePromoUserHook';
+import { usePromoUser } from 'app/hooks/usePromoUser';
 import { SvgSpinner } from 'app/icons/Icons';
 import {
   useGlobalPersistedStore,
-  useGlobalStore,
   useSessionStore,
 } from 'app/stores/globalStore';
 import { Button } from 'designSystem/Buttons/Buttons';
@@ -42,7 +41,7 @@ export default function ProductDiscountForm({
   const addItemToCart = useCartStore(state => state.addItemToCart);
   const cart = useCartStore(state => state.cart);
 
-  const { validatePromoCode } = usePromoUserHook();
+  const { validatePromoCode } = usePromoUser();
   const [messageNotification, setMessageNotification] = useState<string | null>(
     null
   );

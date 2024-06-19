@@ -9,6 +9,7 @@ import CheckoutTotal from 'app/(dashboard)/dashboard/components/checkout/Checkou
 import ProductCard from 'app/(dashboard)/dashboard/components/checkout/ProductCard';
 import App from 'app/(web)/components/layout/App';
 import MainLayout from 'app/(web)/components/layout/MainLayout';
+import { usePromoUser } from 'app/hooks/usePromoUser';
 import { SvgSpinner } from 'app/icons/Icons';
 import { SvgBag } from 'app/icons/IconsDs';
 import {
@@ -21,7 +22,6 @@ import { Button } from 'designSystem/Buttons/Buttons';
 import { Flex } from 'designSystem/Layouts/Layouts';
 import { useRouter } from 'next/navigation';
 
-import { usePromoUserHook } from '../../hooks/usePromoUserHook';
 import { useCartStore } from '../budgets/stores/userCartStore';
 import PepperWidget from './components/payment/paymentMethods/PepperWidget';
 import { PaymentModule } from './components/payment/Payments';
@@ -49,7 +49,7 @@ const Page = () => {
   const router = useRouter();
   const { setTreatmentPacks } = useSessionStore(state => state);
 
-  const { fetchWalletBalance } = usePromoUserHook();
+  const { fetchWalletBalance } = usePromoUser();
 
   useEffect(() => {
     if (storedBudgetId && totalPriceInitial != totalPriceToShow) {

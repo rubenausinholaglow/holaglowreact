@@ -13,6 +13,7 @@ import UserService from '@services/UserService';
 import { useCartStore } from 'app/(dashboard)/dashboard/(pages)/budgets/stores/userCartStore';
 import TextInputField from 'app/(dashboard)/dashboard/components/TextInputField';
 import Notification from 'app/(dashboard)/dashboard/components/ui/Notification';
+import { usePaymentUtils } from 'app/hooks/usePaymentUtils';
 import { SvgClose, SvgSpinner } from 'app/icons/Icons';
 import { SvgArrow } from 'app/icons/IconsDs';
 import {
@@ -38,7 +39,6 @@ import { isEmpty } from 'lodash';
 import { twMerge } from 'tailwind-merge';
 
 import ProductDiscountForm from '../../ProductDiscountForm';
-import { usePaymentHook } from '../payments/paymentHook';
 import { usePaymentList } from '../payments/usePaymentList';
 import AlmaWidget from './AlmaWidget';
 import PepperWidget from './PepperWidget';
@@ -71,7 +71,7 @@ export default function PaymentInput(props: Props) {
   const { remoteControl, storedBudgetId, setCurrentUser, user } =
     useGlobalPersistedStore(state => state);
   const { walletClient } = useSessionStore(state => state);
-  const { createPayment } = usePaymentHook();
+  const { createPayment } = usePaymentUtils();
 
   const [errorMessage, setErrorMessage] = useState<string | undefined>(
     undefined
