@@ -127,13 +127,13 @@ export function ProfessionalDashboardCarousel() {
             </div>
 
             <div className="p-6 bg-derma-secondary300">
-              <Title className="text-hg-secondary font-light font-gtUltra text-xl mb-4">
+              <Title className="text-hg-secondary font-light font-gtUltra text-xl mb-4 text-left">
                 Más sobre {professional.name}
               </Title>
 
               <ul className="flex flex-col gap-4">
                 {professional.experience.map((experience: any) => (
-                  <li key={experience} className="flex justify-start">
+                  <li key={experience} className="flex justify-start text-left">
                     <SvgAdd className="shrink-0 mr-2 h-5 w-5 text-hg-black400" />
                     <div>{experience}</div>
                   </li>
@@ -142,7 +142,7 @@ export function ProfessionalDashboardCarousel() {
             </div>
 
             <div className="p-6">
-              <Title className="text-hg-secondary font-light font-gtUltra text-xl mb-4">
+              <Title className="text-hg-secondary font-light font-gtUltra text-xl mb-4 text-left">
                 Resultados
               </Title>
 

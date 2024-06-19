@@ -10,8 +10,6 @@ export default function ProductImagesCarousel({
 }: {
   product: Product;
 }) {
-  console.log(product.beforeAndAfterImages);
-
   return (
     <Flex className="w-full md:gap-16 items-start">
       <Carousel
