@@ -159,6 +159,7 @@ export default function Carousel({
             classNameTray={sliderStyles}
             verticalPixelThreshold={1000}
             preventVerticalScrollOnTouch={true}
+            classNameAnimation="customCarouselAnimation"
           >
             {childrens.map((children, i) => (
               <Slide index={i} key={i}>

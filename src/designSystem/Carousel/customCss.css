@@ -14,3 +14,9 @@
   color: theme('colors.hg.secondary');
   transform: scale(150%);
 }
+
+.customCarouselAnimation {
+  transition: transform 250ms;
+  transition-timing-function: ease-in-out;
+  will-change: transform;
+}
