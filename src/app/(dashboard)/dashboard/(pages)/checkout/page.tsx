@@ -9,6 +9,7 @@ import CheckoutTotal from 'app/(dashboard)/dashboard/components/checkout/Checkou
 import ProductCard from 'app/(dashboard)/dashboard/components/checkout/ProductCard';
 import App from 'app/(web)/components/layout/App';
 import MainLayout from 'app/(web)/components/layout/MainLayout';
+import { usePromoUser } from 'app/hooks/usePromoUser';
 import { SvgSpinner } from 'app/icons/Icons';
 import { SvgBag } from 'app/icons/IconsDs';
 import {
@@ -48,6 +49,8 @@ const Page = () => {
   const router = useRouter();
   const { setTreatmentPacks } = useSessionStore(state => state);
 
+  const { fetchWalletBalance } = usePromoUser();
+
   useEffect(() => {
     if (storedBudgetId && totalPriceInitial != totalPriceToShow) {
       setBudgetModified(true);
@@ -72,9 +75,9 @@ const Page = () => {
         user?.flowwwToken.substring(0, user?.flowwwToken.length - 32) || '',
       discountAmount: '',
       FlowwwId: '',
-      priceDiscount: Number(priceDiscount.toFixed(2)),
+      priceDiscount: Number(priceDiscount > 0 ? priceDiscount.toFixed(2) : 0),
       percentageDiscount: percentageDiscount / 100,
-      manualPrice: Number(manualPrice.toFixed(2)),
+      manualPrice: Number(manualPrice) > 0 ? Number(manualPrice.toFixed(2)) : 0,
       totalPrice: Number(totalPrice.toFixed(2)),
       totalPriceWithIva: Number(totalPrice.toFixed(2)),
       clinicInfoId: storedClinicId,
@@ -89,6 +92,7 @@ const Page = () => {
       })),
     };
     try {
+      fetchWalletBalance(user!.id);
       if (storedBudgetId.length > 0) {
         setBudgetModified(false);
         budget.id = storedBudgetId;

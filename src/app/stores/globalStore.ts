@@ -1,5 +1,6 @@
 import { LoginResponse } from '@interface/Login';
 import { PaymentBank, PaymentInitResponse } from '@interface/payment';
+import { PromoCodeResponse, Wallet } from '@interface/wallet';
 import { INITIAL_FILTERS } from 'app/(web)/tratamientos/utils/filters';
 import { Appointment, User, UserCheckin } from 'app/types/appointment';
 import { Post } from 'app/types/blog';
@@ -46,6 +47,8 @@ interface SessionStore {
   dermaPhone: string;
   treatmentPacks: PackUnitiesScheduled[];
   isCallMeTriggered: boolean;
+  promoCode : PromoCodeResponse | undefined;
+  walletClient: Wallet | undefined;
 }
 interface SessionActions {
   setAnalyticsMetrics: (analyticsMetrics: AnalyticsMetrics) => void;
@@ -66,6 +69,8 @@ interface SessionActions {
   setDermaPhone: (phone: string) => void;
   setTreatmentPacks: (treatment: PackUnitiesScheduled[]) => void;
   setIsCallMeTriggered: (value: boolean) => void;
+  setPromoCode: (value?: PromoCodeResponse) => void;
+  setWalletClient: (value?: Wallet) => void;
 }
 
 interface GlobalPersistStore {
@@ -89,6 +94,7 @@ interface GlobalPersistStore {
   activePayment: PaymentBank;
   isCallCenter: boolean;
   extraInfo: boolean;
+  advancedPaymentProduct : Product | undefined;
 }
 
 interface GlobalPersistActions {
@@ -112,6 +118,7 @@ interface GlobalPersistActions {
   setActivePayment: (value?: PaymentBank) => void;
   setIsCallCenter: (value?: boolean) => void;
   setExtraInfo: (value?: boolean) => void;
+  setAdvancedPaymentProduct: (value?: Product) => void;
 }
 
 export const useSessionStore = create(
@@ -154,6 +161,8 @@ export const useSessionStore = create(
       dermaPhone: '',
       treatmentPacks: [],
       isCallMeTriggered: false,
+      promoCode: undefined,
+      walletClient: undefined,
       setAppointmentUrl: value => {
         set({ appointmentUrl: value });
       },
@@ -208,7 +217,14 @@ export const useSessionStore = create(
       setIsCallMeTriggered: value => {
         set({ isCallMeTriggered: value });
       },
+      setPromoCode: value => {
+        set({ promoCode: value });
+      },
+      setWalletClient: value => {
+        set({ walletClient: value });
+      },
     }),
+  
     {
       name: 'session-storage',
       version: 30,
@@ -227,6 +243,8 @@ export const useGlobalPersistedStore = create(
       dashboardProducts: [],
       clinics: [],
       user: undefined,
+      promoProduct : undefined,
+      advancedPaymentProduct : undefined,
       setStateProducts: (value: Product[]) => {
         set({ stateProducts: value });
       },
@@ -300,6 +318,9 @@ export const useGlobalPersistedStore = create(
       setExtraInfo: value => {
         set({ extraInfo: value });
       },
+      setAdvancedPaymentProduct : value => {
+        set({advancedPaymentProduct : value})
+      }
     }),
     {
       name: 'global-storage',

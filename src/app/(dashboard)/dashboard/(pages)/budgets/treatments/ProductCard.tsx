@@ -170,7 +170,6 @@ export default function ProductCard({ product, isCheckout }: Props) {
           <>
             <ProductDiscountForm
               cartUniqueId={product.uniqueId}
-              productPrice={product.price}
               isCheckout={false}
             />
           </>

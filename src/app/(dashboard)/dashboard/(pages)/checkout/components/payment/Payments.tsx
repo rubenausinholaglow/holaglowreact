@@ -7,9 +7,13 @@ import { messageService } from '@services/MessageService';
 import { useCartStore } from 'app/(dashboard)/dashboard/(pages)/budgets/stores/userCartStore';
 import Notification from 'app/(dashboard)/dashboard/components/ui/Notification';
 import { useMessageSocket } from 'app/(dashboard)/dashboard/components/useMessageSocket';
+import { BudgetUserReponse } from 'app/GraphQL/BudgetsQueryResponse';
 import { SvgSpinner } from 'app/icons/Icons';
 import { SvgCheck, SvgRadioChecked, SvgTimer } from 'app/icons/IconsDs';
-import { useGlobalPersistedStore } from 'app/stores/globalStore';
+import {
+  useGlobalPersistedStore,
+  useSessionStore,
+} from 'app/stores/globalStore';
 import { StatusBudget, TicketBudget } from 'app/types/budget';
 import { MessageType } from 'app/types/messageSocket';
 import { Ticket } from 'app/types/ticket';
@@ -27,7 +31,7 @@ import { useRouter } from 'next/navigation';
 
 import PaymentItem, { StatusPayment } from './PaymentItem';
 import PaymentClient from './paymentMethods/PaymentClient';
-import { paymentItems } from './paymentMethods/PaymentItems';
+import { PaymentItems, paymentItems } from './paymentMethods/PaymentItems';
 import PepperWidget from './paymentMethods/PepperWidget';
 import { usePaymentList } from './payments/usePaymentList';
 
@@ -44,7 +48,6 @@ export const PaymentModule = () => {
   const [paymentStatus, setPaymentStatus] = useState<
     Record<string, StatusPayment>
   >({});
-
   const { cart, totalPrice, priceDiscount, percentageDiscount, manualPrice } =
     useCartStore(state => state);
   const paymentList = usePaymentList(state => state.paymentRequest);
@@ -61,7 +64,11 @@ export const PaymentModule = () => {
     storedAppointmentId,
   } = useGlobalPersistedStore(state => state);
 
+  const { promoCode, walletClient } = useSessionStore(state => state);
+
   const { addPaymentToList, removePayment } = usePaymentList();
+
+  const [walletAmount, setWalletAmount] = useState(0);
 
   useEffect(() => {
     const { paymentCreatedMessages, paymentResponseMessages } =
@@ -115,6 +122,12 @@ export const PaymentModule = () => {
       messageSocket.removeMessageSocket(message);
     }
   };
+
+  useEffect(() => {
+    if (walletClient) {
+      setWalletAmount(walletClient.amountBalance);
+    }
+  }, [walletClient, paymentList]);
 
   const createPaymentRequest = (message: any): any => {
     return {
@@ -208,6 +221,8 @@ export const PaymentModule = () => {
       referenceId: '',
       statusBudget: StatusBudget.Open,
       professionalId: storedClinicProfessionalId,
+      user: user ? (user as BudgetUserReponse) : undefined,
+      budgetComments: [],
       products: cart.map(CartItem => ({
         productId: CartItem.id,
         price: CartItem.price,
@@ -219,6 +234,7 @@ export const PaymentModule = () => {
 
     const ticket: Ticket = {
       promoCode: '',
+      promoCodeMGM: promoCode?.code || '',
       reference: '',
       userId: user?.id || '',
       clientFlowwwToken: user?.flowwwToken || '',
@@ -235,6 +251,7 @@ export const PaymentModule = () => {
       })),
       products: cart.map(CartItem => ({
         id: CartItem.id,
+        price: CartItem.price.toString(),
       })),
     };
     try {
@@ -297,6 +314,21 @@ export const PaymentModule = () => {
     frakmentaOnline: ['frakmenta.svg'],
   };
 
+  const renderTextMethod = (method: PaymentItems) => {
+    return (
+      <Text>
+        {method.label}
+        {method.key == 'wallet' && (
+          <>
+            <span className="font-semibold text-hg-secondary">
+              {walletAmount >= 0 ? ': ' + walletAmount + '€' : ''}
+            </span>
+          </>
+        )}
+      </Text>
+    );
+  };
+
   return (
     <>
       {paymentItems.length > 0 && (
@@ -326,7 +358,7 @@ export const PaymentModule = () => {
                     className="shrink-0 hidden group-data-[state=open]:block"
                   />
                   <div className="border border-hg-black h-[24px] w-[24px] rounded-full shrink-0 group-data-[state=open]:hidden"></div>
-                  <Text>{method.label}</Text>
+                  {renderTextMethod(method)}
                   <Flex className="ml-auto gap-2">
                     {PAYMENT_ICONS[method.key as keyof typeof PAYMENT_ICONS] &&
                       PAYMENT_ICONS[

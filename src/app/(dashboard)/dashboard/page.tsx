@@ -2,6 +2,7 @@
 
 import React, { useEffect, useState } from 'react';
 import Bugsnag from '@bugsnag/js';
+import ProductService from '@services/ProductService';
 import ScheduleService from '@services/ScheduleService';
 import UserService from '@services/UserService';
 import * as config from '@utils/textConstants';
@@ -43,8 +44,13 @@ export default function Page({
   const [userEmail, setUserEmail] = useState('');
   const [phoneNumber, setPhoneNumber] = useState('');
   const messageSocket = useMessageSocket(state => state);
-  const { setCurrentUser, setAppointmentId, setBudgetId } =
-    useGlobalPersistedStore(state => state);
+  const {
+    setCurrentUser,
+    setAppointmentId,
+    setBudgetId,
+    advancedPaymentProduct,
+    setAdvancedPaymentProduct,
+  } = useGlobalPersistedStore(state => state);
   const { setSelectedTreatments, setSelectedClinic, setSelectedPack } =
     useSessionStore(state => state);
   const {
@@ -152,7 +158,20 @@ export default function Page({
     setExtraInfo(params.get('extraInfo') == 'true');
     const phone = params.get('phoneNumber') || '';
     setPhoneNumber(phone.length > 9 ? phone.slice(3, phone.length) : phone);
+    getInitalProductsDashboard();
   }, []);
+
+  async function getInitalProductsDashboard() {
+    if (advancedPaymentProduct == undefined) {
+      const product = await ProductService.getProduct(
+        process.env.NEXT_PUBLIC_CITA_PREVIA_ID!,
+        true,
+        false
+      );
+      product.price = Number(product.price) * -1;
+      setAdvancedPaymentProduct(product);
+    }
+  }
 
   useEffect(() => {
     if (!isEmpty(phoneNumber)) {
@@ -175,7 +194,6 @@ export default function Page({
             setClinicId(data.clinic.id);
             setClinicFlowwwId(data.clinic.flowwwId);
             setClinicProfessionalId(data.clinicProfessional.id);
-
             if (name == '') {
               name = data.lead.user.firstName;
               id = data.lead.user.id;
@@ -263,7 +281,6 @@ export default function Page({
             setClinicFlowwwId(data.clinicFlowwwId);
             setClinicProfessionalId(data.clinicProfessionalId);
             setSelectedClinic(getClinicToSet(clinics, data.clinicId));
-
             if (name == '') {
               name = data.firstName;
               id = data.userId;

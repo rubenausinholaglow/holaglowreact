@@ -1,6 +1,13 @@
 import { PaymentBank, PaymentMethod } from 'app/types/payment';
 
-export const paymentItems = [
+export interface PaymentItems {
+  key: string;
+  label: string;
+  paymentBank: PaymentBank;
+  paymentMethod: PaymentMethod;
+}
+
+export const paymentItems: PaymentItems[] = [
   {
     key: 'alma',
     label: 'Financiación Alma',
@@ -37,11 +44,17 @@ export const paymentItems = [
     paymentBank: PaymentBank.Stripe,
     paymentMethod: PaymentMethod.CreditCard,
   },
-    {
+  {
     key: 'frakmentaOnline',
     label: 'Frakmenta (Offline)',
     paymentBank: PaymentBank.Frakmenta,
     paymentMethod: PaymentMethod.CreditCard,
+  },
+  {
+    key: 'wallet',
+    label: 'Saldo Monedero',
+    paymentBank: PaymentBank.Points,
+    paymentMethod: PaymentMethod.Wallet,
   },
 ];
 

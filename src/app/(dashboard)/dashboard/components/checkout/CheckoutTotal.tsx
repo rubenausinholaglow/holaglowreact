@@ -12,7 +12,6 @@ import { Text } from 'designSystem/Texts/Texts';
 export default function CheckoutTotal() {
   const {
     cart,
-    totalPrice,
     priceDiscount,
     percentageDiscount,
     manualPrice,
@@ -31,7 +30,6 @@ export default function CheckoutTotal() {
       0
     );
   }
-
   const hasProductsDiscount =
     productsPriceTotal !== productsPriceTotalWithDiscounts;
 
@@ -89,7 +87,7 @@ export default function CheckoutTotal() {
       </Flex>
       {showCartDiscount && (
         <Flex layout="col-left" className="bg-hg-black100 p-4 gap-2">
-          <ProductDiscountForm isCheckout={true} productPrice={totalPrice} />
+          <ProductDiscountForm isCheckout={true} />
           {hasCartDiscount && (
             <Flex layout="row-left">
               {manualPrice > 0 && (

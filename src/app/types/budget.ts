@@ -35,6 +35,7 @@ export interface BudgetProduct {
   percentageDiscount: number;
   product?: Product;
 }
+
 export interface BudgetCommentsReponse {
   comment: string;
   id: string;
