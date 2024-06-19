@@ -38,6 +38,7 @@ import { Text } from 'designSystem/Texts/Texts';
 import { isEmpty } from 'lodash';
 import { useRouter } from 'next/navigation';
 
+import ProductDiscountForm from './(pages)/checkout/components/ProductDiscountForm';
 import { useCrisalix } from './(pages)/crisalix/useCrisalix';
 
 dayjs.extend(utc);
@@ -741,7 +742,14 @@ const AppointmentsListComponent: React.FC<{
       ) : (
         <></>
       )}
-      <div></div>
+      <div>
+        {' '}
+        <ProductDiscountForm
+          isCheckout={true}
+          showPercentage={false}
+          enableMGM={true}
+        />
+      </div>
     </div>
   );
 };
