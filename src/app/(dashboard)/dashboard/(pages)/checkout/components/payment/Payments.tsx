@@ -7,6 +7,7 @@ import { messageService } from '@services/MessageService';
 import { useCartStore } from 'app/(dashboard)/dashboard/(pages)/budgets/stores/userCartStore';
 import Notification from 'app/(dashboard)/dashboard/components/ui/Notification';
 import { useMessageSocket } from 'app/(dashboard)/dashboard/components/useMessageSocket';
+import { BudgetUserReponse } from 'app/GraphQL/BudgetsQueryResponse';
 import { SvgSpinner } from 'app/icons/Icons';
 import { SvgCheck, SvgRadioChecked, SvgTimer } from 'app/icons/IconsDs';
 import {
@@ -220,7 +221,7 @@ export const PaymentModule = () => {
       referenceId: '',
       statusBudget: StatusBudget.Open,
       professionalId: storedClinicProfessionalId,
-      user: user ? user : undefined,
+      user: user ? (user as BudgetUserReponse) : undefined,
       budgetComments: [],
       products: cart.map(CartItem => ({
         productId: CartItem.id,
