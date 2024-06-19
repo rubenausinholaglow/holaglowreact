@@ -238,11 +238,12 @@ const RegistrationForm: React.FC<RegistrationFormProps> = ({
   };
 
   const handleRegistration = async () => {
+    const createAppointment = hasContinueButton;
     const user = await registerUser(
       formData,
       isDashboard,
       redirect,
-      true,
+      createAppointment,
       isDerma
     );
     if (!user) {
