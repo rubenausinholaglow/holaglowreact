@@ -2,6 +2,7 @@ import {
   budgetTotalPriceWithDiscount,
   getProductPrice,
 } from '@utils/budgetUtils';
+
 import { BudgetsResponseNode } from '../BudgetsQueryResponse';
 import { TaskResponseNode } from '../TaskQueryResponse';
 import { UsersResponseNode } from '../UserQueryResponse';
@@ -19,7 +20,7 @@ export const mapBudgetsData = (
         budget.user.secondLastName;
       const services = concatenateProductName(budget.products);
 
-      var total = 0;
+      let total = 0;
       budget.products.forEach(x => {
         total += getProductPrice({
           percentageDiscount: x.percentageDiscount,

@@ -147,7 +147,6 @@ export default function TableBudgets() {
     numberPerPage?: number,
     sortedBy?: string
   ) => {
-    debugger;
     if (!nextPage) {
       setCursors(prev => prev.slice(0, -1));
     }
@@ -197,8 +196,8 @@ export default function TableBudgets() {
           </Button>
           <Button
             type="primary"
-            customStyles="bg-hg-black500 mr-4"
-            className={filterStatus !== 'Open' ? 'opacity-30' : ''}
+            customStyles="bg-hg-tertiary mr-4"
+            className={filterStatus !== 'Contacted' ? 'opacity-30' : ''}
             onClick={() => {
               if (filterStatus == 'Contacted') setFilterStatus('');
               else setFilterStatus('Contacted');

@@ -4,6 +4,10 @@ import TextArea from '@dashboardComponents/ui/TextArea';
 import { Budget, BudgetProduct } from '@interface/budget';
 import { Accordion } from '@radix-ui/react-accordion';
 import { budgetService } from '@services/BudgetService';
+import {
+  budgetTotalPriceWithDiscount,
+  getProductPrice,
+} from '@utils/budgetUtils';
 import FullScreenLoading from 'app/(web)/components/common/FullScreenLayout';
 import ContainerCRM from 'app/crm/components/layout/ContainerCRM';
 import MainLayoutCRM from 'app/crm/components/layout/MainLayoutCRM';
@@ -18,10 +22,6 @@ import {
 import { Button } from 'designSystem/Buttons/Buttons';
 import { Flex } from 'designSystem/Layouts/Layouts';
 import { Text } from 'designSystem/Texts/Texts';
-import {
-  budgetTotalPriceWithDiscount,
-  getProductPrice,
-} from '@utils/budgetUtils';
 
 interface BudgetDetailsProps {
   params: { id: string };
@@ -39,7 +39,7 @@ export default function BudgetDetailPage({ params }: BudgetDetailsProps) {
     setBudgetDetail(undefined);
     budgetService.getBudget(params.id).then(x => {
       if (x) {
-        var total = 0;
+        let total = 0;
         x.products.forEach(x => {
           total += getProductPrice(x);
         });
@@ -86,6 +86,9 @@ export default function BudgetDetailPage({ params }: BudgetDetailsProps) {
     } else {
       await budgetService.addComment(budgetDetail!.id!, comment);
     }
+    if (budgetDetail?.statusBudget == 1) {
+      await setBudgetStatus('4');
+    }
     getBudget();
     setComment('');
     setCommentId('');
@@ -100,13 +103,7 @@ export default function BudgetDetailPage({ params }: BudgetDetailsProps) {
           ) : (
             <>
               <Flex className="w-full gap-2 p-4">
-                <Button
-                  type="primary"
-                  customStyles="bg-hg-black mr-auto"
-                  className={
-                    budgetDetail.statusBudget !== 1 ? 'opacity-30' : ''
-                  }
-                >
+                <Button type="primary" customStyles="bg-hg-black mr-auto">
                   <a
                     target="_blank"
                     href={
@@ -118,10 +115,21 @@ export default function BudgetDetailPage({ params }: BudgetDetailsProps) {
                     PDF
                   </a>
                 </Button>
+                <Button type="primary" customStyles="bg-hg-black mr-auto">
+                  <a
+                    target="_blank"
+                    href={
+                      'https://www.holaglow.com/dashboard?isCallCenter=true&ignoreMessages=true&phoneNumber=+34' +
+                      budgetDetail.user?.phone
+                    }
+                  >
+                    Crear Presupuesto
+                  </a>
+                </Button>
                 <Flex className="w-full justify-end">
                   <Button
                     type="primary"
-                    customStyles="bg-hg-black500"
+                    customStyles="bg-hg-black500 mr-2"
                     className={
                       budgetDetail.statusBudget !== 1 ? 'opacity-30' : ''
                     }
@@ -133,7 +141,19 @@ export default function BudgetDetailPage({ params }: BudgetDetailsProps) {
                   </Button>
                   <Button
                     type="primary"
-                    customStyles="bg-hg-error"
+                    customStyles="bg-hg-tertiary mr-2"
+                    className={
+                      budgetDetail.statusBudget !== 6 ? 'opacity-30' : ''
+                    }
+                    onClick={() => {
+                      setBudgetStatus('6');
+                    }}
+                  >
+                    En seguimiento
+                  </Button>
+                  <Button
+                    type="primary"
+                    customStyles="bg-hg-error mr-2"
                     className={
                       budgetDetail.statusBudget !== 3 ? 'opacity-30' : ''
                     }
@@ -145,7 +165,7 @@ export default function BudgetDetailPage({ params }: BudgetDetailsProps) {
                   </Button>
                   <Button
                     type="primary"
-                    customStyles="bg-hg-green"
+                    customStyles="bg-hg-green mr-2"
                     className={
                       budgetDetail.statusBudget !== 4 ? 'opacity-30' : ''
                     }

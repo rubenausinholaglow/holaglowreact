@@ -69,7 +69,6 @@ const DataTable: React.FC<DataTableProps> = ({
   };
 
   const handleOnFilterChange = async (e: any) => {
-    debugger;
     setIsLoading(true);
     setFilterText(e.target.value);
     setCurrentPage(1);

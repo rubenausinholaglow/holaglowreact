@@ -16,7 +16,6 @@ export class GraphQLQueryBuilder {
     sortedBy?: string,
     filterValue?: string
   ): string {
-    debugger;
     let fieldsString: string;
     let fieldNames: string[];
 
