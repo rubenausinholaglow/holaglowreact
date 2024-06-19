@@ -362,18 +362,60 @@ export default function Page({
     setErrors(errors);
   };
 
-  return <App>Test crash</App>;
-
   if (remoteControl)
     return (
-      <App>
-        <MainLayout isDashboard hideBottomBar>
-          <div className="px-4 w-full max-h-[85%] overflow-y-auto">
-            <AppointmentsListComponent
-              clinicId={storedClinicId}
-              boxId={storedBoxId}
+      <MainLayout isDashboard hideBottomBar>
+        <div className="px-4 w-full max-h-[85%] overflow-y-auto">
+          <AppointmentsListComponent
+            clinicId={storedClinicId}
+            boxId={storedBoxId}
+          />
+        </div>
+        <div className="mt-8">
+          {showRegistration ? (
+            <RegistrationForm
+              formData={formData}
+              handleFieldChange={handleFormFieldChange}
+              handleContinue={handleContinue}
+              errors={errors}
+              isLoading={isLoading}
+              isDerma={false}
             />
-          </div>
+          ) : (
+            <SearchUser
+              email={userEmail}
+              handleFieldChange={handleFieldEmailChange}
+              handleCheckUser={handleCheckUser}
+              errors={errors}
+              isLoading={isLoading}
+            />
+          )}
+          {isLoadingUser && <SvgSpinner />}
+        </div>
+      </MainLayout>
+    );
+
+  if (!remoteControl)
+    return (
+      <MainLayout
+        isDashboard
+        hideBottomBar
+        hasAnimatedBackground={!showRegistration}
+      >
+        <div className="fixed bottom-0 right-0 py-3 px-3">
+          <Button
+            onClick={e => {
+              setShowForm(!showForm);
+              setErrors([]);
+            }}
+            type="white"
+            size="sm"
+            className=""
+          >
+            Búsqueda Manual
+          </Button>
+        </div>
+        {showForm && (
           <div className="mt-8">
             {showRegistration ? (
               <RegistrationForm
@@ -393,62 +435,14 @@ export default function Page({
                 isLoading={isLoading}
               />
             )}
-            {isLoadingUser && <SvgSpinner />}
           </div>
-        </MainLayout>
-      </App>
-    );
-
-  if (!remoteControl)
-    return (
-      <App>
-        <MainLayout
-          isDashboard
-          hideBottomBar
-          hasAnimatedBackground={!showRegistration}
-        >
-          <div className="fixed bottom-0 right-0 py-3 px-3">
-            <Button
-              onClick={e => {
-                setShowForm(!showForm);
-                setErrors([]);
-              }}
-              type="white"
-              size="sm"
-              className=""
-            >
-              Búsqueda Manual
-            </Button>
-          </div>
-          {showForm && (
-            <div className="mt-8">
-              {showRegistration ? (
-                <RegistrationForm
-                  formData={formData}
-                  handleFieldChange={handleFormFieldChange}
-                  handleContinue={handleContinue}
-                  errors={errors}
-                  isLoading={isLoading}
-                  isDerma={false}
-                />
-              ) : (
-                <SearchUser
-                  email={userEmail}
-                  handleFieldChange={handleFieldEmailChange}
-                  handleCheckUser={handleCheckUser}
-                  errors={errors}
-                  isLoading={isLoading}
-                />
-              )}
-            </div>
-          )}
-          {isLoadingUser && <SvgSpinner />}
-          {errors.includes(config.ERROR_AUTHENTICATION) && (
-            <p className="text-red-500 text-left text-sm ml-2 mt-2">
-              {config.ERROR_AUTHENTICATION}
-            </p>
-          )}
-        </MainLayout>
-      </App>
+        )}
+        {isLoadingUser && <SvgSpinner />}
+        {errors.includes(config.ERROR_AUTHENTICATION) && (
+          <p className="text-red-500 text-left text-sm ml-2 mt-2">
+            {config.ERROR_AUTHENTICATION}
+          </p>
+        )}
+      </MainLayout>
     );
 }
