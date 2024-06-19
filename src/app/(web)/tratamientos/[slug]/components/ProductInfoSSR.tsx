@@ -75,7 +75,8 @@ const CONFIG: PropsProductConfig[] = [
     configProduct: [
       {
         title: 'Pack Lifting',
-        description: 'Consigue un rostro firme, terso y rejuvenecido',
+        description:
+          'En este tratamiento utilizamos un vial de hidroxiapatita cálcica (marca Radiesse). De esta forma conseguimos mejorar la firmeza de la piel al estimular la producción de colágeno, logrando un efecto lifting progresivo y duradero. Es ideal para quienes buscan una solución eficaz y rápida para combatir la flacidez facial.',
         products: '1 vial de hidroxiapatita cálcica',
         duration: '30 minutos',
         price: 'desde 399 €',
@@ -83,7 +84,7 @@ const CONFIG: PropsProductConfig[] = [
       {
         title: 'Pack Lifting Esencial',
         description:
-          'Rejuvenece el rostro combatiendo la flacidez con nuestro Pack Lifting y consigue un resultado natural.',
+          'Combina un vial de Radiesse con dos viales de ácido hialurónico. Esta opción no solo proporciona firmeza sino también volumen, mejorando la estructura facial de manera integral. La combinación de estos productos permite un rejuvenecimiento facial más completo, con resultados naturales y armónicos.',
         products:
           '1 vial de hidroxiapatita cálcica + 2 viales de ácido hialurónico',
         duration: '45 minutos',
@@ -91,7 +92,8 @@ const CONFIG: PropsProductConfig[] = [
       },
       {
         title: 'Pack Lifting Plus',
-        description: 'Consigue un rostro firme, terso y rejuvenecido',
+        description:
+          'Nuestra opción más avanzada. Incluye dos viales de HarmonyCa, una mezcla de hidroxiapatita cálcica y ácido hialurónico. Utilizamos una técnica específica de aplicación en "L" para maximizar los efectos de firmeza y volumen. Este tratamiento es perfecto para quienes desean un rejuvenecimiento facial profundo con un efecto lifting visible y duradero.',
         products: '2 viales de Harmonyca',
         duration: '30 minutos',
         price: 'desde 949 €',
