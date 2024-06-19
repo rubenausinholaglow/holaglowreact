@@ -93,16 +93,21 @@ export default function ProductDiscountForm({
       userId: user?.id || '',
     };
 
-    await validatePromoCode(promoRequest).then(response => {
-      if (response.code != undefined) {
-        setPromoCode(response);
-        setIsValidPromoCode(true);
-      } else {
-        setIsValidPromoCode(false);
-        setMessageNotification(response.errorMessage!);
-      }
-      setIsLoading(false);
-    });
+    await validatePromoCode(promoRequest)
+      .then(response => {
+        if (response.code != undefined) {
+          setPromoCode(response);
+          setIsValidPromoCode(true);
+        } else {
+          setIsValidPromoCode(false);
+          setMessageNotification(response.errorMessage!);
+        }
+        setIsLoading(false);
+      })
+      .catch(response => {
+        setMessageNotification(response!);
+        setIsLoading(false);
+      });
   };
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
