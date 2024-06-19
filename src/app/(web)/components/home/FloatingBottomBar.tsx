@@ -31,7 +31,6 @@ import {
 } from 'designSystem/Dialog/Dialog';
 import { Flex } from 'designSystem/Layouts/Layouts';
 import { Text } from 'designSystem/Texts/Texts';
-import { set } from 'lodash';
 import Image from 'next/image';
 import { twMerge } from 'tailwind-merge';
 
@@ -76,6 +75,7 @@ export default function FloatingBottomBar({
     phonePrefix: '',
     termsAndConditionsAccepted: false,
   });
+
   const [showPhoneError, setShowPhoneError] = useState<null | boolean>(null);
 
   let url =
@@ -178,6 +178,7 @@ export default function FloatingBottomBar({
                   size="lg"
                   type="primary"
                   className="mr-4 pointer-events-auto"
+                  id="tmevent_click_floating_button_callme"
                 >
                   <SvgCalling className="h-5 w-5 mr-4" />
                   Te llamamos
@@ -255,7 +256,6 @@ export default function FloatingBottomBar({
                               14h y de 15 a 19h
                             </Text>
                           </div>
-
                           <div className="relative w-full mb-3">
                             <PhoneInput
                               disableDialCodeAndPrefix
@@ -274,7 +274,6 @@ export default function FloatingBottomBar({
                                   `+${country.country.dialCode}`,
                                   'phonePrefix'
                                 );
-
                                 phone.length ===
                                 country.country.dialCode.length + 1
                                   ? setShowPhoneError(null)
@@ -344,13 +343,14 @@ export default function FloatingBottomBar({
                               </label>
                             </Flex>
                           </div>
+
                           <Flex
                             layout="row-center"
                             className="w-full md:justify-start"
                           >
                             <Button
                               type={
-                                formData.phone &&
+                                formData.phone !== formData.phonePrefix &&
                                 !showPhoneError &&
                                 formData.termsAndConditionsAccepted
                                   ? 'primary'
@@ -359,7 +359,7 @@ export default function FloatingBottomBar({
                               size={isMobile ? 'lg' : 'md'}
                               onClick={() => handleCallMe()}
                               className={
-                                formData.phone &&
+                                formData.phone !== formData.phonePrefix &&
                                 !showPhoneError &&
                                 formData.termsAndConditionsAccepted
                                   ? ''

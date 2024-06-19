@@ -1,4 +1,11 @@
 import { User } from './appointment';
+
+import {
+  BudgetProfessionalReponse,
+  BudgetUserReponse,
+} from 'app/GraphQL/BudgetsQueryResponse';
+
+
 import { Product } from './product';
 
 export interface Budget {
@@ -16,9 +23,11 @@ export interface Budget {
   referenceId: string;
   professionalId: string;
   manualPrice: number;
-  user?: User;
-  budgetComments? : string[] 
+  creationDate?: Date;
   products: BudgetProduct[];
+  user?: BudgetUserReponse;
+  professional?: BudgetProfessionalReponse;
+  budgetComments?: BudgetCommentsReponse[];
 }
 
 export interface BudgetProduct {
@@ -28,6 +37,12 @@ export interface BudgetProduct {
   priceDiscount: number;
   percentageDiscount: number;
   product?: Product;
+}
+
+export interface BudgetCommentsReponse {
+  comment: string;
+  id: string;
+  creationDate: Date;
 }
 
 export interface TicketBudget extends Budget {

@@ -54,6 +54,7 @@ export interface RegistrationFormProps {
   splitSurnames?: boolean;
   showBirthday?: boolean;
   isDerma: boolean;
+  hideCheckboxes?: boolean;
 }
 
 export interface CheckboxProps {

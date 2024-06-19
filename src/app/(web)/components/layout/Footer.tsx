@@ -2,7 +2,7 @@
 
 import { isMobile } from 'react-device-detect';
 import { SvgHolaglow } from 'app/icons/IconsDs';
-import { SvgInstagram } from 'app/icons/socialIcons';
+import { SvgInstagram, SvgTikTok } from 'app/icons/socialIcons';
 import {
   useGlobalPersistedStore,
   useSessionStore,
@@ -12,21 +12,15 @@ import SimpleAccordion from 'designSystem/Accordion/SimpleAccordion';
 import { Button } from 'designSystem/Buttons/Buttons';
 import { Container, Flex } from 'designSystem/Layouts/Layouts';
 import { Text } from 'designSystem/Texts/Texts';
-import { usePathname } from 'next/navigation';
 
 export function Footer() {
   const ROUTES = useRoutes();
 
   const { clinics } = useGlobalPersistedStore(state => state);
   const { setSelectedTreatments } = useSessionStore(state => state);
-  const isHome = usePathname() === '/';
 
   return (
-    <Container
-      className={`${
-        isHome ? 'pb-28' : 'pb-12'
-      } pt-12 md:pt-16 md:pb-16 px-0 md:px-4`}
-    >
+    <Container className="pb-20 pt-12 md:pt-16 px-0 md:px-4">
       <Flex layout="col-left" className="gap-12 md:flex-row">
         <Flex
           layout="col-left"
@@ -60,12 +54,20 @@ export function Footer() {
             <br />
             <a href="tel:+34 682 417 208">(+34) 682 417 208</a>
           </Text>
-          <Flex layout="row-center" className="w-full justify-between">
+          <Flex layout="row-center" className="w-full justify-start gap-2">
             <a
               href="https://www.instagram.com/holaglow.clinics/"
+              target="_blank"
               id={'tmevent_footer'}
             >
               <SvgInstagram height={24} width={24} />
+            </a>
+            <a
+              href="https://www.tiktok.com/@holaglow.clinics"
+              target="_blank"
+              id={'tmevent_footer'}
+            >
+              <SvgTikTok height={24} width={24} />
             </a>
           </Flex>
         </Flex>

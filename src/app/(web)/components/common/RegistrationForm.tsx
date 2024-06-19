@@ -6,6 +6,8 @@ import 'app/(web)/checkout/contactform/phoneInputStyle.css';
 import { Dispatch, SetStateAction, useEffect, useState } from 'react';
 import { PhoneInput } from 'react-international-phone';
 import TextArea from '@dashboardComponents/ui/TextArea';
+import ScheduleService from '@services/ScheduleService';
+import ROUTES from '@utils/routes';
 import * as errorsConfig from '@utils/textConstants';
 import useRoutes from '@utils/useRoutes';
 import { useRegistration, validFormData } from '@utils/userUtils';
@@ -17,6 +19,7 @@ import {
   SvgCheckSquareActive,
   SvgCross,
 } from 'app/icons/IconsDs';
+import { useSessionStore } from 'app/stores/globalStore';
 import { Client } from 'app/types/client';
 import { Button } from 'designSystem/Buttons/Buttons';
 import { Flex } from 'designSystem/Layouts/Layouts';
@@ -46,6 +49,7 @@ const RegistrationForm: React.FC<RegistrationFormProps> = ({
   className = '',
   splitSurnames = false,
   showBirthday = false,
+  hideCheckboxes = false,
   isDerma,
 }: {
   redirect?: boolean;
@@ -63,13 +67,17 @@ const RegistrationForm: React.FC<RegistrationFormProps> = ({
   className?: string;
   splitSurnames?: boolean;
   showBirthday?: boolean;
+  hideCheckboxes?: boolean;
   isDerma: boolean;
 }) => {
   const routes = useRoutes();
   const router = useRouter();
 
   const [isDisabled, setIsDisabled] = useState(true);
+  const [redirectToReagenda, setRedirectToReagenda] = useState('');
+
   const [isLoading, setIsLoading] = useState(false);
+  const { selectedTreatments } = useSessionStore(state => state);
   const [errors, setErrors] = useState<Array<string>>([]);
   const [showPhoneError, setShowPhoneError] = useState<null | boolean>(null);
   const [showEmailError, setShowEmailError] = useState<null | boolean>(null);
@@ -131,6 +139,15 @@ const RegistrationForm: React.FC<RegistrationFormProps> = ({
   );
 
   useEffect(() => {
+    async function manageHasPreviousPvAppointment() {
+      await ScheduleService.GetPvAppointmentIfExists(formData.phone).then(x => {
+        if (x) {
+          setRedirectToReagenda(x.clientToken!);
+        }
+        setIsDisabled(false);
+        if (setContinueDisabled) setContinueDisabled(false);
+      });
+    }
     if (
       !isEmpty(formData.name) &&
       !isEmpty(formData.surname) &&
@@ -148,8 +165,16 @@ const RegistrationForm: React.FC<RegistrationFormProps> = ({
       !showDniError &&
       !showBirthdayError
     ) {
-      setIsDisabled(false);
-      if (setContinueDisabled) setContinueDisabled(false);
+      const isProbadorVirtual =
+        selectedTreatments.length > 0 &&
+        selectedTreatments[0].id ===
+          process.env.NEXT_PUBLIC_PROBADOR_VIRTUAL_ID?.toLowerCase();
+      if (isProbadorVirtual) {
+        manageHasPreviousPvAppointment();
+      } else {
+        setIsDisabled(false);
+        if (setContinueDisabled) setContinueDisabled(false);
+      }
     } else {
       setIsDisabled(true);
       if (setContinueDisabled) setContinueDisabled(true);
@@ -186,7 +211,13 @@ const RegistrationForm: React.FC<RegistrationFormProps> = ({
       isValidNie(formData.dni.toUpperCase());
     if (validFormData(formData, errors) && isValidDni) {
       setErrors([]);
-      await handleRegistration();
+      if (redirectToReagenda && redirectToReagenda != '') {
+        router.push(
+          ROUTES.reagenda + '?fromAgenda=true&token=' + redirectToReagenda
+        );
+      } else {
+        await handleRegistration();
+      }
     } else {
       const errorMessages = [];
 
@@ -329,6 +360,7 @@ const RegistrationForm: React.FC<RegistrationFormProps> = ({
         />
         <div className="relative">
           <PhoneInput
+            placeholder="Número de teléfono"
             disableDialCodeAndPrefix
             defaultCountry="es"
             preferredCountries={['es']}
@@ -344,6 +376,10 @@ const RegistrationForm: React.FC<RegistrationFormProps> = ({
               phone.length === country.country.dialCode.length + 1
                 ? setShowPhoneError(null)
                 : setShowPhoneError(!utils.validatePhoneInput(phone));
+
+              if (country.inputValue.length === 0) {
+                handleFieldChange('', 'phone');
+              }
             }}
           />
           {showPhoneError !== null && (
@@ -434,80 +470,83 @@ const RegistrationForm: React.FC<RegistrationFormProps> = ({
             }}
           />
         )}
-        <Flex layout="col-left" className="my-2 mb-4">
-          <Flex
-            layout="row-left"
-            className={
-              !formData.termsAndConditionsAccepted ? 'animate-shake' : ''
-            }
-          >
-            <label
-              htmlFor="termsAndConditionsAccepted"
-              className="flex items-center cursor-pointer"
+        {!hideCheckboxes && (
+          <Flex layout="col-left" className="my-2 mb-4">
+            <Flex
+              layout="row-left"
+              className={
+                !formData.termsAndConditionsAccepted ? 'animate-shake' : ''
+              }
             >
-              <input
-                type="checkbox"
-                id="termsAndConditionsAccepted"
-                checked={formData.termsAndConditionsAccepted}
-                onChange={event =>
-                  handleFieldChange(
-                    event.target.checked,
-                    'termsAndConditionsAccepted'
-                  )
-                }
-                className="hidden"
-              />
-              {formData.termsAndConditionsAccepted ? (
-                <SvgCheckSquareActive className="mr-2" />
-              ) : (
-                <SvgCheckSquare className="mr-2" />
-              )}
-              <span className="text-sm text-gray-700">
-                Acepto términos y condiciones
-              </span>
-            </label>
-          </Flex>
-          <Flex layout="row-left" className="mt-2">
-            <label
-              htmlFor="receiveCommunications"
-              className="flex items-center cursor-pointer"
-            >
-              <input
-                type="checkbox"
-                id="receiveCommunications"
-                checked={formData.receiveCommunications}
-                onChange={event =>
-                  handleFieldChange(
-                    event.target.checked,
-                    'receiveCommunications'
-                  )
-                }
-                className="hidden"
-              />
-              {formData.receiveCommunications ? (
-                <SvgCheckSquareActive className="mr-2" />
-              ) : (
-                <SvgCheckSquare className="mr-2" />
-              )}
-              <span className="text-sm text-gray-700">
-                Quiero que me informéis de vuestras ofertas
-              </span>
-            </label>
-          </Flex>
-          {errors.includes(errorsConfig.ERROR_TERMS_CONDITIONS_UNACCEPTED) &&
-            !formData.termsAndConditionsAccepted && (
-              <Flex className="text-hg-error text-left text-sm py-2 px-3 bg-hg-error100 mt-2 w-full rounded-md">
-                <Image
-                  src="/images/forms/error.svg"
-                  alt="error"
-                  height={16}
-                  width={16}
-                  className="mr-2"
+              <label
+                htmlFor="termsAndConditionsAccepted"
+                className="flex items-center cursor-pointer"
+              >
+                <input
+                  type="checkbox"
+                  id="termsAndConditionsAccepted"
+                  checked={formData.termsAndConditionsAccepted}
+                  onChange={event =>
+                    handleFieldChange(
+                      event.target.checked,
+                      'termsAndConditionsAccepted'
+                    )
+                  }
+                  className="hidden"
                 />
-                {errorsConfig.ERROR_TERMS_CONDITIONS_UNACCEPTED}
-              </Flex>
-            )}
-        </Flex>
+                {formData.termsAndConditionsAccepted ? (
+                  <SvgCheckSquareActive className="mr-2" />
+                ) : (
+                  <SvgCheckSquare className="mr-2" />
+                )}
+                <span className="text-sm text-gray-700">
+                  Acepto términos y condiciones
+                </span>
+              </label>
+            </Flex>
+            <Flex layout="row-left" className="mt-2">
+              <label
+                htmlFor="receiveCommunications"
+                className="flex items-center cursor-pointer"
+              >
+                <input
+                  type="checkbox"
+                  id="receiveCommunications"
+                  checked={formData.receiveCommunications}
+                  onChange={event =>
+                    handleFieldChange(
+                      event.target.checked,
+                      'receiveCommunications'
+                    )
+                  }
+                  className="hidden"
+                />
+                {formData.receiveCommunications ? (
+                  <SvgCheckSquareActive className="mr-2" />
+                ) : (
+                  <SvgCheckSquare className="mr-2" />
+                )}
+                <span className="text-sm text-gray-700">
+                  Quiero que me informéis de vuestras ofertas
+                </span>
+              </label>
+            </Flex>
+            {errors.includes(errorsConfig.ERROR_TERMS_CONDITIONS_UNACCEPTED) &&
+              !formData.termsAndConditionsAccepted && (
+                <Flex className="text-hg-error text-left text-sm py-2 px-3 bg-hg-error100 mt-2 w-full rounded-md">
+                  <Image
+                    src="/images/forms/error.svg"
+                    alt="error"
+                    height={16}
+                    width={16}
+                    className="mr-2"
+                  />
+                  {errorsConfig.ERROR_TERMS_CONDITIONS_UNACCEPTED}
+                </Flex>
+              )}
+          </Flex>
+        )}
+
         {hasContinueButton && (
           <Button
             disabled={isDisabled}

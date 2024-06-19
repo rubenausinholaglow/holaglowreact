@@ -20,6 +20,7 @@ import { Container, Flex } from 'designSystem/Layouts/Layouts';
 import { Text, Title } from 'designSystem/Texts/Texts';
 import Image from 'next/image';
 
+import GuaranteedResults from '../../precios/components/GuaranteedResults';
 import OptionsPrices from '../../precios/components/OptionsPrices';
 import OptionsPricesSelectButton from '../../precios/components/OptionsPricesSelectButton';
 import { DERMA_INGREDIENTS, PAINS_AND_SYMPTOMS } from '../multistepConfig';
@@ -107,6 +108,10 @@ export default function ThankYouMultiStep() {
                 Tenemos un pack preparado para ti
               </Text>
               <OptionsPrices pain={filteredPain} />
+
+              <div className="bg-derma-secondary300">
+                <GuaranteedResults />
+              </div>
             </Flex>
             <Flex
               layout="col-left"

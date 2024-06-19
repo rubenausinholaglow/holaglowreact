@@ -176,6 +176,7 @@ export function getStatusText(statusText: string, entity: string): string {
 }
 
 export const getStatusClassName = (status: string, entity: string): string => {
+  if (!status) return '';
   const uppercaseStatus = status.toUpperCase();
   const config = entityStatusConfig[entity];
   if (config && uppercaseStatus in config.colors) {
@@ -283,4 +284,20 @@ export function getUnityTypePassport(id: number): string {
     default:
       return '';
   }
+}
+
+export function getAllCategoryNames(products: Product[]) {
+  const categories: string[] = products.reduce(
+    (categoryNames: string[], product) => {
+      const productCategories = product.category.map(category => category.name);
+      return [...categoryNames, ...productCategories];
+    },
+    []
+  );
+
+  const uniqueCategoryNames: string[] = [...new Set(categories)].filter(
+    category => category !== ''
+  );
+
+  return uniqueCategoryNames || [];
 }

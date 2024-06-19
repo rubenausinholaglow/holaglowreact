@@ -1,5 +1,6 @@
 'use client';
 
+import { useEffect, useState } from 'react';
 import ROUTES from '@utils/routes';
 import DermaStepBar from 'app/(web)/(derma)/components/DermaStepBar';
 import DermaLayout from 'app/(web)/components/layout/DermaLayout';
@@ -16,10 +17,15 @@ import { DERMA_COMPLEMENTS, PAINS_AND_SYMPTOMS } from '../../multistepConfig';
 export default function RoutineFeedback() {
   const { pain } = useDermaStore(state => state);
   const router = useRouter();
+  const [painName, setPainName] = useState('');
 
-  const painName = PAINS_AND_SYMPTOMS.filter(item => item.value === pain)[0]
-    .name;
-
+  useEffect(() => {
+    const painName =
+      pain && PAINS_AND_SYMPTOMS.filter(item => item.value === pain).length > 0
+        ? PAINS_AND_SYMPTOMS.filter(item => item.value === pain)[0].name
+        : '';
+    setPainName(painName);
+  }, []);
   return (
     <DermaLayout
       hideButton

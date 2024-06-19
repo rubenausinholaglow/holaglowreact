@@ -227,7 +227,7 @@ export const useSessionStore = create(
   
     {
       name: 'session-storage',
-      version: 27,
+      version: 30,
       storage: createJSONStorage(() => sessionStorage),
     }
   )
@@ -324,7 +324,7 @@ export const useGlobalPersistedStore = create(
     }),
     {
       name: 'global-storage',
-      version: 67,
+      version: 70,
     }
   )
 );
