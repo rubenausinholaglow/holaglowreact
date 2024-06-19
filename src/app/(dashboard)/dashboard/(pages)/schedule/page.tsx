@@ -10,6 +10,7 @@ import {
 } from '@interface/product';
 import { Accordion } from '@radix-ui/react-accordion';
 import ProductService from '@services/ProductService';
+import UserService from '@services/UserService';
 import { fetchClinics } from '@utils/fetch';
 import useRoutes from '@utils/useRoutes';
 import { getClinicToSet, validTypesFilterCart } from '@utils/utils';
@@ -44,6 +45,7 @@ export default function Page() {
     setStateProducts,
     setDashboardProducts,
     dashboardProducts,
+    setCurrentUser,
   } = useGlobalPersistedStore(state => state);
   const {
     selectedClinic,
@@ -75,6 +77,14 @@ export default function Page() {
     };
 
     if (isEmpty(cart)) fetchProducts();
+    const queryString = window.location.search;
+    const params = new URLSearchParams(queryString);
+    const flowwwToken = params.get('flowwwToken');
+    if (flowwwToken) {
+      UserService.getUserById(flowwwToken, false).then(x => {
+        setCurrentUser(x);
+      });
+    }
   }, []);
 
   useEffect(() => {
