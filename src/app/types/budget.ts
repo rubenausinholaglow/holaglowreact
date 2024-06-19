@@ -1,10 +1,7 @@
-import { User } from './appointment';
-
 import {
   BudgetProfessionalReponse,
   BudgetUserReponse,
 } from 'app/GraphQL/BudgetsQueryResponse';
-
 
 import { Product } from './product';
 
