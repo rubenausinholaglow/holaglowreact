@@ -3,11 +3,13 @@ import SocketService from '@services/SocketService';
 import useRoutes from '@utils/useRoutes';
 import { ClinicProfessional } from 'app/(dashboard)/dashboard/components/ClinicProfessional';
 import { useMessageSocket } from 'app/(dashboard)/dashboard/components/useMessageSocket';
+import { usePromoUserHook } from 'app/(dashboard)/dashboard/hooks/usePromoUserHook';
 import { SvgHolaglow } from 'app/icons/IconsDs';
 import { useGlobalPersistedStore } from 'app/stores/globalStore';
 import { EventTypes } from 'app/types/FrontEndMessages';
 import { MessageSocket, MessageType } from 'app/types/messageSocket';
 import { Flex } from 'designSystem/Layouts/Layouts';
+import { Text } from 'designSystem/Texts/Texts';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 
@@ -54,8 +56,11 @@ export default function DashboardLayout({
     CheckOut: '/dashboard/remoteControl/Payment',
   };
 
+  const { wallet, getWalletBalance } = usePromoUserHook();
+
   useEffect(() => {
     if (user) {
+      getWalletBalance(user!.id);
       if (!hideContactButtons) {
         SocketService.getInstance({
           urlConnection: SOCKET_URL_PROFESSIONAL_RESPONSE,
@@ -265,6 +270,13 @@ export default function DashboardLayout({
         )}
 
         <Flex className="p-4 justify-center">
+          {remoteControl && user && (
+            <div className="absolute left-5">
+              <Text className="text-lg text-black font-semibold">
+                {wallet !== undefined ? wallet.amountBalance : 0} puntos
+              </Text>
+            </div>
+          )}
           <SvgHolaglow
             height={37.5}
             width={150}

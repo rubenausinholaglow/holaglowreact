@@ -22,7 +22,7 @@ import { CrisalixUser } from 'app/types/crisalix';
 import { MessageType } from 'app/types/messageSocket';
 import { clearLocalStorage, getClinicToSet } from 'app/utils/utils';
 import { Button } from 'designSystem/Buttons/Buttons';
-import { get, isEmpty } from 'lodash';
+import { isEmpty } from 'lodash';
 import { useRouter } from 'next/navigation';
 
 import RegistrationForm from '../../(web)/components/common/RegistrationForm';
@@ -286,7 +286,6 @@ export default function Page({
               name = data.firstName;
               id = data.userId;
             }
-
             UserService.createCrisalixUser(id, data.clinicId).then(async x => {
               const crisalixUser: CrisalixUser = {
                 id: x.id,
