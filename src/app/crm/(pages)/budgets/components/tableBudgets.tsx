@@ -54,9 +54,15 @@ export default function TableBudgets() {
   ];
 
   const columnsToIgnoreSearch: string[] = [
-    'totalPrice',
+    'totalPriceWithIVA',
     'statusBudget',
-    'products.product',
+    'manualPrice',
+    'priceDiscount',
+    'percentageDiscount',
+    'products.priceDiscount',
+    'products.percentageDiscount',
+    'products.price',
+    'clinicInfo.flowwwId',
   ];
   const queryToExecute = [
     `
