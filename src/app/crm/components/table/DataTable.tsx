@@ -125,7 +125,7 @@ const DataTable: React.FC<DataTableProps> = ({
 
   const router = useRouter();
   const redirectToItem = (id: string) => {
-    router.push(`${pathName}/${id}`);
+    window.open(`${pathName}/${id}`, '_blank');
   };
 
   useEffect(() => {

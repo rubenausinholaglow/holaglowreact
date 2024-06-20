@@ -16,6 +16,7 @@ import {
 import { ColumnDataTable } from 'app/GraphQL/common/types/column';
 import { PageInfo } from 'app/GraphQL/PageInfo';
 import { mapBudgetsData } from 'app/GraphQL/utils/utilsMapping';
+import { useCrmStore } from 'app/stores/globalStore';
 import { Button } from 'designSystem/Buttons/Buttons';
 import { createApolloClient } from 'lib/client';
 
@@ -26,6 +27,7 @@ export default function TableBudgets() {
   const [errorMessage, setErrorMessage] = useState<string | undefined>(
     undefined
   );
+  const { setClinicId } = useCrmStore(state => state);
   const [pageInfo, setPageInfo] = useState<PageInfo>();
   const [totalCount, setTotalCount] = useState<number>(0);
   const [filterStatus, setFilterStatus] = useState('');
@@ -138,6 +140,7 @@ export default function TableBudgets() {
     const params = new URLSearchParams(queryString);
     const clinicId = params.get('clinicId') ?? '';
     setClinicFlowwwId(clinicId);
+    setClinicId(clinicId);
     if (clinicFlowwwId) executeQuery(true);
   }, []);
 

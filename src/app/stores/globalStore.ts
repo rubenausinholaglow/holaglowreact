@@ -114,6 +114,29 @@ interface GlobalPersistActions {
   setExtraInfo: (value?: boolean) => void;
 }
 
+interface CrmStore {
+  clinicId: string;
+}
+
+interface CrmActions {
+  setClinicId: (clinicId: string) => void;
+}
+export const useCrmStore = create(
+  persist<CrmStore & CrmActions>(
+    set => ({
+      clinicId: '',
+      setClinicId: value => {
+        set({ clinicId: value });
+      },
+    }),
+    {
+      name: 'session-storage',
+      version: 1,
+      storage: createJSONStorage(() => sessionStorage),
+    }
+  )
+);
+
 export const useSessionStore = create(
   persist<SessionStore & SessionActions>(
     set => ({
