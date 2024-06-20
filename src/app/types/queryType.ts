@@ -122,11 +122,11 @@ function processChild(
       .replaceAll(' ', '')
       .replaceAll(',', '')
       .replaceAll('{', '');
-    const shouldIgnore = !this.columnsToIgnoreSearch
+    processElement(fieldToFilter);
+    const shouldIgnore = !columnsToIgnoreSearch
       ? false
-      : this.columnsToIgnoreSearch.findIndex(x => x == fieldToFilter) >= 0;
+      : columnsToIgnoreSearch.findIndex(x => x == fieldToFilter) >= 0;
     if (!shouldIgnore) {
-      console.log(fieldToFilter);
       filterableFields.push(`${fieldToFilter}.contains(\\"${filters}\\")`);
     }
     nextFieldIndex++;
