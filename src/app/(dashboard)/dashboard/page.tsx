@@ -26,6 +26,7 @@ import { get, isEmpty } from 'lodash';
 import { useRouter } from 'next/navigation';
 
 import RegistrationForm from '../../(web)/components/common/RegistrationForm';
+import ProductDiscountForm from './(pages)/checkout/components/ProductDiscountForm';
 import { useCrisalix } from './(pages)/crisalix/useCrisalix';
 import AppointmentsListComponent from './Appointments';
 import SearchUser from './SearchUser';
@@ -400,13 +401,22 @@ export default function Page({
                 isDerma={false}
               />
             ) : (
-              <SearchUser
-                email={userEmail}
-                handleFieldChange={handleFieldEmailChange}
-                handleCheckUser={handleCheckUser}
-                errors={errors}
-                isLoading={isLoading}
-              />
+              <div className="flex flex-row ">
+                <SearchUser
+                  email={userEmail}
+                  handleFieldChange={handleFieldEmailChange}
+                  handleCheckUser={handleCheckUser}
+                  errors={errors}
+                  isLoading={isLoading}
+                />
+                <div className="flex justify-center">
+                  <ProductDiscountForm
+                    isCheckout={true}
+                    showPercentage={false}
+                    enableMGM={true}
+                  />
+                </div>
+              </div>
             )}
             {isLoadingUser && <SvgSpinner />}
           </div>

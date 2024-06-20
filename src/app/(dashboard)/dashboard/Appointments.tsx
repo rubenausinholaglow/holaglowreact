@@ -742,13 +742,6 @@ const AppointmentsListComponent: React.FC<{
       ) : (
         <></>
       )}
-      <div>
-        <ProductDiscountForm
-          isCheckout={true}
-          showPercentage={false}
-          enableMGM={true}
-        />
-      </div>
     </div>
   );
 };
