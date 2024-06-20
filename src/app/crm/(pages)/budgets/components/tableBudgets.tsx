@@ -61,6 +61,7 @@ export default function TableBudgets() {
     'percentageDiscount',
     'products.priceDiscount',
     'products.percentageDiscount',
+    'products.product.title',
     'products.price',
     'clinicInfo.flowwwId',
   ];

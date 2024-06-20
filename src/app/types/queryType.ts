@@ -49,7 +49,6 @@ export class GraphQLQueryBuilder {
       fieldNames = fieldsArray;
     }
 
-    debugger;
     if (filters && fieldNames) {
       const parseNestedFields = (fieldsArray: string[]): string[] => {
         let filterableFields: string[] = [];
@@ -59,7 +58,6 @@ export class GraphQLQueryBuilder {
           const field = fieldsArray[i];
           if (field.includes('{')) {
             const nextBase = field.split('{')[0].trim();
-            debugger;
             const childRes = processChild(
               nextBase,
               this.columnsToIgnoreSearch,
@@ -114,7 +112,6 @@ export class GraphQLQueryBuilder {
         }
       }
     `;
-    debugger;
     return query;
   }
 }
@@ -133,7 +130,6 @@ function processChild(
     if (nextField.includes('{')) {
       const nextBase = nextField.split('{')[0].trim();
       fieldToFilter = `${base}.${nextBase}`;
-      debugger;
       const childRes = processChild(
         fieldToFilter,
         columnsToIgnoreSearch,
@@ -145,7 +141,6 @@ function processChild(
       filterableFields = childRes.filterableFields;
       nextFieldIndex = childRes.nextFieldIndex;
     } else {
-      debugger;
       fieldToFilter = fieldToFilter
         .replaceAll(' ', '')
         .replaceAll(',', '')
@@ -160,6 +155,7 @@ function processChild(
     }
     nextField = fieldsArray[nextFieldIndex]?.trim();
   }
+  if (nextField.includes('}')) nextFieldIndex++;
   return { nextFieldIndex, filterableFields };
 }
 
