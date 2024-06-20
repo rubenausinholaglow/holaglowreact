@@ -54,39 +54,20 @@ export class GraphQLQueryBuilder {
         const filterableFields: string[] = [];
 
         let i = 0;
+        let base = '';
         while (i < fieldsArray.length) {
           const field = fieldsArray[i];
+          base = field;
           if (field.includes('{')) {
-            const base = field.split('{')[0].trim();
-            let nextFieldIndex = i + 1;
-            let nextField = fieldsArray[nextFieldIndex]?.trim();
-            while (nextField && !nextField.includes('}')) {
-              let fieldToFilter = `${base}.${nextField}`;
-              fieldToFilter = fieldToFilter
-                .replaceAll(' ', '')
-                .replaceAll(',', '')
-                .replaceAll('{', '');
-              const shouldIgnore = !this.columnsToIgnoreSearch
-                ? false
-                : this.columnsToIgnoreSearch.findIndex(
-                    x => x == fieldToFilter
-                  ) >= 0;
-              if (!shouldIgnore) {
-                console.log(fieldToFilter);
-                filterableFields.push(
-                  `${fieldToFilter}.contains(\\"${filters}\\")`
-                );
-              }
-              nextFieldIndex++;
-              nextField = fieldsArray[nextFieldIndex]?.trim();
-            }
-            i = nextFieldIndex;
+            const nextBase = field.split('{')[0].trim();
+            i += processChild(
+              base + '.' + nextBase,
+              i,
+              fieldsArray,
+              filterableFields
+            );
           } else if (!field.includes('}')) {
-            const shouldIgnore = !this.columnsToIgnoreSearch
-              ? false
-              : this.columnsToIgnoreSearch.findIndex(x => x == field) >= 0;
-            if (!shouldIgnore)
-              filterableFields.push(`${field}.contains(\\"${filters}\\")`);
+            processElement();
             i++;
           } else {
             i++;
@@ -126,5 +107,44 @@ export class GraphQLQueryBuilder {
     `;
     return query;
   }
+}
+function processChild(
+  arg0: string,
+  i: number,
+  fieldsArray: string[],
+  filterableFields: string[]
+): number {
+  let nextFieldIndex = 1;
+  let nextField = fieldsArray[nextFieldIndex]?.trim();
+  while (nextField && !nextField.includes('}')) {
+    let fieldToFilter = `${base}.${nextField}`;
+    fieldToFilter = fieldToFilter
+      .replaceAll(' ', '')
+      .replaceAll(',', '')
+      .replaceAll('{', '');
+    const shouldIgnore = !this.columnsToIgnoreSearch
+      ? false
+      : this.columnsToIgnoreSearch.findIndex(x => x == fieldToFilter) >= 0;
+    if (!shouldIgnore) {
+      console.log(fieldToFilter);
+      filterableFields.push(`${fieldToFilter}.contains(\\"${filters}\\")`);
+    }
+    nextFieldIndex++;
+    nextField = fieldsArray[nextFieldIndex]?.trim();
+  }
+  return nextFieldIndex;
+}
+
+function processElement(
+  field: string,
+  columnsToIgnoreSearch: string[],
+  filters: string,
+  filterableFields: string[]
+) {
+  const shouldIgnore = columnsToIgnoreSearch
+    ? false
+    : columnsToIgnoreSearch.findIndex(x => x == field) >= 0;
+  if (!shouldIgnore)
+    filterableFields.push(`${field}.contains(\\"${filters}\\")`);
 }
 export default GraphQLQueryBuilder;
