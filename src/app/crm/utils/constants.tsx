@@ -3,7 +3,7 @@ import { SideNavItem } from '../types/SideNavItem';
 export const SIDENAV_ITEMS: SideNavItem[] = [
   {
     title: 'Presupuestos',
-    path: '/crm/budgets',
+    path: '/crm/budgets?clinicId={{clinicId}}',
   },
   /*
   {

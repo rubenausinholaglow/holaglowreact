@@ -16,13 +16,20 @@ export type BudgetsResponsesEdges = {
 export type BudgetsResponseNode = {
   id: string;
   creationDate: string;
-  totalprice: number;
+  totalPriceWithIVA: number;
   user: BudgetUserReponse;
   products: BudgetProductsReponse[];
+  priceDiscount: number;
+  percentageDiscount: number;
+  manualPrice: number;
 };
 
 export type BudgetProductsReponse = {
   product: BudgetProductResponse2;
+  price: number;
+  priceDiscount: number;
+  percentageDiscount: number;
+  productId: string;
 };
 
 export type BudgetProductResponse2 = {

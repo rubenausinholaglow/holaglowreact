@@ -4,6 +4,7 @@ import { HOLAGLOW_COLORS } from '@utils/colors';
 import { SideNavItem } from 'app/crm/types/SideNavItem';
 import { SIDENAV_ITEMS } from 'app/crm/utils/constants';
 import { SvgHolaglow } from 'app/icons/Icons';
+import { useCrmStore } from 'app/stores/globalStore';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 
@@ -38,6 +39,7 @@ export default SideNav;
 const MenuItem = ({ item }: { item: SideNavItem }) => {
   const pathName = usePathname();
   const [subMenuOpen, setSubMenuOpen] = useState(false);
+  const { clinicId } = useCrmStore(state => state);
   const toggleSubMenu = () => {
     setSubMenuOpen(!subMenuOpen);
   };
@@ -65,7 +67,7 @@ const MenuItem = ({ item }: { item: SideNavItem }) => {
                 return (
                   <Link
                     key={idx}
-                    href={subItem.path}
+                    href={subItem.path.replace('{{clinicId}}', clinicId)}
                     className={`${
                       subItem.path === pathName ? 'font-bold' : ''
                     }`}
@@ -79,7 +81,7 @@ const MenuItem = ({ item }: { item: SideNavItem }) => {
         </>
       ) : (
         <Link
-          href={item.path}
+          href={item.path.replace('{{clinicId}}', clinicId)}
           className={`flex flex-row space-x-4 items-center p-2 rounded-lg  ${
             item.path === pathName
               ? 'bg-hg-secondary700 text-white hover:opacity-100'
