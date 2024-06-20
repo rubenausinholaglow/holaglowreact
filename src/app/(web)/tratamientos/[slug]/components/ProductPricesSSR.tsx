@@ -202,6 +202,7 @@ export default function ProductPricesSSR({ product }: { product: Product }) {
         <Flex layout="row-center" className="pt-4">
           <BlogShareBar
             title={product.title}
+            text={product.description}
             url={`http://www.holaglow.com/${headersList.get('next-url') || ''}`}
           />
         </Flex>

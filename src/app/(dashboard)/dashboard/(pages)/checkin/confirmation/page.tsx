@@ -49,43 +49,41 @@ export default function ConfirmationCheckIn() {
   }, []);
 
   return (
-    <App>
-      <MainLayout
-        isDashboard
-        hideBackButton
-        hideContactButtons
-        hideProfessionalSelector
-        hideBottomBar
-      >
-        <Confirmation isDashboard={true} />
-        <Flex className="gap-3">
-          {!isCheckin && (
-            <Button
-              type="tertiary"
-              customStyles="bg-hg-primary"
-              className="mb-8"
-              href={ROUTES.dashboard.menu}
-            >
-              <SvgArrowSmallLeft />
-              Volver
-            </Button>
-          )}
-          {isPendingProductsScheduler && (
-            <Button
-              type="tertiary"
-              customStyles="bg-hg-primary"
-              className="mb-8"
-              href={ROUTES.dashboard.schedule}
-              onClick={() => {
-                setSelectedTreatments([]);
-              }}
-            >
-              Crear otra cita
-              <SvgArrow height={18} width={18} className="ml-2" />
-            </Button>
-          )}
-        </Flex>
-      </MainLayout>
-    </App>
+    <MainLayout
+      isDashboard
+      hideBackButton
+      hideContactButtons
+      hideProfessionalSelector
+      hideBottomBar
+    >
+      <Confirmation isDashboard={true} />
+      <Flex className="gap-3">
+        {!isCheckin && (
+          <Button
+            type="tertiary"
+            customStyles="bg-hg-primary"
+            className="mb-8"
+            href={ROUTES.dashboard.menu}
+          >
+            <SvgArrowSmallLeft />
+            Volver
+          </Button>
+        )}
+        {isPendingProductsScheduler && (
+          <Button
+            type="tertiary"
+            customStyles="bg-hg-primary"
+            className="mb-8"
+            href={ROUTES.dashboard.schedule}
+            onClick={() => {
+              setSelectedTreatments([]);
+            }}
+          >
+            Crear otra cita
+            <SvgArrow height={18} width={18} className="ml-2" />
+          </Button>
+        )}
+      </Flex>
+    </MainLayout>
   );
 }

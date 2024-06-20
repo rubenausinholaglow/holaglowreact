@@ -18,34 +18,32 @@ export default function RemoteControl({
   const { user } = useGlobalPersistedStore(state => state);
 
   return (
-    <App>
-      <MainLayout isDashboard>
-        <div className="mt-8">
-          <Title className="text-xl mb-4">¡Hola {user?.firstName}!</Title>
-          <Title className="font-bold text-5xl mb-8">
-            Tu <Underlined color={HOLAGLOW_COLORS['primary']}>glow</Underlined>,
-            <br />
-            tus normas
-          </Title>
-          <div className="grid grid-cols-3 mb-12">
-            {menuItems.map(item => (
-              <DashboardMenuItem
-                key={item.title}
-                iconSrc={item.iconSrc}
-                altText={item.altText}
-                title={item.title}
-                link={
-                  item.link.includes('flowwwToken')
-                    ? item.link.replace('flowwwToken', user?.flowwwToken || '')
-                    : item.link
-                }
-                target={item.target}
-              />
-            ))}
-          </div>
-          <ValidateComment />
+    <MainLayout isDashboard>
+      <div className="mt-8">
+        <Title className="text-xl mb-4">¡Hola {user?.firstName}!</Title>
+        <Title className="font-bold text-5xl mb-8">
+          Tu <Underlined color={HOLAGLOW_COLORS['primary']}>glow</Underlined>,
+          <br />
+          tus normas
+        </Title>
+        <div className="grid grid-cols-3 mb-12">
+          {menuItems.map(item => (
+            <DashboardMenuItem
+              key={item.title}
+              iconSrc={item.iconSrc}
+              altText={item.altText}
+              title={item.title}
+              link={
+                item.link.includes('flowwwToken')
+                  ? item.link.replace('flowwwToken', user?.flowwwToken || '')
+                  : item.link
+              }
+              target={item.target}
+            />
+          ))}
         </div>
-      </MainLayout>
-    </App>
+        <ValidateComment />
+      </div>
+    </MainLayout>
   );
 }

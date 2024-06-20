@@ -163,93 +163,88 @@ export default function Page() {
   };
 
   return (
-    <App>
-      <MainLayout
-        isDashboard
-        hideBackButton
-        hideContactButtons
-        hideProfessionalSelector
-        hideBottomBar
-      >
-        <CheckHydration>
-          <Flex layout="col-center" className="w-full">
-            <Flex layout="col-center" className="gap-4 mb-12">
-              <Title className="font-bold text-5xl mb-8">
-                Te damos la <br />
-                <Underlined color={HOLAGLOW_COLORS['primary']}>
-                  Bienvenid@
-                </Underlined>{' '}
-              </Title>
-              <Text className="mb-8 font-bold">
-                Escanea el QR que te hemos envíado para acceder a tu cita.
-              </Text>
-              {isScanning ? (
-                <ReadQr
-                  onScanSuccess={onScanSuccess}
-                  onErrorScan={reloadPageAfterDelay}
-                />
-              ) : (
-                <div
-                  onClick={startScan}
-                  className="justify-center items-center"
-                >
-                  <SvgScanQR height={192} width={192} fill="white" />
-                  <Text className="mb-8 text-center">{SCAN_QR}</Text>
-                </div>
-              )}
-            </Flex>
-
-            {!isScanning && (
-              <>
-                <FormSection
-                  formData={formData}
-                  errors={errors}
-                  handleInputChange={handleInputChange}
-                  handleSubmit={handleSubmit}
-                  isLoading={isLoading}
-                  checkIn={checkIn}
-                />
-                <div className="w-1/2">
-                  <Flex
-                    layout="col-left"
-                    className={`gap-4 px-12 py-8 bg-hg-secondary100 relative z-10 w-full ${
-                      checkIn ? 'rounded-t-xl' : 'rounded-xl'
-                    }`}
-                  >
-                    <div className="flex flex-col w-full gap-4">
-                      <TextInputField
-                        placeholder="Introduce ID"
-                        value={userId}
-                        onChange={e => setUserId(e.target.value)}
-                      />
-                      <Button
-                        type="tertiary"
-                        isSubmit
-                        className="ml-auto"
-                        customStyles="bg-hg-primary"
-                        onClick={() => handleCheckUser(userId)}
-                      >
-                        Buscar por ID
-                        {isLoadingUser ? (
-                          <SvgSpinner className="ml-2 h-5 w-5" />
-                        ) : (
-                          <SvgArrow className="ml-2 h-5 w-5" />
-                        )}
-                      </Button>
-                      {errorMessage && (
-                        <p className="text-red-500 text-left text-sm mt-2">
-                          {errorMessage}
-                        </p>
-                      )}
-                    </div>
-                  </Flex>
-                </div>
-              </>
+    <MainLayout
+      isDashboard
+      hideBackButton
+      hideContactButtons
+      hideProfessionalSelector
+      hideBottomBar
+    >
+      <CheckHydration>
+        <Flex layout="col-center" className="w-full">
+          <Flex layout="col-center" className="gap-4 mb-12">
+            <Title className="font-bold text-5xl mb-8">
+              Te damos la <br />
+              <Underlined color={HOLAGLOW_COLORS['primary']}>
+                Bienvenid@
+              </Underlined>{' '}
+            </Title>
+            <Text className="mb-8 font-bold">
+              Escanea el QR que te hemos envíado para acceder a tu cita.
+            </Text>
+            {isScanning ? (
+              <ReadQr
+                onScanSuccess={onScanSuccess}
+                onErrorScan={reloadPageAfterDelay}
+              />
+            ) : (
+              <div onClick={startScan} className="justify-center items-center">
+                <SvgScanQR height={192} width={192} fill="white" />
+                <Text className="mb-8 text-center">{SCAN_QR}</Text>
+              </div>
             )}
           </Flex>
-        </CheckHydration>
-      </MainLayout>
-    </App>
+
+          {!isScanning && (
+            <>
+              <FormSection
+                formData={formData}
+                errors={errors}
+                handleInputChange={handleInputChange}
+                handleSubmit={handleSubmit}
+                isLoading={isLoading}
+                checkIn={checkIn}
+              />
+              <div className="w-1/2">
+                <Flex
+                  layout="col-left"
+                  className={`gap-4 px-12 py-8 bg-hg-secondary100 relative z-10 w-full ${
+                    checkIn ? 'rounded-t-xl' : 'rounded-xl'
+                  }`}
+                >
+                  <div className="flex flex-col w-full gap-4">
+                    <TextInputField
+                      placeholder="Introduce ID"
+                      value={userId}
+                      onChange={e => setUserId(e.target.value)}
+                    />
+                    <Button
+                      type="tertiary"
+                      isSubmit
+                      className="ml-auto"
+                      customStyles="bg-hg-primary"
+                      onClick={() => handleCheckUser(userId)}
+                    >
+                      Buscar por ID
+                      {isLoadingUser ? (
+                        <SvgSpinner className="ml-2 h-5 w-5" />
+                      ) : (
+                        <SvgArrow className="ml-2 h-5 w-5" />
+                      )}
+                    </Button>
+                    {errorMessage && (
+                      <p className="text-red-500 text-left text-sm mt-2">
+                        {errorMessage}
+                      </p>
+                    )}
+                  </div>
+                </Flex>
+              </div>
+            </>
+          )}
+        </Flex>
+      </CheckHydration>
+    </MainLayout>
   );
 }
 
