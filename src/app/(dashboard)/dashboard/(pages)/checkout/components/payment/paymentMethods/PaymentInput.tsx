@@ -72,6 +72,7 @@ export default function PaymentInput(props: Props) {
     useGlobalPersistedStore(state => state);
   const { walletClient } = useSessionStore(state => state);
   const { createPayment } = usePaymentUtils();
+  const paymentList = usePaymentList();
 
   const [errorMessage, setErrorMessage] = useState<string | undefined>(
     undefined
@@ -126,6 +127,11 @@ export default function PaymentInput(props: Props) {
     if (props.paymentMethod == PaymentMethod.Wallet) {
       fetchWalletBalance();
     } else {
+      if (props.paymentMethod == PaymentMethod.AdvancedPayment) {
+        setMaxValue(49);
+        setInputValue('49');
+        return;
+      }
       setMaxValue(
         parseFloat(cartTotalWithDiscountFixed.toFixed(2)) -
           parseFloat(totalAmount.toFixed(2))
@@ -207,6 +213,7 @@ export default function PaymentInput(props: Props) {
       paymentBank: props.paymentBank,
       originOfPayment: OriginPayment.dashboard,
     };
+
     await createPayment(paymentRequestApi).then(response => {
       if (response) {
         sendPaymentCreated(
@@ -221,8 +228,28 @@ export default function PaymentInput(props: Props) {
     setIsLoading(false);
   }
   const handleSubmitForm = async (data: any) => {
-    const amount = parseFloat(data.number);
+    let amount = parseFloat(data.number);
     if (isLoading || amount == 0) return;
+
+    if (props.paymentMethod == PaymentMethod.AdvancedPayment) {
+      amount = parseFloat(inputValue);
+    }
+    if (
+      paymentList.paymentRequest.filter(
+        x => x.method == PaymentMethod.AdvancedPayment
+      ).length > 0 &&
+      props.paymentMethod == PaymentMethod.AdvancedPayment
+    ) {
+      return;
+    }
+    if (
+      paymentList.paymentRequest.filter(x => x.method == PaymentMethod.Wallet)
+        .length > 0 &&
+      props.paymentMethod == PaymentMethod.Wallet
+    ) {
+      return;
+    }
+
     if (
       showAlma ||
       messageNotification ||

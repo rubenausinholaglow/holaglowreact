@@ -15,7 +15,8 @@ export enum PaymentMethod {
   CreditCard,
   Financing,
   Others,
-  Wallet
+  Wallet,
+  AdvancedPayment,
 }
 
 export enum PaymentBank {

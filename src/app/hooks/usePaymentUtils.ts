@@ -37,18 +37,21 @@ export const usePaymentUtils = () => {
     }
   };
 
-  const deletePayment = async (payment: PaymentTicketRequest) : Promise<boolean> => {
-        await FinanceService.deletePayment(payment.id, false).then(async data => {
-          if(data && !isEmpty(data)) {
-            manageWallet(payment.method, payment.amount, false);
-            return true;
-          }
-        }).catch(error => {
-          Bugsnag.notify('Error deletePayment', error);
-          return false;
-        });
-        return false;
-  }
+  const deletePayment = async (payment: PaymentTicketRequest): Promise<boolean> => {
+    try {
+      const data = await FinanceService.deletePayment(payment.id, false);
+
+      if (data && !isEmpty(data)) {
+        manageWallet(payment.method, payment.amount, false);
+        return true; 
+      } else {
+        return false; 
+      }
+    } catch (error : any) {
+      Bugsnag.notify('Error deletePayment', error);
+      return false; 
+    }
+  };
 
   const manageWallet = async (method: PaymentMethod, amount : number, create = true) : Promise<boolean> => {
     if(method == PaymentMethod.Wallet) {

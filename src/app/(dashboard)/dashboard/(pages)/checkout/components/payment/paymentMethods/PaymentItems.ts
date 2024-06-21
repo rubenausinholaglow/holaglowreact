@@ -51,6 +51,12 @@ export const paymentItems: PaymentItems[] = [
     paymentMethod: PaymentMethod.CreditCard,
   },
   {
+    key: 'anticipo',
+    label: 'Anticipo Web',
+    paymentBank: PaymentBank.CreditCard,
+    paymentMethod: PaymentMethod.AdvancedPayment,
+  },
+  {
     key: 'wallet',
     label: 'Saldo Monedero',
     paymentBank: PaymentBank.Points,

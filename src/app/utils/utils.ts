@@ -133,6 +133,8 @@ export function getPaymentMethodText(method: PaymentMethod): string {
       return 'Otros';
     case PaymentMethod.Wallet:
       return 'Saldo Monedero'
+    case PaymentMethod.AdvancedPayment:
+      return 'Anticipo Web'
     default:
       return 'Unknown';
   }

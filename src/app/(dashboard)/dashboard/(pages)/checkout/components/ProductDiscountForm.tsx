@@ -59,12 +59,6 @@ export default function ProductDiscountForm({
       value: 0,
       show: !showPercentage && enableMGM,
     },
-    {
-      name: 'WEB',
-      type: 'total',
-      value: 49,
-      show: !showPercentage && !enableMGM,
-    },
     { name: '100%', type: '%', value: 100, show: showPercentage },
   ];
 

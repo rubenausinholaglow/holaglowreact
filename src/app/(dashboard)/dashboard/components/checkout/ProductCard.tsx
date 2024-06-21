@@ -44,7 +44,10 @@ export default function ProductCard({ product, isCheckout }: Props) {
     (acc, product) => acc + product.price,
     0
   );
-  const validProducts = ['5519', '2151'];
+  const validProducts = [
+    '6FA3561B-2650-4E00-8ED3-852E95A38A0B',
+    '62403DAD-846F-46CF-B4CC-7DAE946E028E',
+  ];
 
   useEffect(() => {
     if (pendingDiscount) {
@@ -115,7 +118,7 @@ export default function ProductCard({ product, isCheckout }: Props) {
 
       {showDiscountForm && (
         <>
-          {validProducts.includes(product.flowwwId.toString()) &&
+          {validProducts.includes(product.id.toLocaleUpperCase().toString()) &&
             productsPriceTotal > minPriceToStartDiscount && (
               <div className="bg-hg-black100 p-4 w-full justify-end">
                 <SvgArrow
