@@ -9,19 +9,23 @@ export const PROFESSIONALS_BY_CITY = [
     bullets: [
       {
         icon: 'SvgUsers',
-        text: '+4000 pacientes atendidos',
+        value: '+4000',
+        text: 'pacientes atendidos',
       },
       {
         icon: 'SvgInjection',
-        text: '+8500 tratamientos aplicados',
+        value: '+8500',
+        text: 'tratamientos aplicados',
       },
       {
         icon: 'SvgMedal',
-        text: '98% de clientes satisfechos',
+        value: '98%',
+        text: 'de clientes satisfechos',
       },
       {
-        icon: 'SvgShieldTick',
-        text: '4,9 valoración',
+        icon: 'SvgVerify',
+        value: '4,9',
+        text: 'valoración',
       },
     ],
     experience: [
@@ -49,19 +53,23 @@ export const PROFESSIONALS_BY_CITY = [
     bullets: [
       {
         icon: 'SvgUsers',
-        text: '+1500 pacientes atendidos',
+        value: '+1500',
+        text: 'pacientes atendidos',
       },
       {
         icon: 'SvgInjection',
-        text: '+2500 tratamientos aplicados',
+        value: '+2500',
+        text: 'tratamientos aplicados',
       },
       {
         icon: 'SvgMedal',
-        text: '97% de clientes satisfechos',
+        value: '97%',
+        text: 'de clientes satisfechos',
       },
       {
-        icon: 'SvgShieldTick',
-        text: '4,7 valoración',
+        icon: 'SvgVerify',
+        value: '4,7',
+        text: 'valoración',
       },
     ],
     experience: [
@@ -79,7 +87,7 @@ export const PROFESSIONALS_BY_CITY = [
   },
   {
     name: 'Almudena Castellano',
-    flowwwId: '236',
+    id: 'f9ac7d8b-0324-448d-8397-cb9770881ef2',
     urlPhoto:
       'https://budgetimages.blob.core.windows.net/images/professionals/Almudena.png',
     title: 'Directora Médica',
@@ -87,19 +95,23 @@ export const PROFESSIONALS_BY_CITY = [
     bullets: [
       {
         icon: 'SvgUsers',
-        text: '+2500 pacientes atendidos',
+        value: '+2500',
+        text: 'pacientes atendidos',
       },
       {
         icon: 'SvgInjection',
-        text: '+5000 tratamientos aplicados',
+        value: '+5000',
+        text: 'tratamientos aplicados',
       },
       {
         icon: 'SvgMedal',
-        text: '98% de clientes satisfechos',
+        value: '98%',
+        text: 'de clientes satisfechos',
       },
       {
-        icon: 'SvgShieldTick',
-        text: '4,9 valoración',
+        icon: 'SvgVerify',
+        value: '4,9',
+        text: 'valoración',
       },
     ],
     experience: [
@@ -118,7 +130,7 @@ export const PROFESSIONALS_BY_CITY = [
   },
   {
     name: 'Fátima Lopez',
-    flowwwId: '259',
+    id: '93f54890-ac9f-4c1b-a5f9-d63ef1f77d4c',
     urlPhoto:
       'https://budgetimages.blob.core.windows.net/images/professionals/Alicia.png',
     title: 'Médico estético',
@@ -126,19 +138,23 @@ export const PROFESSIONALS_BY_CITY = [
     bullets: [
       {
         icon: 'SvgUsers',
-        text: '+2500 pacientes atendidos',
+        value: '+2500',
+        text: 'pacientes atendidos',
       },
       {
         icon: 'SvgInjection',
-        text: '+5000 tratamientos aplicados',
+        value: '+5000',
+        text: 'tratamientos aplicados',
       },
       {
         icon: 'SvgMedal',
-        text: '97% de clientes satisfechos',
+        value: '97%',
+        text: 'de clientes satisfechos',
       },
       {
-        icon: 'SvgShieldTick',
-        text: '4,8 valoración',
+        icon: 'SvgVerify',
+        value: '4,8',
+        text: 'valoración',
       },
     ],
     experience: [
@@ -158,6 +174,7 @@ export const PROFESSIONALS_BY_CITY = [
   },
   {
     name: 'Leidy González',
+    id: '53235c66-0eed-417f-8497-b959b58f6a4c',
     urlPhoto:
       'https://budgetimages.blob.core.windows.net/images/professionals/Alicia.png',
     title: 'Médico estético',
@@ -165,19 +182,23 @@ export const PROFESSIONALS_BY_CITY = [
     bullets: [
       {
         icon: 'SvgUsers',
-        text: '+2000 pacientes atendidos',
+        value: '+2000',
+        text: 'pacientes atendidos',
       },
       {
         icon: 'SvgInjection',
-        text: '+4200 tratamientos aplicados',
+        value: '+4200',
+        text: 'tratamientos aplicados',
       },
       {
         icon: 'SvgMedal',
-        text: '97% de clientes satisfechos',
+        value: '97%',
+        text: 'de clientes satisfechos',
       },
       {
-        icon: 'SvgShieldTick',
-        text: '4,8 valoración',
+        icon: 'SvgVerify',
+        value: '4,8',
+        text: 'valoración',
       },
     ],
     experience: [

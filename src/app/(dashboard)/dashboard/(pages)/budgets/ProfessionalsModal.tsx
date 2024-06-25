@@ -17,7 +17,7 @@ import {
   DialogTrigger,
 } from 'designSystem/Dialog/Dialog';
 import { Flex } from 'designSystem/Layouts/Layouts';
-import { Title } from 'designSystem/Texts/Texts';
+import { Text, Title } from 'designSystem/Texts/Texts';
 import { isEmpty } from 'lodash';
 import Image from 'next/image';
 
@@ -29,7 +29,6 @@ export function ProfessionalDashboardCarousel() {
   const [professionalsByCity, setProfessionalsByCity] = useState<
     Professional[]
   >([]);
-  const [professionalsExtraData, setProfessionalsExtraData] = useState([]);
   const { storedClinicId } = useGlobalPersistedStore(state => state);
 
   useEffect(() => {
@@ -50,19 +49,6 @@ export function ProfessionalDashboardCarousel() {
       fetchProfessionals();
     }
   }, [isHydrated]);
-
-  useEffect(() => {
-    if (!isEmpty(professionalsByCity)) {
-      console.log(professionalsByCity);
-      const customProfessionalDataByCountry = PROFESSIONALS_BY_CITY.filter(
-        (item: any) => item.cityId === storedClinicId
-      );
-
-      setProfessionalsExtraData(
-        customProfessionalDataByCountry[0].professionals as []
-      );
-    }
-  }, [professionalsByCity]);
 
   function handleSlideForwards() {
     if (professionalsCarouselRef.current) {
@@ -133,85 +119,89 @@ export function ProfessionalDashboardCarousel() {
                   </li>
                 </ul>
               </Flex>
-
-              {/* <ul className="grid grid-cols-2 grid-rows-2 gap-4 w-full text-hg-black500">
-
-
-
-                {professionalsExtraData.filter(item => professional.id === item.id)[0].bullets
-                .map((bullet: any) => (
+              <ul className="flex  gap-4 w-full text-hg-black500">
+                {PROFESSIONALS_BY_CITY.filter(
+                  item => item.id === professional.id
+                )[0].bullets.map((bullet: any) => (
                   <li
                     key={bullet.icon}
-                    className="flex gap-2 justify-left items-center rounded-2xl bg-hg-secondary700 font-semibold text-white p-4"
+                    className="flex flex-col gap-2 justify-start items-center rounded-2xl bg-derma-secondary500 text-white p-4 w-1/4"
                   >
-                    <div className="bg-white p-2 rounded-full">
-                      <DynamicIcon
-                        name={bullet.icon}
-                        className="text-hg-black h-6 w-6"
-                      />
-                    </div>
-                    {bullet.text}
+                    <DynamicIcon
+                      name={bullet.icon}
+                      className="text-hg-secondary h-10 w-10"
+                    />
+                    <Text className="text-center text-hg-secondary text-xl font-semibold font-gtUltra">
+                      {bullet.value}
+                    </Text>
+                    <Text className="text-center text-hg-black500 text-xs">
+                      {bullet.text}
+                    </Text>
                   </li>
                 ))}
-              </ul> */}
+              </ul>
             </div>
 
-            <div className="p-6 bg-derma-secondary300">
+            <div className="p-6 bg-derma-secondary400">
               <Title className="text-hg-secondary font-light font-gtUltra text-xl mb-4 text-left">
                 Más sobre {professional.name}
               </Title>
 
               <ul className="flex flex-col gap-4">
-                {/* {professional.experience.map((experience: any) => (
+                {PROFESSIONALS_BY_CITY.filter(
+                  item => item.id === professional.id
+                )[0].experience.map((experience: any) => (
                   <li key={experience} className="flex justify-start text-left">
                     <SvgAdd className="shrink-0 mr-2 h-5 w-5 text-hg-black400" />
                     <div>{experience}</div>
                   </li>
-                ))} */}
+                ))}
               </ul>
             </div>
 
-            <div className="p-6">
-              <Title className="text-hg-secondary font-light font-gtUltra text-xl mb-4 text-left">
-                Resultados
-              </Title>
+            {professional.resultsImages?.length > 0 && (
+              <div className="p-6">
+                <Title className="text-hg-secondary font-light font-gtUltra text-xl mb-4 text-left">
+                  Resultados
+                </Title>
 
-              <Carousel
-                controlstyles="px-4"
-                hasControls={professional.resultsImages?.length > 1}
-                dragEnabled={professional.resultsImages?.length > 1}
-                touchEnabled={professional.resultsImages?.length > 1}
-                visibleSlides={2}
-                hasCounter={isMobile && professional.resultsImages?.length > 1}
-                className={`md:px-0 rounded-xl aspect-[2/1] ${
-                  professional.resultsImages?.length < 2 && !isMobile
-                    ? 'w-1/2'
-                    : ''
-                }`}
-              >
-                <p>hola</p>
-                <p>adeu</p>
-                {/* {professional.resultsImages.map((image: string) => (
-                  <div className="px-4" key={image}>
-                    <div className="overflow-hidden relative aspect-square">
-                      <div className="relative aspect-square">
-                        <div
-                          itemScope
-                          itemType="https://schema.org/ImageObject"
-                        >
-                          <Image
-                            src={image || ''}
-                            alt="antes y despues"
-                            fill
-                            className="object-cover rounded-3xl"
-                          />
+                <Carousel
+                  controlstyles="px-4"
+                  hasControls={professional.resultsImages?.length > 1}
+                  dragEnabled={professional.resultsImages?.length > 1}
+                  touchEnabled={professional.resultsImages?.length > 1}
+                  visibleSlides={2}
+                  hasCounter={
+                    isMobile && professional.resultsImages?.length > 1
+                  }
+                  className={`md:px-0 rounded-xl aspect-[2/1] ${
+                    professional.resultsImages?.length < 2 && !isMobile
+                      ? 'w-1/2'
+                      : ''
+                  }`}
+                >
+                  {professional.resultsImages.map((image: string) => (
+                    <div className="px-4" key={image}>
+                      <div className="overflow-hidden relative aspect-square">
+                        <div className="relative aspect-square">
+                          <div
+                            itemScope
+                            itemType="https://schema.org/ImageObject"
+                          >
+                            <Image
+                              src={image || ''}
+                              alt="antes y despues"
+                              fill
+                              className="object-cover rounded-3xl"
+                            />
+                          </div>
                         </div>
                       </div>
                     </div>
-                  </div>
-                ))} */}
-              </Carousel>
-            </div>
+                  ))}
+                </Carousel>
+              </div>
+            )}
           </div>
         ))}
       </Carousel>
@@ -253,7 +243,7 @@ export default function ProfessionalsModal() {
     if (isHydrated) {
       if (professionalsModalRef.current && !hasSeenDashboardProfessionals) {
         professionalsModalRef.current.click();
-        //setHasSeenDashboardProfessionals(true);
+        setHasSeenDashboardProfessionals(true);
       }
     }
   }, [isHydrated]);

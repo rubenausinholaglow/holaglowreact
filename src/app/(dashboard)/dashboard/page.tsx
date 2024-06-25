@@ -56,7 +56,6 @@ export default function Page({
     storedBoxId,
     storedClinicId,
     isCallCenter,
-    extraInfo,
     setExtraInfo,
     setBoxId,
     setClinicId,
