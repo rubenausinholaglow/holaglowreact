@@ -1,4 +1,5 @@
 import * as categoryIcons from 'app/icons/categoryIcons';
+import * as olderIcons from 'app/icons/Icons';
 import * as defaultIcons from 'app/icons/IconsDs';
 import * as serviceIcons from 'app/icons/serviceIcons';
 import * as suggestionIcons from 'app/icons/suggestionIcons';
@@ -11,7 +12,7 @@ export default function DynamicIcon({
   className = '',
 }: {
   name?: string;
-  family?: 'default' | 'suggestion' | 'service' | 'category';
+  family?: 'default' | 'older' | 'suggestion' | 'service' | 'category';
   height?: number;
   width?: number;
   className?: string;
@@ -35,6 +36,10 @@ export default function DynamicIcon({
     case 'category':
       iconComponentName = name;
       IconComponent = (categoryIcons as any)[iconComponentName] || null;
+      break;
+    case 'older':
+      iconComponentName = name;
+      IconComponent = (olderIcons as any)[iconComponentName] || null;
       break;
     default:
       break;

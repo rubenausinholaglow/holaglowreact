@@ -1,30 +1,31 @@
 import { isMobileSSR } from '@utils/isMobileSSR';
 import ROUTES from '@utils/routes';
-import AnimateOnViewport from 'app/(web)/components/common/AnimateOnViewport';
-import Clinics from 'app/(web)/components/common/Clinics';
-import Professionals from 'app/(web)/components/common/Professionals';
-import GoogleStars from 'app/(web)/components/home/GoogleStars';
-import GoToTreatments from 'app/(web)/components/home/GoToTreatments';
-import Products from 'app/(web)/components/home/Products';
-import App from 'app/(web)/components/layout/App';
-import MainLayout from 'app/(web)/components/layout/MainLayout';
-import FullWidthCarousel from 'app/(web)/components/product/fullWidthCarousel';
-import { SvgHolaglow } from 'app/icons/Icons';
-import { SvgArrow } from 'app/icons/IconsDs';
+import ClinicsSSR from 'app/(web)/components/common/ClinicsSSR';
+import DynamicIcon from 'app/(web)/components/common/DynamicIcon';
+import ProfessionalsSSR from 'app/(web)/components/common/ProfessionalsSSR';
+import RegistrationForm from 'app/(web)/components/common/RegistrationForm';
+import Testimonials from 'app/(web)/components/home/Testimonials';
+import MainLayoutSSR from 'app/(web)/components/layout/MainLayoutSSR';
+import ProductVideos from 'app/(web)/tratamientos/[slug]/components/ProductVideos';
+import { SvgHolaglow, SvgHolaglowHand } from 'app/icons/Icons';
+import {
+  SvgArrow,
+  SvgByGoogle,
+  SvgCalling,
+  SvgStar,
+  SvgUserScan,
+} from 'app/icons/IconsDs';
 import { HOLAGLOW_COLORS } from 'app/utils/colors';
 import {
   HEADER_HEIGHT_DESKTOP,
   HEADER_HEIGHT_MOBILE,
 } from 'app/utils/constants';
 import { Button } from 'designSystem/Buttons/Buttons';
+import Carousel from 'designSystem/Carousel/Carousel';
 import { Container, Flex } from 'designSystem/Layouts/Layouts';
-import { Text, Title, Underlined } from 'designSystem/Texts/Texts';
+import { Text, Title } from 'designSystem/Texts/Texts';
 import Image from 'next/image';
 import Link from 'next/link';
-
-import ConsistOf from './components/ConsistOF';
-import LandingTestimonials from './components/LandingTestimonials';
-import LeadLandingRegistrationForm from './components/LeadLandingRegistrationForm';
 
 export default function LandingCaptacion() {
   const HEADER_HEIGHT = isMobileSSR()
@@ -32,217 +33,353 @@ export default function LandingCaptacion() {
     : HEADER_HEIGHT_DESKTOP;
   const HEADER_HEIGHT_CLASS = `h-[${HEADER_HEIGHT}px]`;
 
+  const videos = [
+    {
+      url: '6JTUo3RinD8',
+      active: true,
+    },
+    {
+      url: 'w2k8_rsVUow',
+      active: true,
+    },
+    {
+      url: 'ULjrbydmOiE',
+      active: true,
+    },
+    {
+      url: 'Bv1kC-be09U',
+      active: true,
+    },
+    {
+      url: 'yoFtEyG3Lgc',
+      active: true,
+    },
+    {
+      url: '3r1DnOMOEoQ',
+      active: true,
+    },
+    {
+      url: 'jdXB7I9HHrY',
+      active: true,
+    },
+    {
+      url: 'jIK-_jSETPg',
+      active: true,
+    },
+  ];
+
   return (
-    <App>
-      <MainLayout hideHeader>
-        <meta name="robots" content="noindex,follow" />
-        <header id="header" className="z-30 w-full bg-white">
-          <Container isHeader>
-            <Flex
-              layout="row-between"
-              className={`w-full relative py-4 lg:py-5 justify-between lg:justify-center ${HEADER_HEIGHT_CLASS}`}
-            >
-              <Link href={ROUTES.home} className="lg:absolute left-0 2xl:ml-20">
-                <SvgHolaglow
-                  fill={HOLAGLOW_COLORS['secondary']}
-                  className="h-[24px] lg:h-[32px] w-[98px] lg:w-[130px]"
-                />
-              </Link>
-
-              <Flex
-                layout="row-center"
-                className="lg:absolute right-0  2xl:mr-20"
-              >
-                <Button
-                  size={isMobileSSR() ? 'sm' : 'md'}
-                  type="tertiary"
-                  href={ROUTES.checkout.clinics}
-                >
-                  Reservar cita
-                  <SvgArrow
-                    height={16}
-                    width={16}
-                    className="ml-2 hidden md:block"
-                  />
-                </Button>
-              </Flex>
-            </Flex>
-          </Container>
-        </header>
-
-        <Container className="px-0 md:px-4 overflow-hidden">
-          <div className="px-4 md:px-0 relative md:grid md:grid-cols-2 pt-12 pb-16 border-b border-hg-black">
-            <div className="col-start-2 md:ml-16">
-              <Title isAnimated size="2xl" className="font-bold mb-4 md:mb-8">
-                Asesórate{' '}
-                <Underlined color={HOLAGLOW_COLORS['primary']}>
-                  gratis
-                </Underlined>{' '}
-                con nuestro equipo médico
-              </Title>
-              <Text isAnimated className="w-[220px] md:w-full md:mb-12">
-                Pide tu primera cita médica e infórmate sobre medicina estética
-                sin compromiso
-              </Text>
-              <Flex className="hidden md:block md:justify-start">
-                <Button
-                  isAnimated
-                  size="xl"
-                  type="tertiary"
-                  customStyles="bg-hg-primary hover:bg-hg-secondary100"
-                  href="#leadForm"
-                >
-                  Pide tu cita médica gratis
-                </Button>
-              </Flex>
-            </div>
-            <div className="row-start-1">
-              <Image
-                src={`/images/statics/landings/captacion/hero${
-                  isMobileSSR() ? '' : 'Desktop'
-                }.png`}
-                alt="Asesórate gratis con nuestro equipo médico"
-                height={1044}
-                width={924}
-                className="translate-x-4 -translate-y-[5%] md:translate-y-0 md:translate-x-0"
+    <MainLayoutSSR
+      hideHeader
+      className="bg-derma-secondary300"
+      hideFloatingBottomBar
+    >
+      <meta name="robots" content="noindex,follow" />
+      <header id="header" className="z-30 w-full bg-transparent">
+        <Container isHeader>
+          <Flex
+            layout="row-between"
+            className={`w-full relative py-4 lg:py-5 justify-between lg:justify-center ${HEADER_HEIGHT_CLASS}`}
+          >
+            <Link href={ROUTES.home} className="lg:absolute left-0 2xl:ml-20">
+              <SvgHolaglow
+                fill={HOLAGLOW_COLORS['secondary']}
+                className="h-[24px] lg:h-[32px] w-[98px] lg:w-[130px]"
               />
-              <Flex className="justify-center col-start-2 -mt-[40%] md:hidden md:mt-auto md:self-start md:justify-start md:ml-16 ">
-                <Button
-                  size="xl"
-                  type="tertiary"
-                  customStyles="bg-hg-primary hover:bg-hg-secondary100"
-                  href="#leadForm"
-                >
-                  Pide tu cita médica gratis
-                </Button>
-              </Flex>
-            </div>
-          </div>
-        </Container>
+            </Link>
 
-        <Container className="relative px-0">
-          <div className="md:absolute right-4 bottom-4">
-            <GoogleStars />
-          </div>
-        </Container>
-
-        <ConsistOf />
-
-        <Products hideCategorySelector />
-
-        <div className="bg-[url('/images/statics/landings/captacion/testimonialsBg.svg')] md:bg-[url('/images/statics/landings/captacion/testimonialsBg-desktop.svg')] bg-no-repeat bg-center py-12 md:py-16">
-          <LandingTestimonials />
-        </div>
-
-        <div
-          className="bg-hg-black50 pb-4 rounded-t-2xl md:bg-hg-secondary100"
-          id="leadForm"
-        >
-          <Container className="py-8 md:py-16">
             <Flex
-              layout="col-left"
-              className="md:flex md:flex-row items-center md:gap-16"
+              layout="row-center"
+              className="lg:absolute right-0 gap-3 2xl:mr-20"
             >
-              <div className="md:order-2">
-                <Title
-                  isAnimated
-                  origin={isMobileSSR() ? 'bottom' : 'right'}
-                  size="2xl"
-                  className="font-bold mb-4"
-                >
-                  Rellena el formulario para{' '}
-                  <Underlined color={HOLAGLOW_COLORS['primary']}>
-                    agendar
-                  </Underlined>{' '}
-                  tu cita
-                </Title>
-                <Text
-                  isAnimated
-                  origin={isMobileSSR() ? 'bottom' : 'right'}
-                  className="text-hg-black500 mb-8 md:text-lg"
-                >
-                  En el siguiente paso podrás seleccionar clínica
-                </Text>
-              </div>
-              <AnimateOnViewport
-                origin={isMobileSSR() ? 'bottom' : 'left'}
-                className="w-full"
-              >
-                <div className="md:bg-hg-black50 md:p-8 rounded-2xl shrink-0 md:shadow-centered-secondary">
-                  <LeadLandingRegistrationForm />
-                </div>
-              </AnimateOnViewport>
-            </Flex>
-          </Container>
-        </div>
-
-        <div className="bg-hg-pink/30 py-16">
-          <Container className="px-0 md:flex md:flex-row items-center">
-            <Container className="mb-4 md:w-3/4">
-              <Title isAnimated size="2xl" className="font-bold mb-4">
-                Diseñamos contigo un tratamiento{' '}
-                <Underlined color={HOLAGLOW_COLORS['primary']}>
-                  a tu medida
-                </Underlined>
-              </Title>
-            </Container>
-
-            <Container className="mt-12 pt-6 md:mt-0 px-0 md:px-4 md:w-2/5 shrink-0 overflow-hidden md:overflow-auto">
-              <Image
-                src="/images/statics/landings/captacion/comoFunciona.png"
-                alt="¿Cómo Funciona?"
-                width={816}
-                height={816}
-                className="w-full scale-[115%] md:scale-100 mt-4"
-              />
-            </Container>
-          </Container>
-          <AnimateOnViewport>
-            <FullWidthCarousel
-              className="pb-8 -mt-8"
-              visibleSlides={isMobileSSR() ? 1.5 : null}
-              isPlaying
-            >
-              {Array.from({ length: 15 }, (_, index) => (
-                <div
-                  className="aspect-[3/4] relative h-[300px] md:h-[350px] mr-8 rounded-3xl overflow-hidden"
-                  key={index}
-                >
-                  <Image
-                    src={`/images/statics/landings/captacion/comoFunciona/${
-                      index + 1
-                    }.jpg`}
-                    alt={`Cómo funciona ${index}`}
-                    fill
-                    className="object-cover"
-                    loading="eager"
-                  />
-                </div>
-              ))}
-            </FullWidthCarousel>
-          </AnimateOnViewport>
-
-          <Container>
-            <Flex className="justify-center">
               <Button
-                size="xl"
-                type="tertiary"
-                customStyles="bg-hg-primary hover:bg-hg-secondary100"
-                href="#leadForm"
+                className="md:order-2"
+                size={isMobileSSR() ? 'sm' : 'md'}
+                type="white"
+                href={ROUTES.checkout.clinics}
+                customStyles="bg-transparent"
               >
-                Pide tu cita médica gratis.
+                Reservar cita
+                <SvgArrow
+                  height={16}
+                  width={16}
+                  className="ml-2 hidden md:block"
+                />
+              </Button>
+              <Button
+                size={isMobileSSR() ? 'sm' : 'md'}
+                type="secondary"
+                href={ROUTES.checkout.clinics}
+                customStyles="bg-transparent md:bg-inherit border-0 md:border md:border-hg-secondary"
+              >
+                <SvgCalling className=" text-hg-black md:text-hg-secondary h-6 w-6 md:h-4 md:w-4 -mr-4 md:mr-2" />
+                <span className="hidden md:inline">(+34) 682 417 208</span>
               </Button>
             </Flex>
-          </Container>
-        </div>
+          </Flex>
+        </Container>
+      </header>
 
-        <div className="bg-[#f8fefe] pt-12 pb-24 md:py-16">
-          <Professionals />
-        </div>
+      <div className="relative">
+        <Container className="pt-12 pb-8 md:py-16 flex flex-col md:flex-row">
+          <div className="flex md:w-1/2  md:pl-12 ml-auto">
+            <Flex layout="col-left">
+              <Title isAnimated className="font-bold mb-4 md:mb-8 text-3xl">
+                Cita de asesoramiento gratis con escáner facial
+              </Title>
+              <Flex className="absolute bottom-8 left-0 right-0 md:relative mx-auto md:mx-0 w-full justify-center md:justify-start">
+                <Button isAnimated size="xl" type="primary" href="#leadForm">
+                  <SvgUserScan className="mr-2 h-6 w-6" />
+                  Pedir cita gratis
+                </Button>
+              </Flex>
+            </Flex>
+          </div>
+          <div className="md:absolute top-0 bottom-0 left-0 right-1/2">
+            <div className="relative h-full">
+              <Image
+                src="/images/statics/landings/captacion/PVWider.png"
+                alt="descubre"
+                className="object-cover object-right-bottom"
+                fill
+              />
+            </div>
+          </div>
+        </Container>
+        <Image
+          src="/images/statics/landings/captacion/PVWider.png"
+          alt="descubre"
+          height={1552}
+          width={1440}
+          className="md:hidden w-full"
+        />
+      </div>
 
-        <Clinics />
-        <GoToTreatments />
-      </MainLayout>
-    </App>
+      <div className="bg-hg-secondary/30 py-4">
+        <Container>
+          <Flex className="gap-4 w-full">
+            <SvgHolaglowHand className="h-[72px] w-[72px] p-3 bg-hg-secondary text-hg-primary rounded-full shrink-0" />
+            <Flex layout="col-left" className="gap-1 w-full">
+              <Text className="font-semibold text-lg">
+                Holaglow clinics{' '}
+                <span className="inline-block text-xs text-hg-black500 font-normal md:ml-6">
+                  +1000 pacientes atendidos
+                </span>
+              </Text>
+              <Flex className="gap-2 text-hg-secondary w-full">
+                <Text className="font-semibold text-lg -mb-1">4.9</Text>
+                <SvgStar />
+                <SvgStar />
+                <SvgStar />
+                <SvgStar />
+                <SvgStar />
+                <SvgByGoogle className="ml-auto -mb-1" />
+              </Flex>
+            </Flex>
+          </Flex>
+        </Container>
+      </div>
+
+      <div className="bg-hg-tertiary/10">
+        <Container className="pt-12 md:pt-16 ">
+          <Title isAnimated size="2xl" className="font-bold mb-4 md:mb-8">
+            ¿En qué consiste nuestro asesoramiento?
+          </Title>
+        </Container>
+
+        <Container className="px-0 md:px-4 pb-12 md:pb-16 ">
+          <Flex className="w-full md:gap-16 items-start">
+            <Carousel
+              controlstyles="px-4"
+              hasDots={isMobileSSR()}
+              dragEnabled
+              touchEnabled
+              visibleSlides={isMobileSSR() ? 1.25 : 3}
+            >
+              {[
+                {
+                  icon: 'SvgCalendar',
+                  iconFamily: 'older',
+                  title: 'Pide tu cita gratis',
+                  description:
+                    'Reserva una cita con nuestro equipo médico y cuéntanos qué objetivos tienes para tu piel',
+                },
+                {
+                  icon: 'SvgUserScan',
+                  iconFamily: 'default',
+                  title: 'Escáner facial en 3D',
+                  description:
+                    'Usamos la última tecnología para generar tu imagen en tres dimensiones y ver los resultados que tendrían distintos tratamientos',
+                },
+                {
+                  icon: 'SvgDiamond',
+                  iconFamily: 'older',
+                  title: 'Elige los resultados que deseas',
+                  description:
+                    'Diseñaremos el tratamiento ideal con la información del escáner para conseguir los resultados que quieres',
+                },
+              ].map((item, index) => (
+                <div className="p-4 h-full flex w-full" key={item.title}>
+                  <div
+                    className=" bg-derma-secondary400 border border-hg-secondary700 rounded-2xl p-4 md:p-6 md:py-10 relative justify-center items-center"
+                    style={{
+                      boxShadow: '0px 4px 12px 0px #A96FE74D',
+                    }}
+                  >
+                    <span className="absolute top-0 left-0 px-6 border-b border-r border-hg-secondary700 font-gtUltra text-3xl text-hg-secondary500 font-bold">
+                      {index + 1}
+                    </span>
+                    <DynamicIcon
+                      family={item.iconFamily as 'default' | 'older'}
+                      name={item.icon}
+                      height={48}
+                      width={48}
+                      className="text-hg-secondary mx-auto mb-8"
+                    />
+                    <Text className="text-center text-xl font-semibold text-hg-secondary mb-4">
+                      Pide tu cita gratis
+                    </Text>
+                    <Text className="text-center text-hg-black500">
+                      Reserva una cita con nuestro equipo médico y cuéntanos qué
+                      objetivos tienes para tu piel
+                    </Text>
+                  </div>
+                </div>
+              ))}
+            </Carousel>
+          </Flex>
+        </Container>
+      </div>
+
+      <div className="bg-derma-secondary300">
+        <Container className="pt-12 md:pt-16 ">
+          <Title isAnimated size="2xl" className="font-bold mb-8 md:mb-12">
+            Antes y después
+          </Title>
+        </Container>
+
+        <Container className="px-0 md:px-4 pb-12 md:pb-16 ">
+          <Flex className="w-full md:gap-16 items-start">
+            <Carousel
+              controlstyles="px-4"
+              hasControls
+              hasCounter={isMobileSSR()}
+              dragEnabled
+              touchEnabled
+              visibleSlides={isMobileSSR() ? 1 : 3}
+              className="md:px-0 rounded-xl aspect-square md:aspect-auto"
+            >
+              {[
+                {
+                  treatment: 'Aumento de labios',
+                  src: 'https://www.holaglow.com/_next/image?url=https://budgetimages.blob.core.windows.net/images/antes-y-despues/aumento-labios/1.jpg&w=1080&q=75',
+                },
+                {
+                  treatment:
+                    'Arrugas de expresión: frente, entrecejo y patas de gallo',
+                  src: 'https://www.holaglow.com/_next/image?url=https://budgetimages.blob.core.windows.net/images/antes-y-despues/arrugas-expresion-frente-entrecejo-patas-gallo/1.jpg&w=1080&q=75',
+                },
+                {
+                  treatment: 'Relleno de ojeras',
+                  src: 'https://www.holaglow.com/_next/image?url=https://budgetimages.blob.core.windows.net/images/antes-y-despues/relleno-ojeras/1.jpg&w=1080&q=75',
+                },
+                {
+                  treatment: 'Rinomodelacion',
+                  src: 'https://www.holaglow.com/_next/image?url=https://budgetimages.blob.core.windows.net/images/antes-y-despues/rinomodelacion/1.jpg&w=1080&q=75',
+                },
+                {
+                  treatment: 'Proyeccion de mentón',
+                  src: 'https://www.holaglow.com/_next/image?url=https://budgetimages.blob.core.windows.net/images/antes-y-despues/proyeccion-menton/1.jpg&w=1080&q=75',
+                },
+                {
+                  treatment: 'Surco nasogeniano',
+                  src: 'https://www.holaglow.com/_next/image?url=https://budgetimages.blob.core.windows.net/images/antes-y-despues/surco-nasogeniano/1.jpg&w=1080&q=75',
+                },
+              ].map(item => (
+                <div className="px-4 h-full flex w-full" key={item.treatment}>
+                  <div className="overflow-hidden relative flex flex-col h-full w-full  justify-between ">
+                    <Flex className="grow w-full justify-center mb-6">
+                      <Text className="font-semibold text-center text-lg">
+                        {item.treatment}
+                      </Text>
+                    </Flex>
+                    <div className="relative aspect-square">
+                      <Image
+                        src={item.src || ''}
+                        alt={'antes y despues ' + item.treatment}
+                        fill
+                        className="object-cover rounded-3xl"
+                      />
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </Carousel>
+          </Flex>
+        </Container>
+      </div>
+
+      <div className="bg-hg-secondary100 py-12 md:py-16">
+        <ProfessionalsSSR />
+      </div>
+
+      <div className="md:bg-hg-secondary/30 relative z-10">
+        <Container className="px-0 md:py-16 md:px-4">
+          <Flex className="w-full gap-8 md:gap-12 items-start">
+            <div className="hidden md:block md:w-1/2">
+              <Title isAnimated size="2xl" className="font-bold mb-4 md:mb-8">
+                Pide tu cita gratis
+              </Title>
+              <Text className="text-hg-black500 mb-8 md:text-lg">
+                Te asesoraremos con nuestro escáner facial 3D
+              </Text>
+            </div>
+            <div
+              className="md:w-1/2 bg-derma-secondary500 rounded-3xl p-4 md:p-8 border border-hg-secondary700 md:border-0 -mb-4 md:-mb-0"
+              style={{ boxShadow: '0px 4px 12px 0px #A96FE74D' }}
+            >
+              <div className="md:hidden pt-4">
+                <Title isAnimated size="2xl" className="font-bold mb-4 md:mb-8">
+                  Pide tu cita gratis
+                </Title>
+                <Text className="text-hg-black500 mb-8 md:text-lg">
+                  Te asesoraremos con nuestro escáner facial 3D
+                </Text>
+              </div>
+              <RegistrationForm isDerma={false} />
+            </div>
+          </Flex>
+        </Container>
+      </div>
+
+      <ClinicsSSR />
+
+      <ProductVideos videos={videos} />
+
+      <Testimonials />
+
+      <div className="bg-hg-secondary">
+        <Container className="py-12 md:py-16">
+          <Flex className="flex-col items-center gap-4 md:gap-8">
+            <SvgUserScan className="h-12 w-12 md:h-16 md:w-16 text-hg-secondary300" />
+            <Title
+              isAnimated
+              size="2xl"
+              className="text-hg-primary text-3xl font-bold text-center"
+            >
+              Asesórate con nuestro equipo médico
+            </Title>
+            <Button
+              size="lg"
+              type="primary"
+              href="#"
+              customStyles="bg-hg-secondary300 text-hg-secondary hover:bg-hg-secondary100"
+            >
+              Pedir cita gratis
+            </Button>
+          </Flex>
+        </Container>
+      </div>
+    </MainLayoutSSR>
   );
 }
