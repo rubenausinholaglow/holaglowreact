@@ -124,10 +124,10 @@ export default function LandingCaptacion() {
         <Container className="pt-12 pb-8 md:py-16 flex flex-col md:flex-row">
           <div className="flex md:w-1/2  md:pl-12 ml-auto">
             <Flex layout="col-left">
-              <Title isAnimated className="font-bold mb-4 md:mb-8 text-3xl">
+              <Text className="font-bold mb-4 md:mb-8 text-3xl font-gtUltra text-hg-secondary md:text-5xl lg:text-6xl">
                 Cita de asesoramiento gratis con escáner facial
-              </Title>
-              <Flex className="absolute bottom-8 left-0 right-0 md:relative mx-auto md:mx-0 w-full justify-center md:justify-start">
+              </Text>
+              <Flex className="absolute bottom-8 left-0 right-0 md:relative md:bottom-0 mx-auto md:mx-0 w-full justify-center md:justify-start">
                 <Button isAnimated size="xl" type="primary" href="#leadForm">
                   <SvgUserScan className="mr-2 h-6 w-6" />
                   Pedir cita gratis
