@@ -1,8 +1,10 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+import ReactCardFlip from 'react-card-flip';
 import { isMobile } from 'react-device-detect';
 import { fetchProduct } from '@utils/fetch';
+import { PacksConfigured } from '@utils/packUtils';
 import ROUTES from '@utils/routes';
 import { Quantifier } from 'app/(dashboard)/dashboard/(pages)/budgets/HightLightedProduct/Quantifier';
 import {
@@ -10,7 +12,13 @@ import {
   useCartStore,
 } from 'app/(dashboard)/dashboard/(pages)/budgets/stores/userCartStore';
 import DynamicIcon from 'app/(web)/components/common/DynamicIcon';
-import { SvgArrow, SvgGlow, SvgInjection } from 'app/icons/IconsDs';
+import {
+  SvgArrow,
+  SvgCross,
+  SvgGlow,
+  SvgInfoCircle,
+  SvgInjection,
+} from 'app/icons/IconsDs';
 import {
   useGlobalPersistedStore,
   useSessionStore,
@@ -42,12 +50,8 @@ function ProductPriceItemsCard({
   const { setSelectedTreatments, setSelectedPack } = useSessionStore(
     state => state
   );
-  const {
-    productHighlighted,
-    addItemToCart,
-    getQuantityOfProduct,
-    removeSingleProduct,
-  } = useCartStore(state => state);
+  const { addItemToCart, getQuantityOfProduct, removeSingleProduct } =
+    useCartStore(state => state);
 
   const [medicalVisitProduct, setMedicalVisitProduct] = useState<Product>();
 
@@ -178,62 +182,148 @@ export default function ProductPriceCard({
   product,
   isDashboard = false,
   className,
+  index,
 }: {
   product: Product;
   parentProduct: Product;
   isDashboard?: boolean;
   className?: string;
+  index: number;
 }) {
+  const ProductFlowwwIds = () => {
+    return PacksConfigured.filter(
+      pack => pack.packId === product.flowwwId.toString()
+    )[0]?.productId;
+  };
+
+  const [cardHeight, setCardHeight] = useState(0);
+  const [isFlipped, setIsFlipped] = useState<boolean>(false);
+  const [hasRinomodelacion, setHasRinomodelacion] = useState<boolean>(false);
+  const [hasRellenoOjeras, setHasRellenoOjeras] = useState<boolean>(false);
   const [discountedPrice, setDiscountedPrice] = useState<null | number>(null);
 
   useEffect(() => {
     if (product && !isEmpty(product.discounts)) {
       setDiscountedPrice(getDiscountedPrice(product));
     }
+
+    if (product?.flowwwId && product.isPack) {
+      setHasRinomodelacion(
+        ProductFlowwwIds() ? ProductFlowwwIds().includes('855') : false
+      );
+
+      setHasRellenoOjeras(
+        ProductFlowwwIds() ? ProductFlowwwIds().includes('854') : false
+      );
+    }
   }, [product]);
 
+  useEffect(() => {
+    const frontPriceCard = document.getElementById(`frontPriceCard-${index}`);
+
+    if (frontPriceCard) {
+      setCardHeight(frontPriceCard.clientHeight);
+    }
+  }, []);
+
   return (
-    <Flex
-      className={`bg-white flex-col p-6 rounded-2xl shadow-centered-secondary w-full md:w-1/2 ${className}`}
+    <ReactCardFlip
+      isFlipped={isFlipped}
+      flipDirection="horizontal"
+      containerClassName="w-full md:w-1/2 relative"
     >
-      <Flex layout="col-left" className="w-full">
-        <Flex layout="row-between" className="w-full mb-2 items-start">
-          <Flex className="text-hg-secondary">
-            <span className="text-2xl font-semibold md:text-2xl mr-2">
-              {discountedPrice ? discountedPrice : product.price} €
-            </span>
-            {discountedPrice && (
-              <span className="text-l inline-block line-through font-normal text-hg-black500">
-                {product.price} €
-              </span>
-            )}
-          </Flex>
-          <Flex layout="row-right">
-            {!isEmpty(product.tags) && product.tags[0].tag && (
-              <Flex
-                layout="row-center"
-                className="bg-hg-primary rounded-full p-1 px-2"
-              >
-                <SvgGlow
-                  height={12}
-                  width={12}
-                  className="text-hg-black mr-1"
-                />
-                <Text className="text-hg-black" size="xs">
-                  {product.tags[0].tag}
-                </Text>
-              </Flex>
-            )}
-          </Flex>
-        </Flex>
-        <Text className="font-semibold md:text-lg">{product.title}</Text>
-        {product.isPack && isMobile && (
-          <Text className="font-semibold md:text-lg">¡Tu eliges la zona!</Text>
+      <Flex
+        id={`frontPriceCard-${index}`}
+        className={`bg-white h-full flex-col p-6 rounded-2xl shadow-centered-secondary ${className}`}
+      >
+        {(!hasRinomodelacion || !hasRellenoOjeras) && product.isPack && (
+          <div
+            className="absolute top-6 right-6 bg-derma-secondary300 rounded-full p-2 text-hg-secondary shrink-0 aspect-square flex justify-center items-center cursor-pointer"
+            onClick={() => setIsFlipped(!isFlipped)}
+          >
+            <SvgInfoCircle className="h-6 w-6" />
+          </div>
         )}
+
+        <Flex layout="col-left" className="w-full">
+          <Flex layout="row-between" className="w-full mb-2 items-start">
+            <Flex className="text-hg-secondary">
+              <span className="text-2xl font-semibold md:text-2xl mr-2">
+                {discountedPrice ? discountedPrice : product.price} €
+              </span>
+              {discountedPrice && (
+                <span className="text-l inline-block line-through font-normal text-hg-black500">
+                  {product.price} €
+                </span>
+              )}
+            </Flex>
+
+            <Flex layout="row-right">
+              {!isEmpty(product.tags) && product.tags[0].tag && (
+                <Flex
+                  layout="row-center"
+                  className="bg-hg-primary rounded-full p-1 px-2"
+                >
+                  <SvgGlow
+                    height={12}
+                    width={12}
+                    className="text-hg-black mr-1"
+                  />
+                  <Text className="text-hg-black" size="xs">
+                    {product.tags[0].tag}
+                  </Text>
+                </Flex>
+              )}
+            </Flex>
+          </Flex>
+          <Text className="font-semibold md:text-lg">{product.title}</Text>
+          {product.isPack && isMobile && (
+            <Text className="font-semibold md:text-lg">
+              ¡Tu eliges la zona!
+            </Text>
+          )}
+        </Flex>
+        <Flex layout="col-left" className="w-full items-start pt-2">
+          <ProductPriceItemsCard isDashboard={isDashboard} product={product} />
+        </Flex>
       </Flex>
-      <Flex layout="col-left" className="w-full items-start pt-2">
-        <ProductPriceItemsCard isDashboard={isDashboard} product={product} />
-      </Flex>
-    </Flex>
+      <div className="h-full flex">
+        {(!hasRinomodelacion || !hasRellenoOjeras) && (
+          <div
+            className="bg-hg-secondary text-white rounded-2xl  flex flex-col items-start gap-4 p-6"
+            style={{ minHeight: `${cardHeight}px`, height: `${cardHeight}px` }}
+          >
+            <div
+              className="bg-white rounded-full p-2 text-hg-secondary shrink-0 aspect-square flex justify-center items-center self-end cursor-pointer"
+              onClick={() => setIsFlipped(!isFlipped)}
+            >
+              <SvgCross className="h-4 w-4" />
+            </div>
+
+            {!hasRinomodelacion && !hasRellenoOjeras && (
+              <p className="md:text-lg font-semibold mb-auto">
+                *No incluye los tratamientos de rinomodelación ni relleno de
+                ojeras.
+              </p>
+            )}
+
+            {!hasRinomodelacion && hasRellenoOjeras && (
+              <p className="md:text-lg font-semibold mb-auto">
+                *No incluye el tratamiento de rinomodelación.
+              </p>
+            )}
+
+            <Button
+              type="white"
+              onClick={() => setIsFlipped(!isFlipped)}
+              customStyles="border-0 text-hg-secondary"
+            >
+              <SvgArrow className="rotate-180 h-4 w-4 mr-2" />
+              Volver
+            </Button>
+          </div>
+        )}
+      </div>
+    </ReactCardFlip>
   );
 }

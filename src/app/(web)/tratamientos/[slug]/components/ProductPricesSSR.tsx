@@ -99,6 +99,7 @@ export default function ProductPricesSSR({ product }: { product: Product }) {
                     key={item.title}
                     product={item}
                     parentProduct={product}
+                    index={index}
                   />
                 ))
               ) : (
@@ -106,6 +107,7 @@ export default function ProductPricesSSR({ product }: { product: Product }) {
                   <ProductPriceCard
                     product={productItems[0]}
                     parentProduct={product}
+                    index={0}
                   />
                   <PVCard />
                 </>
@@ -132,73 +134,6 @@ export default function ProductPricesSSR({ product }: { product: Product }) {
           </Flex>
         </CheckHydration>
 
-        {/* {isSessionProduct && isEmpty(groupedSessionProducts) && (
-          <Flex layout="col-left" className="md:flex-row md:gap-8">
-            <Flex
-              layout="col-left"
-              className="bg-white p-3 md:p-0 rounded-2xl w-full shadow-centered-secondary md:bg-transparent md:shadow-none"
-            >
-              <Text className="p-3 font-semibold md:hidden">
-                {product.title}
-              </Text>
-
-              <Flex
-                layout="col-left"
-                className="gap-4 p-3 w-full md:flex-row md:gap-12"
-              >
-                {productItems.map((item: Product, index: number) => {
-                  if (item.price > 0) {
-                    return (
-                      <ProductSessionPriceCard
-                        key={item.title}
-                        product={item}
-                        index={index}
-                      />
-                    );
-                  }
-                })}
-              </Flex>
-            </Flex>
-          </Flex>
-        )}
-
-        {isSessionProduct && !isEmpty(groupedSessionProducts) && (
-          <Flex
-            layout="col-left"
-            className="w-full gap-4 md:gap-12 md:flex-row"
-          >
-            {groupedSessionProducts?.map((products, productIndex) => (
-              <Flex
-                layout="col-left"
-                className="w-full md:flex-row md:gap-8"
-                key={`productGroup-${productIndex}`}
-              >
-                <Flex
-                  layout="col-left"
-                  className="bg-white p-3 rounded-2xl w-full shadow-centered-secondary "
-                >
-                  <Text className="p-3 font-semibold md:text-lg">
-                    {products[0].title}
-                  </Text>
-
-                  <Flex layout="col-left" className="gap-4 w-full">
-                    {products.map((item: Product, index: number) => {
-                      if (item.price > 0) {
-                        return (
-                          <ProductSessionGroupedPriceCard
-                            key={`product-card-${index}`}
-                            product={item}
-                          />
-                        );
-                      }
-                      return null;
-                    })}
-                  </Flex>
-                </Flex>
-              </Flex>
-            ))}
-          </Flex>
-        )} */}
         <Flex layout="row-center" className="pt-4">
           <BlogShareBar
             title={product.title}
