@@ -27,6 +27,8 @@ import { Text, Title } from 'designSystem/Texts/Texts';
 import Image from 'next/image';
 import Link from 'next/link';
 
+import LandingPPCFaqs from './components/LandingPPCFaqs';
+
 export default function LandingCaptacion() {
   const HEADER_HEIGHT = isMobileSSR()
     ? HEADER_HEIGHT_MOBILE
@@ -130,7 +132,7 @@ export default function LandingCaptacion() {
               <Flex className="absolute bottom-8 left-0 right-0 md:relative md:bottom-0 mx-auto md:mx-0 w-full justify-center md:justify-start">
                 <Button isAnimated size="xl" type="primary" href="#leadForm">
                   <SvgUserScan className="mr-2 h-6 w-6" />
-                  Pedir cita gratis
+                  Pedir cita
                 </Button>
               </Flex>
             </Flex>
@@ -354,6 +356,40 @@ export default function LandingCaptacion() {
 
       <ClinicsSSR />
 
+      <div className="bg-hg-secondary/10">
+        <Container className="pt-12 md:pt-16 ">
+          <Title isAnimated size="2xl" className="font-bold mb-4 md:mb-8">
+            Vive la experiencia glow
+          </Title>
+        </Container>
+        <Container className="pl-4 pr-0 md:px-4 pb-12 md:pb-16">
+          <Carousel
+            controlstyles="px-4"
+            hasDots={isMobileSSR()}
+            hasControls={!isMobileSSR()}
+            dragEnabled
+            touchEnabled
+            visibleSlides={isMobileSSR() ? 1.33 : 3}
+          >
+            {[
+              '/images/statics/landings/captacion/ppcSlider1.jpg',
+              '/images/statics/landings/captacion/ppcSlider2.jpg',
+              '/images/statics/landings/captacion/ppcSlider3.jpg',
+              '/images/statics/landings/captacion/ppcSlider4.jpg',
+            ].map(image => (
+              <div className="aspect-square relative mr-4" key={image}>
+                <Image
+                  fill
+                  src={image}
+                  alt="Descubre la experiencia Glow"
+                  className="object-cover rounded-3xl"
+                />
+              </div>
+            ))}
+          </Carousel>
+        </Container>
+      </div>
+
       <ProductVideos videos={videos} />
 
       <Testimonials />
@@ -380,6 +416,8 @@ export default function LandingCaptacion() {
           </Flex>
         </Container>
       </div>
+
+      <LandingPPCFaqs />
     </MainLayoutSSR>
   );
 }
