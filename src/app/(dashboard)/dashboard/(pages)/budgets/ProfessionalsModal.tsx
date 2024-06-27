@@ -5,7 +5,7 @@ import { isMobile } from 'react-device-detect';
 import { Professional } from '@interface/clinic';
 import clinicService from '@services/ClinicService';
 import DynamicIcon from 'app/(web)/components/common/DynamicIcon';
-import { SvgAdd, SvgArrow } from 'app/icons/IconsDs';
+import { SvgAdd, SvgArrow, SvgGoogle } from 'app/icons/IconsDs';
 import {
   useGlobalPersistedStore,
   useSessionStore,
@@ -122,7 +122,7 @@ export function ProfessionalDashboardCarousel() {
               <ul className="flex  gap-4 w-full text-hg-black500">
                 {PROFESSIONALS_BY_CITY.filter(
                   item => item.id === professional.id
-                )[0]?.bullets?.map((bullet: any) => (
+                )[0]?.bullets?.map((bullet: any, index: number) => (
                   <li
                     key={bullet.icon}
                     className="flex flex-col gap-2 justify-start items-center rounded-2xl bg-derma-secondary500 text-white p-4 w-1/4"
@@ -137,6 +137,9 @@ export function ProfessionalDashboardCarousel() {
                     <Text className="text-center text-hg-black500 text-xs">
                       {bullet.text}
                     </Text>
+                    {index === 3 && (
+                      <SvgGoogle className="text-hg-secondary -mt-5" />
+                    )}
                   </li>
                 ))}
               </ul>
