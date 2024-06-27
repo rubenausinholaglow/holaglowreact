@@ -98,7 +98,7 @@ export default function ProductDiscountForm({
 
     await validatePromoCode(promoRequest)
       .then(response => {
-        if (response.code != undefined) {
+        if (response.code != undefined && response.code.length > 0) {
           setPromoCode(response);
           setIsValidPromoCode(true);
         } else {
@@ -164,7 +164,7 @@ export default function ProductDiscountForm({
               name="DiscountCode"
               type="text"
               placeholder="Código"
-              className={` m-1 rounded-xl border-2 border-black w-[50%] text-center ${
+              className={` m-1 rounded-xl border-2 border-black text-center ${
                 isValidPromoCode === null
                   ? ''
                   : isValidPromoCode
