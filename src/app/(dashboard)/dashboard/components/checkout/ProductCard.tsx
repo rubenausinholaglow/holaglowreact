@@ -15,9 +15,14 @@ import { isEmpty } from 'lodash';
 interface Props {
   product: CartItem;
   isCheckout?: boolean;
+  showDiscount?: boolean;
 }
 
-export default function ProductCard({ product, isCheckout }: Props) {
+export default function ProductCard({
+  product,
+  isCheckout,
+  showDiscount,
+}: Props) {
   const { cart, removeFromCart, removeItemDiscount } = useCartStore(
     state => state
   );
@@ -116,7 +121,7 @@ export default function ProductCard({ product, isCheckout }: Props) {
         </Text>
       </Flex>
 
-      {showDiscountForm && (
+      {showDiscount && (
         <>
           {validProducts.includes(product.id.toLocaleUpperCase().toString()) &&
             productsPriceTotal > minPriceToStartDiscount && (

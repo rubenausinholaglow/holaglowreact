@@ -49,7 +49,7 @@ const Page = () => {
   const router = useRouter();
   const { setTreatmentPacks } = useSessionStore(state => state);
 
-  const { fetchWalletBalance } = usePromoUser();
+  const { fetchWalletBalance, promoCode } = usePromoUser();
 
   useEffect(() => {
     if (storedBudgetId && totalPriceInitial != totalPriceToShow) {
@@ -92,7 +92,9 @@ const Page = () => {
       })),
     };
     try {
-      fetchWalletBalance(user!.id);
+      if (promoCode == undefined) {
+        fetchWalletBalance(user!.id);
+      }
       if (storedBudgetId.length > 0) {
         setBudgetModified(false);
         budget.id = storedBudgetId;
@@ -125,6 +127,18 @@ const Page = () => {
     return cartTotalWithDiscount;
   }
 
+  const validProducts = [
+    '6FA3561B-2650-4E00-8ED3-852E95A38A0B',
+    '62403DAD-846F-46CF-B4CC-7DAE946E028E',
+  ];
+
+  const isValidProduct = (productId: string) => {
+    return validProducts.includes(productId);
+  };
+
+  // Maintain a set to track which products have had their discount shown
+  const shownDiscounts = new Set<string>();
+
   return (
     <App>
       <MainLayout isDashboard isCheckout>
@@ -148,11 +162,33 @@ const Page = () => {
               </Flex>
             </Flex>
             <ul>
-              {cart?.map(cartItem => (
-                <li key={cartItem.uniqueId}>
-                  <ProductCard isCheckout product={cartItem} />
-                </li>
-              ))}
+              {cart?.map(cartItem => {
+                // Check if the product is valid
+                const isValid = isValidProduct(cartItem.id.toLocaleUpperCase());
+
+                // Determine if the discount should be shown
+                const showDiscount =
+                  isValid &&
+                  !shownDiscounts.has(cartItem.id.toLocaleUpperCase());
+
+                // If valid and not shown yet, add to the set so it won't be shown again
+                if (
+                  isValid &&
+                  !shownDiscounts.has(cartItem.id.toLocaleUpperCase())
+                ) {
+                  shownDiscounts.add(cartItem.id.toLocaleUpperCase());
+                }
+
+                return (
+                  <li key={cartItem.uniqueId}>
+                    <ProductCard
+                      isCheckout
+                      product={cartItem}
+                      showDiscount={showDiscount}
+                    />
+                  </li>
+                );
+              })}
             </ul>
 
             <CheckoutTotal />

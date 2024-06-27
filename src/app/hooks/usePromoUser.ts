@@ -7,7 +7,7 @@ import { useSessionStore } from "app/stores/globalStore";
 
 export const usePromoUser = () => {
     const [wallet, setWallet] = useState<Wallet | undefined>(undefined);
-    const { setWalletClient, setPromoCode } = useSessionStore(state => state);
+    const { setWalletClient, setPromoCode, promoCode } = useSessionStore(state => state);
 
     const validatePromoCode = async (validatePromoCode: ValidatePromoCodeRequest) : Promise<PromoCodeResponse> => {
         const promo = await FinanceService.validatePromoCode(validatePromoCode);
@@ -34,6 +34,7 @@ export const usePromoUser = () => {
     
     return {
         wallet,
+        promoCode,
         validatePromoCode,
         fetchWalletBalance 
     }

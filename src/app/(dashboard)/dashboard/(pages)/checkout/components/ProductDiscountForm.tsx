@@ -38,9 +38,11 @@ export default function ProductDiscountForm({
 
   const { setPromoCode, promoCode } = useSessionStore(state => state);
 
-  const addItemToCart = useCartStore(state => state.addItemToCart);
   const cart = useCartStore(state => state.cart);
-
+  const applyItemDiscount = useCartStore(state => state.applyItemDiscount);
+  const cartItemDiscount = (data: any) => {
+    applyItemDiscount(data.cartUniqueId, data.Value, data.DiscountType);
+  };
   const { validatePromoCode } = usePromoUser();
   const [messageNotification, setMessageNotification] = useState<string | null>(
     null
@@ -76,8 +78,15 @@ export default function ProductDiscountForm({
     ) {
       return;
     }
-    const product = advancedPaymentProduct!;
-    addItemToCart(product as CartItem);
+
+    if (data.type === '%') {
+      const discount = {
+        cartUniqueId: cartUniqueId,
+        Value: data.value,
+        DiscountType: '%',
+      };
+      cartItemDiscount(discount);
+    }
   }
 
   const handleValidate = async () => {
@@ -102,6 +111,9 @@ export default function ProductDiscountForm({
         setMessageNotification(response!);
         setIsLoading(false);
       });
+    setTimeout(() => {
+      setMessageNotification('');
+    }, 4000);
   };
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -116,7 +128,7 @@ export default function ProductDiscountForm({
   };
 
   useEffect(() => {
-    if (promoCode != undefined && promoCode.code.length > 0) {
+    if (promoCode != undefined && promoCode.code?.length > 0) {
       setIsMGM(true);
       setCodeDiscount(promoCode.code);
       setIsValidPromoCode(true);
@@ -152,7 +164,7 @@ export default function ProductDiscountForm({
               name="DiscountCode"
               type="text"
               placeholder="Código"
-              className={` m-1 rounded-xl border-2 border-black w-[30%] text-center ${
+              className={` m-1 rounded-xl border-2 border-black w-[50%] text-center ${
                 isValidPromoCode === null
                   ? ''
                   : isValidPromoCode

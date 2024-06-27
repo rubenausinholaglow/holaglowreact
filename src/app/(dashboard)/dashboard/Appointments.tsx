@@ -565,7 +565,7 @@ const AppointmentsListComponent: React.FC<{
                     )}
               </Text>
               <Text className="w-[7%] shrink-0 p-2">
-                {isHeader ? 'Puntos' : appointment.totalPoints}
+                {isHeader ? 'Puntos' : `${appointment.totalPoints} €`}
               </Text>
             </>
           )}
