@@ -92,9 +92,9 @@ const Page = () => {
       })),
     };
     try {
-      if (promoCode == undefined) {
-        fetchWalletBalance(user!.id);
-      }
+      // if (promoCode == undefined) {
+      fetchWalletBalance(user!.id);
+      // }
       if (storedBudgetId.length > 0) {
         setBudgetModified(false);
         budget.id = storedBudgetId;
