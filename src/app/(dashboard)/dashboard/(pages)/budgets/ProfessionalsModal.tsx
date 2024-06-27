@@ -159,7 +159,7 @@ export function ProfessionalDashboardCarousel() {
               </ul>
             </div>
 
-            {professional.resultsImages?.length > 0 && (
+            {professional.beforeAndAfterImages?.length > 0 && (
               <div className="p-6">
                 <Title className="text-hg-secondary font-light font-gtUltra text-xl mb-4 text-left">
                   Resultados
@@ -167,38 +167,40 @@ export function ProfessionalDashboardCarousel() {
 
                 <Carousel
                   controlstyles="px-4"
-                  hasControls={professional.resultsImages?.length > 1}
-                  dragEnabled={professional.resultsImages?.length > 1}
-                  touchEnabled={professional.resultsImages?.length > 1}
+                  hasControls={professional.beforeAndAfterImages?.length > 1}
+                  dragEnabled={professional.beforeAndAfterImages?.length > 1}
+                  touchEnabled={professional.beforeAndAfterImages?.length > 1}
                   visibleSlides={2}
                   hasCounter={
-                    isMobile && professional.resultsImages?.length > 1
+                    isMobile && professional.beforeAndAfterImages?.length > 1
                   }
                   className={`md:px-0 rounded-xl aspect-[2/1] ${
-                    professional.resultsImages?.length < 2 && !isMobile
+                    professional.beforeAndAfterImages?.length < 2 && !isMobile
                       ? 'w-1/2'
                       : ''
                   }`}
                 >
-                  {professional.resultsImages.map((image: string) => (
-                    <div className="px-4" key={image}>
-                      <div className="overflow-hidden relative aspect-square">
-                        <div className="relative aspect-square">
-                          <div
-                            itemScope
-                            itemType="https://schema.org/ImageObject"
-                          >
-                            <Image
-                              src={image || ''}
-                              alt="antes y despues"
-                              fill
-                              className="object-cover rounded-3xl"
-                            />
+                  {professional.beforeAndAfterImages.map(
+                    (item: { id: string; urlAfter: string }) => (
+                      <div className="px-4" key={item.id}>
+                        <div className="overflow-hidden relative aspect-square">
+                          <div className="relative aspect-square">
+                            <div
+                              itemScope
+                              itemType="https://schema.org/ImageObject"
+                            >
+                              <Image
+                                src={item.urlAfter || ''}
+                                alt="antes y despues"
+                                fill
+                                className="object-cover rounded-3xl"
+                              />
+                            </div>
                           </div>
                         </div>
                       </div>
-                    </div>
-                  ))}
+                    )
+                  )}
                 </Carousel>
               </div>
             )}
