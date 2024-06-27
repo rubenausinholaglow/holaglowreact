@@ -122,7 +122,7 @@ export function ProfessionalDashboardCarousel() {
               <ul className="flex  gap-4 w-full text-hg-black500">
                 {PROFESSIONALS_BY_CITY.filter(
                   item => item.id === professional.id
-                )[0].bullets.map((bullet: any) => (
+                )[0]?.bullets?.map((bullet: any) => (
                   <li
                     key={bullet.icon}
                     className="flex flex-col gap-2 justify-start items-center rounded-2xl bg-derma-secondary500 text-white p-4 w-1/4"
@@ -141,23 +141,29 @@ export function ProfessionalDashboardCarousel() {
                 ))}
               </ul>
             </div>
+            {PROFESSIONALS_BY_CITY.filter(
+              item => item.id === professional.id
+            )[0]?.experience.length > 0 && (
+              <div className="p-6 bg-derma-secondary400">
+                <Title className="text-hg-secondary font-light font-gtUltra text-xl mb-4 text-left">
+                  Más sobre {professional.name}
+                </Title>
 
-            <div className="p-6 bg-derma-secondary400">
-              <Title className="text-hg-secondary font-light font-gtUltra text-xl mb-4 text-left">
-                Más sobre {professional.name}
-              </Title>
-
-              <ul className="flex flex-col gap-4">
-                {PROFESSIONALS_BY_CITY.filter(
-                  item => item.id === professional.id
-                )[0].experience.map((experience: any) => (
-                  <li key={experience} className="flex justify-start text-left">
-                    <SvgAdd className="shrink-0 mr-2 h-5 w-5 text-hg-black400" />
-                    <div>{experience}</div>
-                  </li>
-                ))}
-              </ul>
-            </div>
+                <ul className="flex flex-col gap-4">
+                  {PROFESSIONALS_BY_CITY.filter(
+                    item => item.id === professional.id
+                  )[0]?.experience?.map((experience: any) => (
+                    <li
+                      key={experience}
+                      className="flex justify-start text-left"
+                    >
+                      <SvgAdd className="shrink-0 mr-2 h-5 w-5 text-hg-black400" />
+                      <div>{experience}</div>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            )}
 
             {professional.beforeAndAfterImages?.length > 0 && (
               <div className="p-6">
