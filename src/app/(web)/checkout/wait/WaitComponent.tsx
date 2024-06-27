@@ -41,25 +41,7 @@ export default function WaitComponent({ isDerma }: { isDerma: boolean }) {
       await FinanceService.checkPaymentStatus(id, isDerma).then(async x => {
         tries++;
         if (x) {
-          if (selectedSlot) {
-            router.push('/checkout/confirmation');
-          } else {
-            let treatments = selectedTreatments!.map(x => x.title).join(', ');
-            if (!treatments) treatments = cart!.map(x => x.title).join(',');
-            const createTicketResponse = await FinanceService.createTicket(
-              {
-                flowwwToken: user!.flowwwToken,
-                paymentId: id,
-                treatmentTitle: treatments,
-              },
-              isDerma
-            );
-            if (createTicketResponse) {
-              router.push('/checkout/confirmation');
-            } else {
-              router.push('/checkout/contactform?error=true');
-            }
-          }
+          router.push('/checkout/confirmation');
         } else if (tries < 40) {
           setTimeout(async () => {
             await checkPaymentStatus(id);
