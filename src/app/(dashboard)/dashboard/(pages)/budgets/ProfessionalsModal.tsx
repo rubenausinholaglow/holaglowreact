@@ -141,6 +141,7 @@ export function ProfessionalDashboardCarousel() {
                 ))}
               </ul>
             </div>
+
             {PROFESSIONALS_BY_CITY.filter(
               item => item.id === professional.id
             )[0]?.experience.length > 0 && (

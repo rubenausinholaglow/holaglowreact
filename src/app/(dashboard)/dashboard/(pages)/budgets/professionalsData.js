@@ -1,11 +1,7 @@
 export const PROFESSIONALS_BY_CITY = [
   {
-    name: 'Sonsoles Espi',
+    //name: 'Sonsoles Espi',
     id: 'c5fd0fa7-ecb8-4079-9e3a-0dbc56dfa9aa',
-    urlPhoto:
-      'https://budgetimages.blob.core.windows.net/images/professionals/Sonsoles.png',
-    title: 'Directora Médica',
-    collegiateNumber: '505015795',
     bullets: [
       {
         icon: 'SvgUsers',
@@ -36,20 +32,10 @@ export const PROFESSIONALS_BY_CITY = [
       'Hands On total face con 11 viales de ácido hialurónico por Dr. Iratxe Díaz',
       'Curso de medicina estética avanzada por Dr. Moises Amselem',
     ],
-    resultsImages: [
-      'https://budgetimages.blob.core.windows.net/images/antes-y-despues/aumento-labios/13.jpg',
-      'https://budgetimages.blob.core.windows.net/images/antes-y-despues/aumento-labios/12.jpg',
-      'https://budgetimages.blob.core.windows.net/images/antes-y-despues/aumento-labios/9.jpg',
-      'https://budgetimages.blob.core.windows.net/images/antes-y-despues/aumento-labios/8.jpg',
-    ],
   },
   {
-    name: 'Farah Anani',
+    //name: 'Farah Anani',
     id: '0d4a3b0c-3782-4fc6-854d-381ac66d1feb',
-    urlPhoto:
-      'https://budgetimages.blob.core.windows.net/images/professionals/Alicia.png',
-    title: 'Directora Médica',
-    collegiateNumber: '60020',
     bullets: [
       {
         icon: 'SvgUsers',
@@ -78,20 +64,10 @@ export const PROFESSIONALS_BY_CITY = [
       'Master en Medicina y Ginecología Cosmética y Estética y del Envejecimiento Fisiológico por la UB',
       'Apasionada de la medicina estética y especialista en armonización facial y cuidado de la piel',
     ],
-    resultsImages: [
-      'https://budgetimages.blob.core.windows.net/images/antes-y-despues/aumento-labios/13.jpg',
-      'https://budgetimages.blob.core.windows.net/images/antes-y-despues/aumento-labios/12.jpg',
-      'https://budgetimages.blob.core.windows.net/images/antes-y-despues/aumento-labios/9.jpg',
-      'https://budgetimages.blob.core.windows.net/images/antes-y-despues/aumento-labios/8.jpg',
-    ],
   },
   {
-    name: 'Almudena Castellano',
+    //name: 'Almudena Castellano',
     id: 'f9ac7d8b-0324-448d-8397-cb9770881ef2',
-    urlPhoto:
-      'https://budgetimages.blob.core.windows.net/images/professionals/Almudena.png',
-    title: 'Directora Médica',
-    collegiateNumber: '505016030',
     bullets: [
       {
         icon: 'SvgUsers',
@@ -123,18 +99,10 @@ export const PROFESSIONALS_BY_CITY = [
       'AS Lips Masterclass: Aumento de labios',
       'Especialista en tratamiento de labios y rinomodelación',
     ],
-    resultsImages: [
-      'https://budgetimages.blob.core.windows.net/images/antes-y-despues/relleno-ojeras/1.jpg',
-      'https://budgetimages.blob.core.windows.net/images/antes-y-despues/relleno-ojeras/2.jpg',
-    ],
   },
   {
-    name: 'Fátima Lopez',
+    //name: 'Fátima Lopez',
     id: '93f54890-ac9f-4c1b-a5f9-d63ef1f77d4c',
-    urlPhoto:
-      'https://budgetimages.blob.core.windows.net/images/professionals/Alicia.png',
-    title: 'Médico estético',
-    collegiateNumber: '460606962',
     bullets: [
       {
         icon: 'SvgUsers',
@@ -164,12 +132,6 @@ export const PROFESSIONALS_BY_CITY = [
       'Formación One to One con Dra. Paula Rosso y Dr. José Vicente Lajo (formadores internacionales)',
       'Especialista en armonización facial ',
       'Formación de Anatomía con disección de cadáveres, Teoxane',
-    ],
-    resultsImages: [
-      'https://budgetimages.blob.core.windows.net/images/antes-y-despues/arrugas-expresion-frente-entrecejo-patas-gallo/1.jpg',
-      'https://budgetimages.blob.core.windows.net/images/antes-y-despues/arrugas-expresion-frente-entrecejo-patas-gallo/2.jpg',
-      'https://budgetimages.blob.core.windows.net/images/antes-y-despues/arrugas-expresion-frente-entrecejo-patas-gallo/3.jpg',
-      'https://budgetimages.blob.core.windows.net/images/antes-y-despues/arrugas-expresion-frente-entrecejo-patas-gallo/4.jpg',
     ],
   },
   {
@@ -205,12 +167,6 @@ export const PROFESSIONALS_BY_CITY = [
       'Master de Medicina Estética por la Universidad de Valencia, Fundación ADEIT',
       '+10 años de experiencia en medicina de urgencias y alta complejidad',
       'Especialista en labios y armonización facial ',
-    ],
-    resultsImages: [
-      'https://budgetimages.blob.core.windows.net/images/antes-y-despues/arrugas-expresion-frente-entrecejo-patas-gallo/1.jpg',
-      'https://budgetimages.blob.core.windows.net/images/antes-y-despues/arrugas-expresion-frente-entrecejo-patas-gallo/2.jpg',
-      'https://budgetimages.blob.core.windows.net/images/antes-y-despues/arrugas-expresion-frente-entrecejo-patas-gallo/3.jpg',
-      'https://budgetimages.blob.core.windows.net/images/antes-y-despues/arrugas-expresion-frente-entrecejo-patas-gallo/4.jpg',
     ],
   },
 ];
