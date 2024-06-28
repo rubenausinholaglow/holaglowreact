@@ -45,6 +45,9 @@ export const PaymentModule = () => {
   const [messageNotification, setMessageNotification] = useState<string | null>(
     null
   );
+  const [ticketCreated, setTicketCreated] = useState<boolean | undefined>(
+    undefined
+  );
   const [paymentStatus, setPaymentStatus] = useState<
     Record<string, StatusPayment>
   >({});
@@ -255,7 +258,33 @@ export const PaymentModule = () => {
       })),
     };
     try {
-      return await budgetService.createTicket(ticket);
+      await budgetService
+        .createTicket(ticket)
+        .then(response => {
+          if (response) {
+            if (remoteControl) {
+              const message: any = {
+                clinicId: storedClinicId,
+                BoxId: storedBoxId,
+                Page: 'Menu',
+              };
+              messageService.goToPage(message);
+              router.push('/dashboard/remoteControl');
+            }
+
+            setMessageNotification('Ticket Creado Correctamente');
+            setTicketCreated(true);
+            setShowCreateTicketButton(false);
+          } else {
+            setMessageNotification('Error creando ticket');
+            setTicketCreated(false);
+          }
+        })
+        .catch(error => {
+          Bugsnag.notify(error);
+          setTicketCreated(false);
+          setMessageNotification('Error creando ticket');
+        });
     } catch (error: any) {
       Bugsnag.notify(error);
     }
@@ -279,23 +308,7 @@ export const PaymentModule = () => {
       }
       setIsLoading(true);
       try {
-        const result = await sendTicket();
-        if (result) {
-          if (remoteControl) {
-            const message: any = {
-              clinicId: storedClinicId,
-              BoxId: storedBoxId,
-              Page: 'Menu',
-            };
-            messageService.goToPage(message);
-            router.push('/dashboard/remoteControl');
-          }
-
-          setMessageNotification('Ticket Creado Correctamente');
-          setShowCreateTicketButton(false);
-        } else {
-          //TODO - ALERT MESSAGE
-        }
+        await sendTicket();
       } catch (error: any) {
         setIsLoading(false);
         Bugsnag.notify(error);
@@ -435,11 +448,17 @@ export const PaymentModule = () => {
         size="lg"
         type="tertiary"
         className="w-full mb-8"
-        customStyles="bg-hg-primary"
+        customStyles={`${
+          ticketCreated == undefined
+            ? 'bg-hg-primary'
+            : ticketCreated
+            ? 'bg-hg-green text-white'
+            : 'bg-hg-error text-white'
+        }`}
         onClick={createTicket}
         disabled={!showCreateTicketButton}
       >
-        {isLoading ? <SvgSpinner height={24} width={24} /> : 'Generar Tiquet'}
+        {isLoading ? <SvgSpinner height={24} width={24} /> : 'Generar Ticket'}
       </Button>
       {messageNotification ? (
         <Notification message={messageNotification} />

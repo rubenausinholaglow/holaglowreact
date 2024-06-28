@@ -633,6 +633,9 @@ export default function PaymentInput(props: Props) {
                           'url("/images/forms/euro.svg") #ffffff no-repeat center right 12px',
                       }}
                       value={inputValue}
+                      readOnly={
+                        props.paymentMethod == PaymentMethod.AdvancedPayment
+                      }
                     />
                     {props.paymentBank === PaymentBank.Alma && (
                       <Button
