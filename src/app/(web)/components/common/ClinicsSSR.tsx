@@ -18,16 +18,14 @@ export default async function ClinicsSSR({
   const clinics = await getClinics();
 
   return (
-    <div className={className}>
-      <div className="relative bg-derma-secondary100">
-        <Container className="py-12 md:py-16">
-          <Title isAnimated size="2xl" className="font-bold mb-8 md:w-1/2">
-            Nuestras clínicas
-          </Title>
+    <div className={`relative bg-derma-secondary100 ${className}`}>
+      <Container className="py-12 md:py-16">
+        <Title isAnimated size="2xl" className="font-bold mb-8 md:w-1/2">
+          Nuestras clínicas
+        </Title>
 
-          {clinics && <ClinicsSelector clinics={clinics} />}
-        </Container>
-      </div>
+        {clinics && <ClinicsSelector clinics={clinics} />}
+      </Container>
     </div>
   );
 }

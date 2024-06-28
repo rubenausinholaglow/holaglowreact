@@ -2,7 +2,6 @@
 
 import { ClinicReview } from '@interface/clinic';
 import { SvgStar } from 'app/icons/IconsDs';
-import { Testimonial } from 'app/types/testimonial';
 import { Flex } from 'designSystem/Layouts/Layouts';
 import { Text } from 'designSystem/Texts/Texts';
 import Image from 'next/image';

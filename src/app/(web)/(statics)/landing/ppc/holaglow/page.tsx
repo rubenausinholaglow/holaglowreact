@@ -94,24 +94,26 @@ export default function LandingCaptacion() {
               layout="row-center"
               className="lg:absolute right-0 gap-3 2xl:mr-20"
             >
-              <Button
-                className="md:order-2"
-                size={isMobileSSR() ? 'sm' : 'md'}
-                type="white"
-                href={ROUTES.checkout.clinics}
-                customStyles="bg-transparent"
-              >
-                Reservar cita
-                <SvgArrow
-                  height={16}
-                  width={16}
-                  className="ml-2 hidden md:block"
-                />
-              </Button>
+              <div className="scroll-smooth">
+                <Button
+                  className="md:order-2"
+                  size={isMobileSSR() ? 'sm' : 'md'}
+                  type="white"
+                  href="#leadForm"
+                  customStyles="bg-transparent"
+                >
+                  Reservar cita
+                  <SvgArrow
+                    height={16}
+                    width={16}
+                    className="ml-2 hidden md:block"
+                  />
+                </Button>
+              </div>
               <Button
                 size={isMobileSSR() ? 'sm' : 'md'}
                 type="secondary"
-                href={ROUTES.checkout.clinics}
+                href="tel:+34 682 417 208"
                 customStyles="bg-transparent md:bg-inherit border-0 md:border md:border-hg-secondary"
               >
                 <SvgCalling className=" text-hg-black md:text-hg-secondary h-6 w-6 md:h-4 md:w-4 -mr-4 md:mr-2" />
@@ -130,10 +132,12 @@ export default function LandingCaptacion() {
                 Cita de asesoramiento gratis con escáner facial
               </Text>
               <Flex className="absolute bottom-8 left-0 right-0 md:relative md:bottom-0 mx-auto md:mx-0 w-full justify-center md:justify-start">
-                <Button isAnimated size="xl" type="primary" href="#leadForm">
-                  <SvgUserScan className="mr-2 h-6 w-6" />
-                  Pedir cita
-                </Button>
+                <div className="scroll-smooth">
+                  <Button isAnimated size="xl" type="primary" href="#leadForm">
+                    <SvgUserScan className="mr-2 h-6 w-6" />
+                    Pedir cita
+                  </Button>
+                </div>
               </Flex>
             </Flex>
           </div>
@@ -239,11 +243,10 @@ export default function LandingCaptacion() {
                       className="text-hg-secondary mx-auto mb-8"
                     />
                     <Text className="text-center text-xl font-semibold text-hg-secondary mb-4">
-                      Pide tu cita gratis
+                      {item.title}
                     </Text>
                     <Text className="text-center text-hg-black500">
-                      Reserva una cita con nuestro equipo médico y cuéntanos qué
-                      objetivos tienes para tu piel
+                      {item.description}
                     </Text>
                   </div>
                 </div>
@@ -325,7 +328,7 @@ export default function LandingCaptacion() {
         <ProfessionalsSSR />
       </div>
 
-      <div className="md:bg-hg-secondary/30 relative z-10">
+      <div className="md:bg-hg-secondary/30 relative z-10" id="leadForm">
         <Container className="px-0 md:py-16 md:px-4">
           <Flex className="w-full gap-8 md:gap-12 items-start">
             <div className="hidden md:block md:w-1/2">
@@ -354,7 +357,7 @@ export default function LandingCaptacion() {
         </Container>
       </div>
 
-      <ClinicsSSR />
+      <ClinicsSSR className="pt-8" />
 
       <div className="bg-hg-secondary/10">
         <Container className="pt-12 md:pt-16 ">
@@ -377,7 +380,7 @@ export default function LandingCaptacion() {
               '/images/statics/landings/captacion/ppcSlider3.jpg',
               '/images/statics/landings/captacion/ppcSlider4.jpg',
             ].map(image => (
-              <div className="aspect-square relative mr-4" key={image}>
+              <div className="aspect-[2/3] relative mr-4" key={image}>
                 <Image
                   fill
                   src={image}
@@ -392,7 +395,9 @@ export default function LandingCaptacion() {
 
       <ProductVideos videos={videos} />
 
-      <Testimonials />
+      <div className="bg-white/50">
+        <Testimonials />
+      </div>
 
       <div className="bg-hg-secondary">
         <Container className="py-12 md:py-16">
@@ -405,14 +410,16 @@ export default function LandingCaptacion() {
             >
               Asesórate con nuestro equipo médico
             </Title>
-            <Button
-              size="lg"
-              type="primary"
-              href="#"
-              customStyles="bg-hg-secondary300 text-hg-secondary hover:bg-hg-secondary100"
-            >
-              Pedir cita gratis
-            </Button>
+            <div className="scroll-smooth">
+              <Button
+                size="lg"
+                type="primary"
+                href="#leadForm"
+                customStyles="bg-hg-secondary300 text-hg-secondary hover:bg-hg-secondary100"
+              >
+                Pedir cita gratis
+              </Button>
+            </div>
           </Flex>
         </Container>
       </div>

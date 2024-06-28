@@ -24,8 +24,6 @@ export default function ProductVideos({
     finalVideos.push(genericVideo as any);
   }
 
-  console.log(videos);
-
   if (finalVideos.length < 0) {
     return <></>;
   }
