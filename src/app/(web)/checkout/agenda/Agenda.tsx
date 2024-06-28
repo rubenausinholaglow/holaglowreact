@@ -220,7 +220,7 @@ export default function Agenda({
       ) {
         if (
           x.box != '7' ||
-          (x.box == '7' && !isDashboard && !user) ||
+          (x.box == '7' && (isDashboard || previousAppointment)) ||
           isOnline
         ) {
           hours.push(x);
