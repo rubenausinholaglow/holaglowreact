@@ -406,7 +406,9 @@ export default function Agenda({
             }
           });
         } else if (!isDerma) {
-          router.push('/checkout/contactform');
+          router.push(
+            user ? ROUTES.checkout.confirmation : ROUTES.checkout.contactForm
+          );
         } else if (isDerma && isCheckout) {
           router.push('/planes/contactform');
         }
