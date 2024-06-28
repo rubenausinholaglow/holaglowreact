@@ -338,12 +338,7 @@ export default function Agenda({
               }
             }
           });
-        } else if (
-          user &&
-          selectedDay &&
-          !isDerma &&
-          (isDashboard || isCheckin || isOnline)
-        ) {
+        } else if (user && selectedDay) {
           setLoadingDays(true);
           setLoadingMonth(true);
           if (isDashboard || isCheckin)
@@ -406,11 +401,7 @@ export default function Agenda({
             }
           });
         } else if (!isDerma) {
-          router.push(
-            user ? ROUTES.checkout.confirmation : ROUTES.checkout.contactForm
-          );
-        } else if (isDerma && isCheckout) {
-          router.push('/planes/contactform');
+          router.push(ROUTES.checkout.contactForm);
         }
       } catch {
         setShowErrorMessage(true);
