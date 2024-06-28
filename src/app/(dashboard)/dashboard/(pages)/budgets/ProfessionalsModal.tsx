@@ -99,6 +99,9 @@ export function ProfessionalDashboardCarousel() {
                 </div>
                 <ul>
                   <li className="font-light font-gtUltra text-2xl">
+                    {professional.tittleAbbreviation
+                      ? `${professional.tittleAbbreviation}.`
+                      : ''}{' '}
                     {professional.name}
                   </li>
                   <li className="font-light text-hg-black500">
