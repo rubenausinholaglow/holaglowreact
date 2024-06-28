@@ -130,7 +130,7 @@ export const useCrmStore = create(
       },
     }),
     {
-      name: 'session-storage',
+      name: 'session-storagecrm',
       version: 1,
       storage: createJSONStorage(() => sessionStorage),
     }
