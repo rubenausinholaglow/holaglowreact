@@ -3,7 +3,6 @@ import ROUTES from '@utils/routes';
 import ClinicsSSR from 'app/(web)/components/common/ClinicsSSR';
 import DynamicIcon from 'app/(web)/components/common/DynamicIcon';
 import ProfessionalsSSR from 'app/(web)/components/common/ProfessionalsSSR';
-import RegistrationForm from 'app/(web)/components/common/RegistrationForm';
 import Testimonials from 'app/(web)/components/home/Testimonials';
 import MainLayoutSSR from 'app/(web)/components/layout/MainLayoutSSR';
 import ProductVideos from 'app/(web)/tratamientos/[slug]/components/ProductVideos';
@@ -28,6 +27,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 
 import LandingPPCFaqs from './components/LandingPPCFaqs';
+import LeadLandingRegistrationForm from './components/LeadLandingRegistrationForm';
 
 export default function LandingCaptacion() {
   const HEADER_HEIGHT = isMobileSSR()
@@ -110,6 +110,7 @@ export default function LandingCaptacion() {
                   />
                 </Button>
               </div>
+
               <Button
                 size={isMobileSSR() ? 'sm' : 'md'}
                 type="secondary"
@@ -351,7 +352,7 @@ export default function LandingCaptacion() {
                   Te asesoraremos con nuestro escáner facial 3D
                 </Text>
               </div>
-              <RegistrationForm isDerma={false} />
+              <LeadLandingRegistrationForm />
             </div>
           </Flex>
         </Container>
