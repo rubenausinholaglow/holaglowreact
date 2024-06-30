@@ -10,6 +10,7 @@ import {
 } from '@interface/product';
 import { Accordion } from '@radix-ui/react-accordion';
 import ProductService from '@services/ProductService';
+import UserService from '@services/UserService';
 import { fetchClinics } from '@utils/fetch';
 import useRoutes from '@utils/useRoutes';
 import { getClinicToSet, validTypesFilterCart } from '@utils/utils';
@@ -44,6 +45,7 @@ export default function Page() {
     setStateProducts,
     setDashboardProducts,
     dashboardProducts,
+    setCurrentUser,
   } = useGlobalPersistedStore(state => state);
   const {
     selectedClinic,
@@ -75,6 +77,14 @@ export default function Page() {
     };
 
     if (isEmpty(cart)) fetchProducts();
+    const queryString = window.location.search;
+    const params = new URLSearchParams(queryString);
+    const flowwwToken = params.get('flowwwToken');
+    if (flowwwToken) {
+      UserService.getUserById(flowwwToken, false).then(x => {
+        setCurrentUser(x);
+      });
+    }
   }, []);
 
   useEffect(() => {
@@ -341,65 +351,59 @@ export default function Page() {
   };
 
   return (
-    <App>
-      <MainLayout isDashboard>
-        <Container className="mt-4">
-          {!isLoading && (
-            <>
-              {!selectedClinic && (
-                <>
-                  <Title className="font-semibold mb-8">
-                    Selecciona clínica
-                  </Title>
+    <MainLayout isDashboard>
+      <Container className="mt-4">
+        {!isLoading && (
+          <>
+            {!selectedClinic && (
+              <>
+                <Title className="font-semibold mb-8">Selecciona clínica</Title>
 
-                  <CheckoutClinicSelector isDashboard className="mb-8" />
-                </>
-              )}
+                <CheckoutClinicSelector isDashboard className="mb-8" />
+              </>
+            )}
 
-              {selectedClinic && (
-                <>
-                  <Title className="font-semibold mb-8">
-                    {cart.length == 0
-                      ? 'Selecciona tratamiento'
-                      : 'Tratamientos'}
-                  </Title>
-                  <Flex layout="col-left" className="w-full">
-                    {!isEmpty(dashboardProducts) && !isLoading ? (
-                      <>
-                        {cart.length > 0 && (
-                          <>
-                            {renderProductsDashboard(cart, true)}
-                            {renderProductsDashboard(cart)}
-                          </>
-                        )}
-                        <TreatmentAccordionSelector
-                          isDashboard
-                          packInProductCart={packInProductCart}
-                        />
-                      </>
-                    ) : (
-                      <SvgSpinner className="w-full mb-4" />
-                    )}
-                  </Flex>
+            {selectedClinic && (
+              <>
+                <Title className="font-semibold mb-8">
+                  {cart.length == 0 ? 'Selecciona tratamiento' : 'Tratamientos'}
+                </Title>
+                <Flex layout="col-left" className="w-full">
+                  {!isEmpty(dashboardProducts) && !isLoading ? (
+                    <>
+                      {cart.length > 0 && (
+                        <>
+                          {renderProductsDashboard(cart, true)}
+                          {renderProductsDashboard(cart)}
+                        </>
+                      )}
+                      <TreatmentAccordionSelector
+                        isDashboard
+                        packInProductCart={packInProductCart}
+                      />
+                    </>
+                  ) : (
+                    <SvgSpinner className="w-full mb-4" />
+                  )}
+                </Flex>
 
-                  <Button
-                    onClick={() => {
-                      if (selectedTreatments.length > 0) {
-                        router.push(
-                          `${ROUTES.dashboard.checkIn.agenda}?isCheckin=false`
-                        );
-                      }
-                    }}
-                    disabled={selectedTreatments.length == 0}
-                  >
-                    Continuar
-                  </Button>
-                </>
-              )}
-            </>
-          )}
-        </Container>
-      </MainLayout>
-    </App>
+                <Button
+                  onClick={() => {
+                    if (selectedTreatments.length > 0) {
+                      router.push(
+                        `${ROUTES.dashboard.checkIn.agenda}?isCheckin=false`
+                      );
+                    }
+                  }}
+                  disabled={selectedTreatments.length == 0}
+                >
+                  Continuar
+                </Button>
+              </>
+            )}
+          </>
+        )}
+      </Container>
+    </MainLayout>
   );
 }

@@ -37,6 +37,7 @@ export const PaymentModule = () => {
   const [activePaymentMethod, setActivePaymentMethod] = useState('');
   const [, setOnLoad] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const [showCreateTicketButton, setShowCreateTicketButton] = useState(true);
   const [messageNotification, setMessageNotification] = useState<string | null>(
     null
   );
@@ -201,7 +202,7 @@ export const PaymentModule = () => {
       percentageDiscount: 0,
       manualPrice: 0,
       totalPrice: totalPrice,
-      totalPriceWithIva: totalPrice,
+      totalPriceWithIVA: totalPrice,
       clinicInfoId: storedClinicId,
       FlowwwId: '',
       referenceId: '',
@@ -254,33 +255,36 @@ export const PaymentModule = () => {
   };
 
   const createTicket = async () => {
-    if (Number(totalAmount) < Number(cartTotalWithDiscount)) {
-      alert('Hay cantidad pendiente de pagar');
-      return;
-    }
-    setIsLoading(true);
-    try {
-      const result = await sendTicket();
-      if (result) {
-        if (remoteControl) {
-          const message: any = {
-            clinicId: storedClinicId,
-            BoxId: storedBoxId,
-            Page: 'Menu',
-          };
-          messageService.goToPage(message);
-          router.push('/dashboard/remoteControl');
-        }
-
-        setMessageNotification('Ticket Creado Correctamente');
-      } else {
-        //TODO - ALERT MESSAGE
+    if (!isLoading) {
+      if (Number(totalAmount) < Number(cartTotalWithDiscount)) {
+        alert('Hay cantidad pendiente de pagar');
+        return;
       }
-    } catch (error: any) {
+      setIsLoading(true);
+      try {
+        const result = await sendTicket();
+        if (result) {
+          if (remoteControl) {
+            const message: any = {
+              clinicId: storedClinicId,
+              BoxId: storedBoxId,
+              Page: 'Menu',
+            };
+            messageService.goToPage(message);
+            router.push('/dashboard/remoteControl');
+          }
+
+          setMessageNotification('Ticket Creado Correctamente');
+          setShowCreateTicketButton(false);
+        } else {
+          //TODO - ALERT MESSAGE
+        }
+      } catch (error: any) {
+        setIsLoading(false);
+        Bugsnag.notify(error);
+      }
       setIsLoading(false);
-      Bugsnag.notify(error);
     }
-    setIsLoading(false);
   };
 
   const PAYMENT_ICONS = {
@@ -401,6 +405,7 @@ export const PaymentModule = () => {
         className="w-full mb-8"
         customStyles="bg-hg-primary"
         onClick={createTicket}
+        disabled={!showCreateTicketButton}
       >
         {isLoading ? <SvgSpinner height={24} width={24} /> : 'Generar Tiquet'}
       </Button>

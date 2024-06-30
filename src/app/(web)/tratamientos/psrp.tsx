@@ -38,7 +38,7 @@ export default function PsrpPage({ slug = '' }: { slug?: string }) {
     isModalOpen,
   } = useGlobalStore(state => state);
 
-  const [isHydrated, setIsHydrated] = useState(false);
+  const [isHydrated, setIsHydrated] = useState(true);
   const [isMobileFiltersVisible, setIsMobileFiltersVisible] = useState(false);
   const [showDesktopFilters, setShowDesktopFilters] = useState(false);
 
@@ -50,46 +50,49 @@ export default function PsrpPage({ slug = '' }: { slug?: string }) {
 
   useEffect(() => {
     if (slug !== '') {
-      if (slug !== 'packs') {
-        let filterToApply = '';
-        switch (slug) {
-          case 'piel':
-            filterToApply = 'Calidad de la Piel';
-            break;
-          case 'pelo':
-            filterToApply = 'Caida del pelo';
-            break;
-          default:
-            filterToApply =
-              slug[0].toUpperCase() + slug.substr(1).toLowerCase();
-            break;
-        }
-        const categoryExists = filterItems.some(x => {
-          const exists = x.buttons.some(y => {
-            if (y.value == filterToApply) return true;
-          });
-          return exists;
-        });
-        if (
-          filterToApply &&
-          productFilters.category.indexOf(filterToApply) == -1 &&
-          categoryExists
-        ) {
-          if (filterToApply == 'Calidad de la Piel')
-            filterToApply = 'Calidad Piel';
-          productFilters.category.push(filterToApply);
-        }
-      } else {
-        setSeoMetaData(metadataPacks.title, metadataPacks.description);
-        productFilters.isPack = true;
+      let filterToApply = '';
+      switch (slug) {
+        case 'piel':
+          filterToApply = 'Calidad de la Piel';
+          break;
+        case 'pelo':
+          filterToApply = 'Caida del pelo';
+          break;
+        default:
+          filterToApply = slug[0].toUpperCase() + slug.substr(1).toLowerCase();
+          break;
       }
+      const categoryExists = filterItems.some(x => {
+        const exists = x.buttons.some(y => {
+          if (y.value == filterToApply) return true;
+        });
+        return exists;
+      });
+
+      if (
+        filterToApply &&
+        productFilters.category.indexOf(filterToApply) == -1 &&
+        categoryExists
+      ) {
+        if (filterToApply == 'Calidad de la Piel')
+          filterToApply = 'Calidad Piel';
+        productFilters.category.push(filterToApply);
+      }
+
+      if (slug === 'packs') {
+        setSeoMetaData(metadataPacks.title, metadataPacks.description);
+      }
+
       setProductFilters(productFilters);
+      processFilters();
     }
   }, [slug, stateProducts]);
 
   useEffect(() => {
-    processFilters();
-    setIsHydrated(true);
+    if (filteredProducts && filteredProducts.length > 0) {
+      processFilters();
+      setIsHydrated(true);
+    }
   }, [productFilters]);
 
   useEffect(() => {

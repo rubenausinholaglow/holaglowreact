@@ -136,13 +136,14 @@ export default function DermaPayment() {
               showAddress
               showPostalCode
               isDerma={true}
+              hideCheckboxes
             />
 
             {!isProbadorVirtual && (
               <CheckoutPayment
                 isDerma={true}
                 hasError={hasError}
-                className="mt-8"
+                className="mt-12"
                 formData={client}
                 checkAddress={true}
               />

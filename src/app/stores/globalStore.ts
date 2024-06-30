@@ -46,6 +46,7 @@ interface SessionStore {
   dermaPhone: string;
   treatmentPacks: PackUnitiesScheduled[];
   hasSeenDashboardProfessionals: boolean;
+  isCallMeTriggered: boolean;
 }
 interface SessionActions {
   setAnalyticsMetrics: (analyticsMetrics: AnalyticsMetrics) => void;
@@ -66,6 +67,7 @@ interface SessionActions {
   setDermaPhone: (phone: string) => void;
   setTreatmentPacks: (treatment: PackUnitiesScheduled[]) => void;
   setHasSeenDashboardProfessionals: (value: boolean) => void;
+  setIsCallMeTriggered: (value: boolean) => void;
 }
 
 interface GlobalPersistStore {
@@ -114,6 +116,29 @@ interface GlobalPersistActions {
   setExtraInfo: (value?: boolean) => void;
 }
 
+interface CrmStore {
+  clinicId: string;
+}
+
+interface CrmActions {
+  setClinicId: (clinicId: string) => void;
+}
+export const useCrmStore = create(
+  persist<CrmStore & CrmActions>(
+    set => ({
+      clinicId: '',
+      setClinicId: value => {
+        set({ clinicId: value });
+      },
+    }),
+    {
+      name: 'session-storage',
+      version: 1,
+      storage: createJSONStorage(() => sessionStorage),
+    }
+  )
+);
+
 export const useSessionStore = create(
   persist<SessionStore & SessionActions>(
     set => ({
@@ -154,6 +179,7 @@ export const useSessionStore = create(
       dermaPhone: '',
       treatmentPacks: [],
       hasSeenDashboardProfessionals: false,
+      isCallMeTriggered: false,
       setAppointmentUrl: value => {
         set({ appointmentUrl: value });
       },
@@ -208,10 +234,13 @@ export const useSessionStore = create(
       setHasSeenDashboardProfessionals: value => {
         set({ hasSeenDashboardProfessionals: value });
       },
+      setIsCallMeTriggered: value => {
+        set({ isCallMeTriggered: value });
+      },
     }),
     {
       name: 'session-storage',
-      version: 27,
+      version: 30,
       storage: createJSONStorage(() => sessionStorage),
     }
   )
@@ -303,7 +332,7 @@ export const useGlobalPersistedStore = create(
     }),
     {
       name: 'global-storage',
-      version: 65,
+      version: 71,
     }
   )
 );

@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { getAllCategoryNames } from '@utils/utils';
 import {
   applyFilters,
   filterCount,
@@ -36,36 +37,13 @@ export default function CategorySelector({
   const [productCategories, setProductCategories] = useState<string[]>([]);
 
   useEffect(() => {
-    const allCategoryNames: string[] = stateProducts.reduce(
-      (categoryNames: string[], product) => {
-        const productCategories = product.category.map(
-          category => category.name
-        );
-        return [...categoryNames, ...productCategories];
-      },
-      []
+    setProductCategories(
+      getAllCategoryNames(stateProducts).sort((a, b) => {
+        if (a === 'Packs') return -1;
+        if (b === 'Packs') return 1;
+        return 0;
+      })
     );
-    let filteredCategoryNames;
-
-    if (isDashboard) {
-      filteredCategoryNames = allCategoryNames.filter(
-        categoryName =>
-          categoryName !== 'Calidad Piel' && categoryName !== 'Caida del pelo'
-      );
-    } else {
-      filteredCategoryNames = allCategoryNames;
-    }
-
-    const packsIndex = filteredCategoryNames.indexOf('Packs');
-
-    if (packsIndex !== -1) {
-      const packsItem = filteredCategoryNames.splice(packsIndex, 1)[0];
-      filteredCategoryNames.unshift(packsItem);
-    }
-
-    const uniqueCategoryNames: string[] = [...new Set(filteredCategoryNames)];
-
-    setProductCategories(uniqueCategoryNames);
   }, [stateProducts]);
 
   useEffect(() => {

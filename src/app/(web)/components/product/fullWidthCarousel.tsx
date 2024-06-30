@@ -20,6 +20,7 @@ export default function FullWidthCarousel({
   isPlaying = false,
   disableLeftMargin = false,
   children,
+  dragEnabled = true,
   isDerma = false,
 }: {
   type?: 'products' | 'professionals';
@@ -31,6 +32,7 @@ export default function FullWidthCarousel({
   isPlaying?: boolean;
   disableLeftMargin?: boolean;
   children?: ReactNode;
+  dragEnabled?: boolean;
   isDerma?: boolean;
 }) {
   const randomId = Math.random().toString().slice(2, 5);
@@ -75,6 +77,7 @@ export default function FullWidthCarousel({
         visibleSlides={slidesToShow}
         isPlaying={isPlaying}
         isFullWidth
+        dragEnabled={dragEnabled}
         isDerma={isDerma}
       >
         {type &&
@@ -98,13 +101,15 @@ export default function FullWidthCarousel({
           type === 'professionals' &&
           items &&
           items.map((professional: Professional | any, index) => {
-            return (
-              <ProfessionalCard
-                key={professional.name}
-                professional={professional}
-                className="h-full flex flex-col mr-10"
-              />
-            );
+            if (professional.urlPhoto !== '') {
+              return (
+                <ProfessionalCard
+                  key={professional.name}
+                  professional={professional}
+                  className="h-full flex flex-col mr-10"
+                />
+              );
+            }
           })}
 
         {children}

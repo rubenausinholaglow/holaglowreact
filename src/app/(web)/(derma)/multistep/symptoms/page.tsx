@@ -24,6 +24,9 @@ export default function Symptoms() {
     state => state
   );
 
+  const painItem = PAINS_AND_SYMPTOMS.filter(
+    painItem => painItem.value === pain
+  )[0];
   return (
     <DermaLayout
       hideButton
@@ -50,32 +53,33 @@ export default function Symptoms() {
 
             <div className="w-full md:w-1/2">
               <ul className="flex flex-col gap-4 w-full mb-8">
-                {PAINS_AND_SYMPTOMS.filter(
-                  painItem => painItem.value === pain
-                )[0].symptoms.map(symptom => (
-                  <li
-                    className={`transition-all rounded-xl px-3 py-4 flex items-center justify-between gap-4 cursor-pointer ${
-                      symptoms.includes(symptom)
-                        ? 'bg-derma-primary500/20'
-                        : 'bg-derma-secondary400'
-                    }`}
-                    key={symptom}
-                    onClick={() => {
-                      if (symptoms.includes(symptom)) {
-                        setSymptoms(symptoms.filter(item => item !== symptom));
-                      } else {
-                        setSymptoms([...symptoms, symptom]);
-                      }
-                    }}
-                  >
-                    {symptom}
-                    {symptoms.includes(symptom) ? (
-                      <SvgCheckSquareActive className="h-6 w-6" />
-                    ) : (
-                      <SvgCheckSquare className="h-6 w-6" />
-                    )}
-                  </li>
-                ))}
+                {painItem &&
+                  painItem.symptoms.map(symptom => (
+                    <li
+                      className={`transition-all rounded-xl px-3 py-4 flex items-center justify-between gap-4 cursor-pointer ${
+                        symptoms.includes(symptom)
+                          ? 'bg-derma-primary500/20'
+                          : 'bg-derma-secondary400'
+                      }`}
+                      key={symptom}
+                      onClick={() => {
+                        if (symptoms.includes(symptom)) {
+                          setSymptoms(
+                            symptoms.filter(item => item !== symptom)
+                          );
+                        } else {
+                          setSymptoms([...symptoms, symptom]);
+                        }
+                      }}
+                    >
+                      {symptom}
+                      {symptoms.includes(symptom) ? (
+                        <SvgCheckSquareActive className="h-6 w-6" />
+                      ) : (
+                        <SvgCheckSquare className="h-6 w-6" />
+                      )}
+                    </li>
+                  ))}
               </ul>
 
               <Flex className="justify-between">

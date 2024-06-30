@@ -10,6 +10,12 @@ export interface Clinic {
   professionals: Professional[];
   flowwwId: string;
   phone: string;
+  addressExtraInfo: string;
+  district?: string;
+  province?: string;
+  zipCode?: string;
+  lat: number;
+  long: number;
 }
 export interface ClinicReview {
   rating: number;
@@ -31,6 +37,7 @@ export interface Professional {
   flowwwId: string;
   authorDescription: string;
   city?: string;
+  active: boolean;
 }
 
 export enum ProfessionalType {

@@ -172,6 +172,7 @@ export function getStatusText(statusText: string, entity: string): string {
 }
 
 export const getStatusClassName = (status: string, entity: string): string => {
+  if (!status) return '';
   const uppercaseStatus = status.toUpperCase();
   const config = entityStatusConfig[entity];
   if (config && uppercaseStatus in config.colors) {
@@ -189,8 +190,8 @@ export const formatDate = (date: Date, includeHours = true) => {
   }
 
   const options: Intl.DateTimeFormatOptions = {
-    day: '2-digit' ,
-    month: '2-digit' ,
+    day: '2-digit',
+    month: '2-digit',
     year: 'numeric',
     hour: includeHours ? '2-digit' : undefined,
     minute: includeHours ? '2-digit' : undefined,
@@ -251,12 +252,11 @@ export function getClinicToSet(
   )[0];
 }
 
-
-export function getUnityTypePassport(id: number) : string {
+export function getUnityTypePassport(id: number): string {
   console.log(id);
   switch (id) {
     case 1:
-      return 'Ácido hialurónico';  
+      return 'Ácido hialurónico';
     case 2:
       return 'Toxina botulínica';
     case 3:
@@ -271,12 +271,29 @@ export function getUnityTypePassport(id: number) : string {
       return 'Hilos absorbibles de PDO';
     case 8:
       return 'Lifting';
-    case 9: 
+    case 9:
       return 'Solución química con ácidos';
     case 10:
       return 'Hidroxiapatita cálcica';
     case 11:
       return 'Ácido desoxicólico';
-    default: return '';
+    default:
+      return '';
   }
+}
+
+export function getAllCategoryNames(products: Product[]) {
+  const categories: string[] = products.reduce(
+    (categoryNames: string[], product) => {
+      const productCategories = product.category.map(category => category.name);
+      return [...categoryNames, ...productCategories];
+    },
+    []
+  );
+
+  const uniqueCategoryNames: string[] = [...new Set(categories)].filter(
+    category => category !== ''
+  );
+
+  return uniqueCategoryNames || [];
 }

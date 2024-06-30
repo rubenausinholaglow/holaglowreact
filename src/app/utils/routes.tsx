@@ -1,6 +1,7 @@
 const ROUTES = {
   home: '/',
   treatments: '/tratamientos',
+  reagenda: '/reagenda',
   checkout: {
     clinics: '/checkout/clinicas',
     type: '/checkout/tipo-cita',
@@ -61,17 +62,25 @@ const ROUTES = {
       routineProducts: '/multistep/routine-products',
       routineTime: '/multistep/routine-time',
       sunScreen: '/multistep/sunscreen',
-      feedback: '/multistep/feedback',
       pictures: '/multistep/pictures',
       extraInfo: '/multistep/extra-info',
       form: '/multistep/form',
       payment: '/multistep/payment',
       thankyou: '/multistep/thank-you',
       planes: '/multistep/planes',
+      output: {
+        pain: '/multistep/output-pain',
+        skinType: '/multistep/output-skin-type',
+        skinColor: '/multistep/output-skin-color',
+        secondaryConcern: '/multistep/output-secondary-concern',
+        skinCare: '/multistep/output-skin-care',
+        pictures: '/multistep/output-pictures',
+      },
     },
     diagnostico: {
       home: '/diagnostico',
       seguimiento: '/diagnostico/seguimiento',
+      subscription: '/diagnostico/subscription',
     },
   },
 };

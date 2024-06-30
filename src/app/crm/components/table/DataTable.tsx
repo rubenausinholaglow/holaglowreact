@@ -8,7 +8,7 @@ import { SvgSpinner } from 'app/icons/Icons';
 import dayjs from 'dayjs';
 import debouce from 'lodash.debounce';
 import Link from 'next/link';
-import { usePathname } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 
 import Pagination from './Pagination';
 
@@ -123,6 +123,11 @@ const DataTable: React.FC<DataTableProps> = ({
     return debouce(handleOnFilterChange, 300);
   }, []);
 
+  const router = useRouter();
+  const redirectToItem = (id: string) => {
+    window.open(`${pathName}/${id}`, '_blank');
+  };
+
   useEffect(() => {
     return () => {
       debouncedResults.cancel();
@@ -201,6 +206,7 @@ const DataTable: React.FC<DataTableProps> = ({
                   .slice(0, itemsPerPage)
                   .map((rowData, rowIndex) => (
                     <tr
+                      onClick={() => redirectToItem(rowData[columns[0].key])}
                       key={rowIndex}
                       className={rowIndex % 2 === 0 ? '' : 'bg-gray-100'}
                     >
@@ -217,21 +223,23 @@ const DataTable: React.FC<DataTableProps> = ({
 
                           const formatColumn =
                             column.format.toLocaleUpperCase();
-
-                          if (column.key === 'status') {
+                          if (
+                            column.key === 'status' ||
+                            formatColumn === 'STATUS'
+                          ) {
                             className = getStatusClassName(value, entity);
                           } else if (formatColumn === 'DATE') {
                             className += '';
                           }
 
-                          const formattedValue =
-                            column.key === 'status'
-                              ? getStatusText(value, entity)
-                              : formatColumn === 'DATE' && !isValidDate(value)
-                              ? ''
-                              : dayjs(value).isValid()
-                              ? dayjs(value).format('DD-MM-YYYY HH:mm:ss')
-                              : value;
+                          let formattedValue = value;
+                          if (formatColumn == 'DATE') {
+                            formattedValue = dayjs(value).format(
+                              'DD-MM-YYYY HH:mm:ss'
+                            );
+                          } else if (formatColumn == 'status') {
+                            formattedValue = getStatusText(value, entity);
+                          }
 
                           return (
                             <td key={column.key} className="p-4">

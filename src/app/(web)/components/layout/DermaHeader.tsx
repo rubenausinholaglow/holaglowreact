@@ -149,7 +149,7 @@ export default function DermaHeader({
                           id="tmevent_nav_menu_open"
                         />
                       </DialogTrigger>
-                      <DialogContent className="left-0 right-0">
+                      <DialogContent className="left-0 right-0 bg-white">
                         <DermaMobileNavigation
                           isVisible={isMobileNavVisible}
                           setIsMobileNavVisible={setIsMobileNavVisible}

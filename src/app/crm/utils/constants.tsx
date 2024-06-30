@@ -2,9 +2,10 @@ import { SideNavItem } from '../types/SideNavItem';
 
 export const SIDENAV_ITEMS: SideNavItem[] = [
   {
-    title: 'Dashboard',
-    path: '/crm/menu',
+    title: 'Presupuestos',
+    path: '/crm/budgets?clinicId={{clinicId}}',
   },
+  /*
   {
     title: 'Contactos',
     path: '/crm/contacts',
@@ -13,7 +14,7 @@ export const SIDENAV_ITEMS: SideNavItem[] = [
     title: 'Tareas',
     path: '/crm/tasks',
   },
-  /*{
+  {
     title: 'Test Sumbenu',
     path: '/crm/tasks',
     submenu: true,

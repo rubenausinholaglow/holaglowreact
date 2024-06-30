@@ -88,7 +88,7 @@ export default function ImageUploader({
         userId ? userId : undefined,
         updatedPictures[0].file!,
         position,
-        id ?? diagnosticId,
+        diagnosticId ? diagnosticId : id,
         diagnosticId ? diagnosticId : ''
       );
 
@@ -145,7 +145,7 @@ export default function ImageUploader({
             <div className="w-full relative">
               <button
                 onClick={
-                  isEmpty(images[pictureIndex]) &&
+                  isEmpty(images[pictureIndex]) ||
                   isEmpty(picturesUrls[pictureIndex])
                     ? onImageUpload
                     : undefined

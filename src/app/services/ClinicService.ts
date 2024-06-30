@@ -5,7 +5,7 @@ export default class clinicService {
   static async getProfessionalsByClinic(
     id: string,
     professionalType: ProfessionalType
-  ): Promise<Professional[] | string> {
+  ): Promise<Professional[]> {
     // eslint-disable-next-line no-useless-catch
     try {
       let url = `${process.env.NEXT_PUBLIC_CLINICS_API}Clinics/${id}`;

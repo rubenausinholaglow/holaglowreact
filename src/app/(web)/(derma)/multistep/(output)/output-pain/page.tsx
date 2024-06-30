@@ -1,3 +1,6 @@
+'use client';
+
+import { useEffect, useState } from 'react';
 import ROUTES from '@utils/routes';
 import DermaStepBar from 'app/(web)/(derma)/components/DermaStepBar';
 import DermaLayout from 'app/(web)/components/layout/DermaLayout';
@@ -10,19 +13,26 @@ import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 
 import { DERMA_INGREDIENTS, PAINS_AND_SYMPTOMS } from '../../multistepConfig';
-import MedicAdvice from './MedicAdvice';
+import MedicAdvice from '../components/MedicAdvice';
 
 export default function PainFeedback() {
   const router = useRouter();
   const { pain } = useDermaStore(state => state);
 
-  const painItem = PAINS_AND_SYMPTOMS.filter(item => item.value === pain)[0];
+  const [painItem, setPainItem] = useState<any>(undefined);
+  const [painIngredients, setPainIngredients] = useState<any>(undefined);
 
-  const ingredients = painItem?.feedback?.ingredients as string[] | undefined;
+  useEffect(() => {
+    const painItem = PAINS_AND_SYMPTOMS.filter(item => item.value === pain)[0];
+    setPainItem(painItem);
 
-  const painIngredients = DERMA_INGREDIENTS.filter(
-    item => ingredients?.includes(item.name)
-  );
+    const ingredients = painItem?.feedback?.ingredients as string[] | undefined;
+
+    const painIngredients = DERMA_INGREDIENTS.filter(
+      item => ingredients?.includes(item.name)
+    );
+    setPainIngredients(painIngredients);
+  }, []);
 
   return (
     <DermaLayout
@@ -48,7 +58,7 @@ export default function PainFeedback() {
               <Text className="text-xl md:text-3xl text-derma-primary font-light font-gtUltra mb-4">
                 ¡Entendido! Una crema efectiva para{' '}
                 <span className="font-semibold">
-                  {painItem.name.toLocaleLowerCase()}
+                  {painItem?.name?.toLocaleLowerCase()}
                 </span>{' '}
                 contiene:
               </Text>
@@ -60,8 +70,9 @@ export default function PainFeedback() {
               >
                 <Flex layout="col-left" className="relative z-10">
                   <Flex className="justify-center w-full -ml-6 mb-8">
-                    {painIngredients.length > 0 &&
-                      painIngredients.map(ingredient => (
+                    {painIngredients &&
+                      painIngredients.length > 0 &&
+                      painIngredients.map((ingredient: any) => (
                         <Image
                           key={ingredient.name}
                           src={ingredient.imgSrc}
@@ -74,8 +85,9 @@ export default function PainFeedback() {
                   </Flex>
 
                   <ul className="flex flex-col gap-4 md:gap-6 w-full mb-8 md:mb-16 text-sm md:text-lg">
-                    {painIngredients.length > 0 &&
-                      painIngredients.map(ingredient => (
+                    {painIngredients &&
+                      painIngredients.length > 0 &&
+                      painIngredients.map((ingredient: any) => (
                         <li
                           className="flex items-start gap-3 w-full"
                           key={ingredient.name}

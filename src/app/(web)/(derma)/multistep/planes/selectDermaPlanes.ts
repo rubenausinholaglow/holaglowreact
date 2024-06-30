@@ -14,7 +14,7 @@ export async function selectDermaProduct({
   let productId = '';
   switch (index) {
     case 0:
-      productId = process.env.NEXT_PUBLIC_DERMA_SUSCRIPTION_ID!;
+      productId = process.env.NEXT_PUBLIC_DERMA_ONE_PURCHASE_ID!;
       break;
     case 1:
       productId = process.env.NEXT_PUBLIC_DERMA_ONE_PURCHASE_ID!;
@@ -23,7 +23,10 @@ export async function selectDermaProduct({
       productId = process.env.NEXT_PUBLIC_DERMA_ONLY_RECEIPT_ID!;
       break;
   }
+
   const productDetails = await fetchProduct(productId, false, true);
+
   addItemToCart(productDetails as CartItem);
+
   router.push(ROUTES.derma.multistep.payment);
 }

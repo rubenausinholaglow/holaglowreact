@@ -47,6 +47,8 @@ export default function Page() {
       try {
         const products =
           await ProductService.getDashboardProducts(storedClinicId);
+        productFilters.isPack = true;
+        setProductFilters(productFilters);
         setDashboardProducts(products);
         setFilteredProducts(products);
         productFilters.isPack = true;
@@ -58,12 +60,9 @@ export default function Page() {
         setError(error);
       }
     };
-
-    if (!dashboardProducts || dashboardProducts.length === 0) fetchProducts();
+    fetchProducts();
     setHighlightProduct(null);
-    productFilters.isPack = true;
-    setProductFilters(productFilters);
-  }, [dashboardProducts]);
+  }, []);
 
   useEffect(() => {
     if (!isModalOpen) {
@@ -71,7 +70,7 @@ export default function Page() {
     }
   }, [isModalOpen]);
 
-  if (!isEmpty(error)) {
+  if (error) {
     return <>{error}</>;
   }
 

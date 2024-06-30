@@ -29,6 +29,13 @@ server.use(
   })
 );
 server.use(
+  '/landing/holaglow-vlc',
+  createProxyMiddleware({
+    target: 'https://practical-discussions-804147.framer.app',
+    changeOrigin: true,
+  })
+);
+server.use(
   '/checkout-bcn',
   createProxyMiddleware({
     target: 'https://practical-discussions-804147.framer.app',

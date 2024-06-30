@@ -52,6 +52,7 @@ export default class UserService {
       return false;
     }
   }
+
   static async createCrisalixUser(userId: string, clinicId: string) {
     try {
       const res = await fetch(
@@ -181,6 +182,35 @@ export default class UserService {
       });
       if (res.ok) {
         const data = await res.json();
+        return data;
+      } else {
+        return undefined;
+      }
+    } catch (err) {
+      return undefined;
+    }
+  }
+
+  static async createCallMeTask(formData: {
+    phone: string;
+    phonePrefix: string;
+  }): Promise<any | undefined> {
+    try {
+      const res = await fetch(
+        `${process.env.NEXT_PUBLIC_CONTACTS_API}Contact/CallMe`,
+        {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(formData),
+        }
+      );
+
+      console.log(res);
+
+      if (res.ok) {
+        const data = await res;
         return data;
       } else {
         return undefined;

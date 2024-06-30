@@ -33,7 +33,7 @@ export const DERMA_GENERIC_PRODUCTS = [
   {
     title: 'Espuma limpiadora',
     toggle: 'Mantén tu piel limpia para mejorar el efecto de la rutina',
-    isNightRoutine: true,
+    routineType: 'both',
     img: '/images/derma/landingPrecios/ingredients/espumaLimpiadora.png',
     carouselImg: [
       '/images/derma/products/espumaLimpiadora/espumaLimpiadora1.jpg',
@@ -59,7 +59,7 @@ export const DERMA_GENERIC_PRODUCTS = [
   {
     title: 'Crema de día',
     toggle: 'Crema de día preparada por tu médico',
-    isNightRoutine: false,
+    routineType: 'day',
     img: '/images/derma/landingPrecios/ingredients/crema.png',
     carouselImg: [
       '/images/derma/products/cremaDeDia/cremaDeDia1.jpg',
@@ -147,7 +147,7 @@ export const DERMA_GENERIC_PRODUCTS = [
   {
     title: 'Protector solar 50+',
     toggle: 'Protege tu piel de los efectos de la radiación ultravioleta',
-    isNightRoutine: false,
+    routineType: 'day',
     img: '/images/derma/landingPrecios/ingredients/protectorSolar.png',
     carouselImg: [
       '/images/derma/products/protectorSolar/protectorSolar1.jpg',
@@ -177,7 +177,7 @@ export const DERMA_GENERIC_PRODUCTS = [
     img: '/images/derma/landingPrecios/ingredients/cremaFormulada.png',
     carouselImg: ['/images/derma/products/cremaFormulada/cremaFormulada.png'],
     toggle: 'Diseñada y elaborada exclusivamente para ti',
-    isNightRoutine: false,
+    routineType: 'night',
     subTitle: '50ml',
     text: 'Crema diseñada por el médico con los ingredientes activos que necesita tu piel y en su justa medida para lograr la mayor efectividad. Al ser personalizada, no la encontrarás en ningún otro sitio',
     info: '',
@@ -299,7 +299,7 @@ export const DERMA_APPOINTMENT_IMAGE = [
 ];
 
 export const SUBSCRIPTIONS = [
-  {
+  /*{
     title: 'Envío trimestral',
     id: '17c3b810-d810-45e0-b732-3283ea632d77',
     subtitle:
@@ -336,28 +336,28 @@ export const SUBSCRIPTIONS = [
       },
     ],
     bottomBar: 'Cancela en cualquier momento',
-  },
+  },*/
   {
-    title: 'Compra única',
+    title: 'Rutina personalizada',
     id: '2ee9da6f-4fad-42fc-b717-0b67d49ef0cf',
-    subtitle: 'Tu rutina personalizada para 3 meses de tratamiento',
+    subtitle: 'Este pack te servirá para los próximos 3 meses',
     imgSrc: '/images/derma/landingPrecios/rutina.png',
     bgColor: 'bg-white',
     tag: {},
     price: {
-      value: '99 €',
-      subtitle: 'En un solo pago',
+      value: '75 €',
+      subtitle: '(Equivalente a 25€/mes)',
     },
     bullets: [
       {
         icon: 'SvgCream',
-        text: 'Rutina de 4 pasos para',
+        text: 'Rutina personalizada de 4 pasos',
         isEnabled: true,
       },
       {
         icon: 'SvgCalendarSearch',
-        text: 'Seguimiento mensual con tu médico',
-        isEnabled: false,
+        text: 'Revisión de tu piel a los 90 días con el médico',
+        isEnabled: true,
       },
       {
         icon: 'SvgBox',

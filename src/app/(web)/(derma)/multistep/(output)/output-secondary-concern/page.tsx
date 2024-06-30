@@ -1,3 +1,5 @@
+'use client';
+
 import { isMobile } from 'react-device-detect';
 import ROUTES from '@utils/routes';
 import DermaStepBar from 'app/(web)/(derma)/components/DermaStepBar';
@@ -12,7 +14,7 @@ import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 
 import { DERMA_INGREDIENTS } from '../../multistepConfig';
-import MedicAdvice from './MedicAdvice';
+import MedicAdvice from '../components/MedicAdvice';
 
 export default function SkinTypeFeedback() {
   const router = useRouter();
@@ -109,7 +111,7 @@ export default function SkinTypeFeedback() {
                   <Button
                     type="derma"
                     size="lg"
-                    href={ROUTES.derma.multistep.routine}
+                    href={ROUTES.derma.multistep.allergy}
                   >
                     Continuar
                   </Button>

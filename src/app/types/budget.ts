@@ -1,3 +1,8 @@
+import {
+  BudgetProfessionalReponse,
+  BudgetUserReponse,
+} from 'app/GraphQL/BudgetsQueryResponse';
+
 import { Product } from './product';
 
 export interface Budget {
@@ -10,12 +15,16 @@ export interface Budget {
   priceDiscount: number;
   percentageDiscount: number;
   totalPrice: number;
-  totalPriceWithIva: number;
+  totalPriceWithIVA: number;
   clinicInfoId: string;
   referenceId: string;
   professionalId: string;
   manualPrice: number;
+  creationDate?: Date;
   products: BudgetProduct[];
+  user?: BudgetUserReponse;
+  professional?: BudgetProfessionalReponse;
+  budgetComments?: BudgetCommentsReponse[];
 }
 
 export interface BudgetProduct {
@@ -25,6 +34,11 @@ export interface BudgetProduct {
   priceDiscount: number;
   percentageDiscount: number;
   product?: Product;
+}
+export interface BudgetCommentsReponse {
+  comment: string;
+  id: string;
+  creationDate: Date;
 }
 
 export interface TicketBudget extends Budget {
@@ -36,4 +50,6 @@ export enum StatusBudget {
   Finish = 2,
   Rejected = 3,
   Paid = 4,
+  Accepted = 5,
+  Contacted = 6,
 }

@@ -1,3 +1,5 @@
+'use client';
+
 import { isMobile } from 'react-device-detect';
 import ROUTES from '@utils/routes';
 import DermaStepBar from 'app/(web)/(derma)/components/DermaStepBar';

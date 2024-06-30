@@ -333,6 +333,12 @@ const nextConfig = {
         statusCode: 301,
       },
       {
+        source: '/tratamientos/lifting-liquido',
+        destination: '/tratamientos/pack-lifting',
+        permanent: true,
+        statusCode: 301,
+      },
+      {
         source: '/tratamientos-piel/microneedling',
         destination: '/tratamientos/microneedling',
         permanent: true,
