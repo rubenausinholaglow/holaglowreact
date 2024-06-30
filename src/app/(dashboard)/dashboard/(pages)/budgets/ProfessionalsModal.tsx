@@ -270,7 +270,7 @@ export default function ProfessionalsModal() {
           Modal médicos
         </button>
       </DialogTrigger>
-      <DialogContent className="w-4/5">
+      <DialogContent className="w-4/5 right-0 bg-white">
         <div className="p-6">
           <Title size="2xl" className="font-gtUltra text-hg-secondary">
             Nuestras profesionales
