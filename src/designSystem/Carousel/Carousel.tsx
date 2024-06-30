@@ -200,7 +200,6 @@ export default function Carousel({
 
         {hasControls && !isDashboard && (
           <Container
-            id="carouselControls"
             className={`${isFullWidth ? '' : 'px-0'} ${
               hasTopControls
                 ? 'absolute top-[50%] -translate-y-[50%] px-4'

@@ -4,7 +4,7 @@ import clinicService from '@services/ClinicService';
 import ProductService from '@services/ProductService';
 import promoService from '@services/PromoService';
 import { Post } from 'app/types/blog';
-import { Clinic, Professional, ProfessionalType } from 'app/types/clinic';
+import { Clinic } from 'app/types/clinic';
 import { Product } from 'app/types/product';
 import { Promo } from 'app/types/promo';
 
