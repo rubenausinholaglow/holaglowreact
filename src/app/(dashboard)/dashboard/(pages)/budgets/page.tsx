@@ -85,11 +85,7 @@ export default function Page() {
         ) : (
           <MainLayout isDashboard>
             <p className="mb-4">Cargando productos...</p>
-            <SvgSpinner
-              height={30}
-              width={30}
-              fill={HOLAGLOW_COLORS['primary']}
-            />
+            <SvgSpinner height={30} width={30} className="text-hg-secondary" />
           </MainLayout>
         )}
       </Flex>
