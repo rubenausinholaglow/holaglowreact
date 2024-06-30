@@ -51,12 +51,8 @@ export default function Page() {
         setProductFilters(productFilters);
         setDashboardProducts(products);
         setFilteredProducts(products);
-        productFilters.isPack = true;
-        setProductFilters(productFilters);
         setIsHydrated(true);
       } catch (error: any) {
-        console.log('error', error);
-
         setError(error);
       }
     };
