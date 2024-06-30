@@ -341,7 +341,7 @@ export default function LandingCaptacion() {
               </Text>
             </div>
             <div
-              className="md:w-1/2 bg-derma-secondary500 rounded-3xl p-4 md:p-8 border border-hg-secondary700 md:border-0 -mb-4 md:-mb-0"
+              className="md:w-1/2 bg-derma-secondary500 rounded-3xl p-4 pb-12 md:p-8 md:pb-8 border border-hg-secondary700 md:border-0 -mb-4 md:-mb-0"
               style={{ boxShadow: '0px 4px 12px 0px #A96FE74D' }}
             >
               <div className="md:hidden pt-4">
