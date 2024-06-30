@@ -70,25 +70,14 @@ export default function Page() {
     return <>{error}</>;
   }
 
-  if (!isHydrated) {
+  if (!isHydrated || dashboardProducts.length === 0) {
     return <FullScreenLoading />;
   }
 
   return (
     <App>
-      <Flex layout="col-center" className="w-full gap-1">
-        {dashboardProducts.length > 0 ? (
-          <>
-            {productHighlighted != null && <HightLightedProduct />}
-            <PsrpDashboard />
-          </>
-        ) : (
-          <MainLayout isDashboard>
-            <p className="mb-4">Cargando productos...</p>
-            <SvgSpinner height={30} width={30} className="text-hg-secondary" />
-          </MainLayout>
-        )}
-      </Flex>
+      {productHighlighted != null && <HightLightedProduct />}
+      <PsrpDashboard />
     </App>
   );
 }
