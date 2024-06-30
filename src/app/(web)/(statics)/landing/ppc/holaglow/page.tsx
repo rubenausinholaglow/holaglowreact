@@ -301,6 +301,18 @@ export default function LandingCaptacion() {
                   treatment: 'Surco nasogeniano',
                   src: 'https://www.holaglow.com/_next/image?url=https://budgetimages.blob.core.windows.net/images/antes-y-despues/surco-nasogeniano/1.jpg&w=1080&q=75',
                 },
+                {
+                  treatment: 'Sonrisa gingival',
+                  src: 'https://www.holaglow.com/_next/image?url=https://budgetimages.blob.core.windows.net/images/antes-y-despues/sonrisa-gingival/1.jpg&w=1080&q=75',
+                },
+                {
+                  treatment: 'Pack Full Face',
+                  src: 'https://www.holaglow.com/_next/image?url=https://budgetimages.blob.core.windows.net/images/antes-y-despues/pack-full-face/2.jpg&w=1080&q=75',
+                },
+                {
+                  treatment: 'Proyección de mentón',
+                  src: 'https://www.holaglow.com/_next/image?url=https://budgetimages.blob.core.windows.net/images/antes-y-despues/proyeccion-menton/0.jpg&w=1080&q=75',
+                },
               ].map(item => (
                 <div className="px-4 h-full flex w-full" key={item.treatment}>
                   <div className="overflow-hidden relative flex flex-col h-full w-full  justify-between ">
