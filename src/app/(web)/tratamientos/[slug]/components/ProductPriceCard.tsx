@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react';
 import ReactCardFlip from 'react-card-flip';
 import { isMobile } from 'react-device-detect';
 import { fetchProduct } from '@utils/fetch';
-import { PacksConfigured } from '@utils/packUtils';
+import { getPackMessage, PacksConfigured } from '@utils/packUtils';
 import ROUTES from '@utils/routes';
 import { Quantifier } from 'app/(dashboard)/dashboard/(pages)/budgets/HightLightedProduct/Quantifier';
 import {
@@ -198,6 +198,7 @@ export default function ProductPriceCard({
 
   const [cardHeight, setCardHeight] = useState(0);
   const [isFlipped, setIsFlipped] = useState<boolean>(false);
+  const [packMessage, setPackMessage] = useState<string>('');
   const [hasRinomodelacion, setHasRinomodelacion] = useState<boolean>(false);
   const [hasRellenoOjeras, setHasRellenoOjeras] = useState<boolean>(false);
   const [discountedPrice, setDiscountedPrice] = useState<null | number>(null);
@@ -208,13 +209,18 @@ export default function ProductPriceCard({
     }
 
     if (product?.flowwwId && product.isPack) {
-      setHasRinomodelacion(
-        ProductFlowwwIds() ? ProductFlowwwIds().includes('855') : false
-      );
-
-      setHasRellenoOjeras(
+      /* 
+        setHasRinomodelacion(
+          ProductFlowwwIds() ? ProductFlowwwIds().includes('855') : false
+        );
+        setHasRellenoOjeras(
         ProductFlowwwIds() ? ProductFlowwwIds().includes('854') : false
       );
+      */
+
+      if (ProductFlowwwIds()) {
+        setPackMessage(getPackMessage(ProductFlowwwIds()));
+      }
     }
   }, [product]);
 
@@ -244,6 +250,9 @@ export default function ProductPriceCard({
             <SvgInfoCircle className="h-6 w-6" />
           </div>
         )}
+
+        <p>{product.flowwwId.toString()}</p>
+        {ProductFlowwwIds() && <p>{packMessage}</p>}
 
         <Flex layout="col-left" className="w-full">
           <Flex layout="row-between" className="w-full mb-2 items-start">
