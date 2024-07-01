@@ -45,14 +45,17 @@ export default function Page({
   const messageSocket = useMessageSocket(state => state);
   const { setCurrentUser, setAppointmentId, setBudgetId } =
     useGlobalPersistedStore(state => state);
-  const { setSelectedTreatments, setSelectedClinic, setSelectedPack } =
-    useSessionStore(state => state);
+  const {
+    setSelectedTreatments,
+    setSelectedClinic,
+    setSelectedPack,
+    setHasSeenDashboardProfessionals,
+  } = useSessionStore(state => state);
   const {
     remoteControl,
     storedBoxId,
     storedClinicId,
     isCallCenter,
-    extraInfo,
     setExtraInfo,
     setBoxId,
     setClinicId,
@@ -152,6 +155,7 @@ export default function Page({
     setExtraInfo(params.get('extraInfo') == 'true');
     const phone = params.get('phoneNumber') || '';
     setPhoneNumber(phone.length > 9 ? phone.slice(3, phone.length) : phone);
+    setHasSeenDashboardProfessionals(false);
   }, []);
 
   useEffect(() => {

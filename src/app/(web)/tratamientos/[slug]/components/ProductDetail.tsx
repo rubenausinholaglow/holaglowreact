@@ -1,14 +1,14 @@
 'use client';
 
 import { RefObject, useEffect, useState } from 'react';
-import Bugsnag from '@bugsnag/js';
-import ProductService from '@services/ProductService';
+import { ProfessionalDashboardCarousel } from 'app/(dashboard)/dashboard/(pages)/budgets/ProfessionalsModal';
 import { useCartStore } from 'app/(dashboard)/dashboard/(pages)/budgets/stores/userCartStore';
-import Professionals from 'app/(web)/components/common/Professionals';
 import { useGlobalPersistedStore } from 'app/stores/globalStore';
 import { Product } from 'app/types/product';
 import { setSeoMetaData, useElementOnScreen } from 'app/utils/common';
 import { fetchProduct } from 'app/utils/fetch';
+import { Container } from 'designSystem/Layouts/Layouts';
+import { Text, Title } from 'designSystem/Texts/Texts';
 import { isEmpty } from 'lodash';
 
 import PsrpPage from '../../psrp';
@@ -21,19 +21,16 @@ import ProductResults from './ProductResults';
 export default function ProductDetailPage({
   params,
 }: {
-  params: { slug: string; isDashboard: boolean };
+  params: { slug: string };
 }) {
-  const { stateProducts, dashboardProducts } = useGlobalPersistedStore(
-    state => state
-  );
+  const { dashboardProducts } = useGlobalPersistedStore(state => state);
   const { productHighlighted } = useCartStore(state => state);
 
   const [, setBottomBarThreshold] = useState(1200);
   const [isHydrated, setIsHydrated] = useState(false);
   const [productsAreLoaded, setProductsAreLoaded] = useState(false);
   const [product, setProduct] = useState<Product | null>(null);
-  const [productId, setProductId] = useState('0');
-  const { slug, isDashboard } = params;
+  const { slug } = params;
 
   const [productPriceRef] = useElementOnScreen({
     root: null,
@@ -42,19 +39,15 @@ export default function ProductDetailPage({
   });
 
   useEffect(() => {
-    if (!isEmpty(stateProducts) && !isDashboard) {
+    if (!isEmpty(dashboardProducts)) {
       setProductsAreLoaded(true);
     }
-    if (!isEmpty(dashboardProducts) && isDashboard) {
-      setProductsAreLoaded(true);
-    }
-  }, [stateProducts, dashboardProducts]);
+  }, [dashboardProducts]);
 
   useEffect(() => {
     async function initProduct(productId: string, isDashboard: boolean) {
       const productDetails = await fetchProduct(productId, isDashboard, false);
       setProduct(productDetails);
-      setProductId(productDetails.id);
       setIsHydrated(true);
       setSeoMetaData(
         productDetails.extraInformation.seoTitle,
@@ -63,23 +56,16 @@ export default function ProductDetailPage({
       setIsHydrated(true);
     }
     let product = undefined;
-    if (isDashboard) {
-      product = dashboardProducts.filter(
-        product =>
-          product?.id.toUpperCase() === productHighlighted?.id.toUpperCase()
-      )[0];
-    } else {
-      product = stateProducts.filter(
-        product => product?.extraInformation?.slug === slug
-      )[0];
-    }
+
+    product = dashboardProducts.filter(
+      product =>
+        product?.id.toUpperCase() === productHighlighted?.id.toUpperCase()
+    )[0];
 
     const productId = product?.id ?? '';
 
-    setProductId(productId);
-
     if (productId !== '' && productsAreLoaded) {
-      initProduct(productId, isDashboard);
+      initProduct(productId, true);
       setProduct(isEmpty(product) ? null : product);
     }
   }, [productsAreLoaded, slug]);
@@ -91,12 +77,8 @@ export default function ProductDetailPage({
   if (product && product != undefined && !isEmpty(product)) {
     return (
       <>
-        <div
-          className={`bg-hg-cream500 rounded-t-3xl pt-8 ${
-            !isDashboard ? 'pb-12' : ''
-          }`}
-        >
-          <ProductHeader product={product} isDashboard={isDashboard} />
+        <div className="bg-hg-cream500 rounded-t-3xl pt-8">
+          <ProductHeader product={product} isDashboard={true} />
           {product.beforeAndAfterImages.length > 0 && (
             <div className="mb-6 md:mb-0 md:row-start-2 md:col-start-1 md:col-end-3">
               <ProductImagesCarouselDashboard product={product} />
@@ -104,10 +86,10 @@ export default function ProductDetailPage({
           )}
           <ProductInfo
             product={product}
-            isDashboard={isDashboard}
+            isDashboard={true}
             setBottomBarThreshold={setBottomBarThreshold}
           />
-          {isDashboard && product.type != 3 && product.upgrades?.length > 1 && (
+          {product.type != 3 && product.upgrades?.length > 1 && (
             <div ref={productPriceRef as RefObject<HTMLDivElement>}>
               <ProductPrices product={product} isDashboard />
             </div>
@@ -117,12 +99,25 @@ export default function ProductDetailPage({
           <ProductResults product={product} />
         )}
 
-        <div className="bg-hg-turquoise/5 pt-12 pb-24 md:py-16">
-          <Professionals />
+        <div className="pt-12 pb-20">
+          <Container className="md:px-6">
+            <Title
+              isAnimated
+              size="2xl"
+              className="text-left font-bold mb-6 md:mb-8"
+            >
+              Equipo médico
+            </Title>
+            <Text isAnimated className="text-hg-black500 mb-8 md:text-lg">
+              En Holaglow defendemos una medicina estética que cuida y, para
+              ello, la profesionalidad y la empatía son fundamentales. Todos
+              nuestros doctores comparten el mismo compromiso: ponerse en tu
+            </Text>
+          </Container>
+
+          <ProfessionalDashboardCarousel />
         </div>
       </>
     );
-  } else if (productId == '') {
-    return <PsrpPage slug={params.slug} isDashboard={false} />;
   }
 }
