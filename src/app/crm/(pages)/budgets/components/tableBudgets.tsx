@@ -1,5 +1,9 @@
 'use client';
+import 'react-datepicker/dist/react-datepicker.css';
+import 'app/(web)/checkout/agenda/datePickerStyle.css';
+
 import { useEffect, useState } from 'react';
+import DatePicker, { registerLocale } from 'react-datepicker';
 import { DocumentNode } from '@apollo/client';
 import Bugsnag from '@bugsnag/js';
 import DataTable from 'app/crm/components/table/DataTable';
@@ -17,8 +21,13 @@ import { ColumnDataTable } from 'app/GraphQL/common/types/column';
 import { PageInfo } from 'app/GraphQL/PageInfo';
 import { mapBudgetsData } from 'app/GraphQL/utils/utilsMapping';
 import { useCrmStore } from 'app/stores/globalStore';
+import es from 'date-fns/locale/es';
+import dayjs from 'dayjs';
 import { Button } from 'designSystem/Buttons/Buttons';
+import { Flex } from 'designSystem/Layouts/Layouts';
 import { createApolloClient } from 'lib/client';
+
+registerLocale('es', es);
 
 export default function TableBudgets() {
   const [budgets, setBudgets] = useState<BudgetsResponseNode[] | undefined>(
@@ -29,6 +38,12 @@ export default function TableBudgets() {
   );
   const { setClinicId } = useCrmStore(state => state);
   const [pageInfo, setPageInfo] = useState<PageInfo>();
+  const [startDateFilter, setStartDateFilter] = useState<Date | undefined>(
+    undefined
+  );
+  const [endDateFilter, setEndDateFilter] = useState<Date | undefined>(
+    undefined
+  );
   const [totalCount, setTotalCount] = useState<number>(0);
   const [filterStatus, setFilterStatus] = useState('');
   const [clinicFlowwwId, setClinicFlowwwId] = useState('');
@@ -133,7 +148,7 @@ export default function TableBudgets() {
   };
   useEffect(() => {
     if (clinicFlowwwId) executeQuery(true);
-  }, [filterStatus, clinicFlowwwId]);
+  }, [filterStatus, clinicFlowwwId, startDateFilter, endDateFilter]);
 
   useEffect(() => {
     const queryString = window.location.search;
@@ -166,6 +181,7 @@ export default function TableBudgets() {
       nextCursor,
       columnsToIgnoreSearch,
     };
+    console.log(stringFilter);
     let filterValue = '';
     if (filterStatus != '') {
       filterValue =
@@ -176,6 +192,18 @@ export default function TableBudgets() {
         '\\"';
     } else {
       filterValue = 'clinicInfo.flowwwId == \\"' + clinicFlowwwId + '\\"';
+    }
+    if (startDateFilter) {
+      filterValue +=
+        ' && creationDate >= \\"' +
+        dayjs(startDateFilter).format('YYYY-MM-DD') +
+        ' \\"';
+    }
+    if (endDateFilter) {
+      filterValue +=
+        ' && creationDate <= \\"' +
+        dayjs(endDateFilter).format('YYYY-MM-DD') +
+        ' \\"';
     }
     const queryBuilders = createQuery(params, filterValue);
     await fetchBudgets(queryBuilders, nextPage);
@@ -230,6 +258,44 @@ export default function TableBudgets() {
           >
             Pagado
           </Button>
+          <label className="text-gray-700 mb-2 w-full text-left">
+            Fecha inicio:
+          </label>
+          <DatePicker
+            selected={startDateFilter}
+            onChange={date => {
+              setStartDateFilter(date!);
+            }}
+            useWeekdaysShort
+            calendarStartDay={1}
+            locale="es"
+            className="w-full"
+            fixedHeight
+            popperClassName="pepper-datepicker"
+            popperPlacement="bottom"
+            showYearDropdown
+            showMonthDropdown
+            dateFormat="dd/MM/yyyy"
+          ></DatePicker>
+          <label className="text-gray-700 mb-2 w-full text-left">
+            Fecha fin:
+          </label>
+          <DatePicker
+            selected={endDateFilter}
+            onChange={date => {
+              setEndDateFilter(date!);
+            }}
+            useWeekdaysShort
+            calendarStartDay={1}
+            locale="es"
+            className="w-full"
+            fixedHeight
+            popperClassName="pepper-datepicker"
+            popperPlacement="bottom"
+            showYearDropdown
+            showMonthDropdown
+            dateFormat="dd/MM/yyyy"
+          ></DatePicker>
           <DataTable
             data={budgets}
             columns={columns}
