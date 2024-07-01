@@ -124,6 +124,7 @@ export default function ProductPrices({
             >
               {productItems.map((item: Product, index: number) => (
                 <ProductPriceCard
+                  index={index}
                   isDashboard={isDashboard}
                   key={item.title}
                   product={item}
