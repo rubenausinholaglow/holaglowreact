@@ -51,6 +51,7 @@ const RegistrationForm: React.FC<RegistrationFormProps> = ({
   showBirthday = false,
   hideCheckboxes = false,
   isDerma,
+  lastStep = false,
 }: {
   redirect?: boolean;
   isDashboard?: boolean;
@@ -69,6 +70,7 @@ const RegistrationForm: React.FC<RegistrationFormProps> = ({
   showBirthday?: boolean;
   hideCheckboxes?: boolean;
   isDerma: boolean;
+  lastStep?: boolean;
 }) => {
   const routes = useRoutes();
   const router = useRouter();
@@ -126,7 +128,8 @@ const RegistrationForm: React.FC<RegistrationFormProps> = ({
     if (initialValues) {
       initialValues.surname = initialValues.lastName;
       initialValues.termsAndConditionsAccepted =
-        initialValues.name.length > 0 && initialValues.secondSurname.length > 0;
+        (initialValues.name.length > 0 && initialValues.surname.length > 0) ||
+        hideCheckboxes;
       setFormData(initialValues);
     }
   }, []);
@@ -135,7 +138,8 @@ const RegistrationForm: React.FC<RegistrationFormProps> = ({
     formData,
     isDashboard,
     redirect,
-    isEmbed
+    isEmbed,
+    lastStep
   );
 
   useEffect(() => {
@@ -209,6 +213,7 @@ const RegistrationForm: React.FC<RegistrationFormProps> = ({
       !showDni ||
       isValidNif(formData.dni.toUpperCase()) ||
       isValidNie(formData.dni.toUpperCase());
+
     if (validFormData(formData, errors) && isValidDni) {
       setErrors([]);
       if (redirectToReagenda && redirectToReagenda != '') {

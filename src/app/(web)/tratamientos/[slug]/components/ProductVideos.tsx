@@ -9,16 +9,22 @@ const Carousel = dynamic(() => import('designSystem/Carousel/Carousel'), {
   ssr: false,
 });
 
-export default function ProductVideos({ product }: { product: Product }) {
+export default function ProductVideos({
+  product,
+  videos,
+}: {
+  product?: Product;
+  videos?: { url: string; active: boolean }[];
+}) {
   const genericVideo = { url: 'yoFtEyG3Lgc', active: true };
 
-  const videos = product?.videos;
+  const finalVideos = product?.videos || videos || [];
 
-  if (!videos.find(video => video.url === genericVideo.url)) {
-    videos.push(genericVideo as any);
+  if (!finalVideos.find(video => video.url === genericVideo.url)) {
+    finalVideos.push(genericVideo as any);
   }
 
-  if (videos.length < 0) {
+  if (finalVideos.length < 0) {
     return <></>;
   }
 
@@ -27,12 +33,12 @@ export default function ProductVideos({ product }: { product: Product }) {
       <Flex
         layout="col-left"
         className={`w-full ${
-          videos.length <= 1 && !isMobileSSR() ? 'flex-row gap-16' : ''
+          finalVideos.length <= 1 && !isMobileSSR() ? 'flex-row gap-16' : ''
         }`}
       >
         <div
           className={
-            videos.length <= 1 && !isMobileSSR() ? 'w-1/2 px-4' : 'px-4'
+            finalVideos.length <= 1 && !isMobileSSR() ? 'w-1/2 px-4' : 'px-4'
           }
         >
           <Title size="2xl" className="font-bold mb-6">
@@ -44,29 +50,33 @@ export default function ProductVideos({ product }: { product: Product }) {
           </Text>
         </div>
         <div
-          className={videos.length <= 1 && !isMobileSSR() ? 'w-1/3' : 'w-full'}
+          className={
+            finalVideos.length <= 1 && !isMobileSSR() ? 'w-1/3' : 'w-full'
+          }
         >
           <CheckHydration>
             <Carousel
               hasControls={
-                (isMobileSSR() && videos.length > 1) ||
-                (!isMobileSSR() && videos.length > 3)
+                (isMobileSSR() && finalVideos.length > 1) ||
+                (!isMobileSSR() && finalVideos.length > 3)
               }
               dragEnabled={
-                (isMobileSSR() && videos.length > 1) ||
-                (!isMobileSSR() && videos.length > 3)
+                (isMobileSSR() && finalVideos.length > 1) ||
+                (!isMobileSSR() && finalVideos.length > 3)
               }
               touchEnabled={
-                (isMobileSSR() && videos.length > 1) ||
-                (!isMobileSSR() && videos.length > 3)
+                (isMobileSSR() && finalVideos.length > 1) ||
+                (!isMobileSSR() && finalVideos.length > 3)
               }
-              visibleSlides={videos.length > 1 ? (isMobileSSR() ? 1.2 : 3) : 1}
+              visibleSlides={
+                finalVideos.length > 1 ? (isMobileSSR() ? 1.2 : 3) : 1
+              }
               isIntrinsicHeight
               infinite={false}
               sliderStyles="md:gap-8"
               controlstyles="px-4"
             >
-              {videos.map(video => {
+              {finalVideos.map(video => {
                 if (video.active) {
                   const videoId = video.url.split('/').pop();
 
@@ -74,7 +84,9 @@ export default function ProductVideos({ product }: { product: Product }) {
                     <div key={video.url} className="px-4 w-full">
                       <iframe
                         width={
-                          isMobileSSR() && videos.length > 1 ? '100%' : '315'
+                          isMobileSSR() && finalVideos.length > 1
+                            ? '100%'
+                            : '315'
                         }
                         height="560"
                         src={`https://www.youtube.com/embed/${videoId}`}

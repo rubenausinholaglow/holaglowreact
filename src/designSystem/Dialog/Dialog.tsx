@@ -99,7 +99,7 @@ export function DialogContent({
       <DialogModal.Overlay className="bg-hg-black/20 backdrop-blur-sm data-[state=open]:animate-overlayShow fixed inset-0 z-40" />
       <DialogModal.Content
         className={twMerge(
-          `${poppins.className} ${gtUltra.variable} ${animationStyles} fixed z-50 shadow-centered-black overflow-y-auto border-l border-derma-secondary100 ${className}`
+          `${poppins.className} ${gtUltra.variable} ${animationStyles} outline-none fixed z-50 shadow-centered-black overflow-y-auto border-l border-derma-secondary100 ${className}`
         )}
         onTouchStart={handleTouchStart}
         onTouchMove={handleTouchMove}

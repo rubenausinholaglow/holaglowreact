@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { isMobile } from 'react-device-detect';
 import { Clinic } from '@interface/clinic';
 import CheckHydration from '@utils/CheckHydration';
