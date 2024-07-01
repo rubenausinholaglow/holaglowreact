@@ -227,9 +227,6 @@ export default function ProductPriceCard({
           </Flex>
         </Flex>
         <Text className="font-semibold md:text-lg">{product.title}</Text>
-        {product.isPack && isMobile && (
-          <Text className="font-semibold md:text-lg">¡Tu eliges la zona!</Text>
-        )}
       </Flex>
       <Flex layout="col-left" className="w-full items-start pt-2">
         <ProductPriceItemsCard isDashboard={isDashboard} product={product} />
