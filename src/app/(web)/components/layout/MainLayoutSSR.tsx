@@ -8,23 +8,28 @@ import FooterSSR from './FooterSSR';
 export default function MainLayoutSSR({
   hideHeader = false,
   hideAppointmentButton = false,
+  hideFloatingBottomBar = false,
   hideFooter = false,
+  className = '',
   children,
 }: {
   hideHeader?: boolean;
   hideAppointmentButton?: boolean;
+  hideFloatingBottomBar?: boolean;
   hideFooter?: boolean;
+  className?: string;
   children: ReactNode;
 }) {
+  console.log(hideFloatingBottomBar);
+
   return (
-    <AppSSR>
+    <AppSSR className={className}>
       <main>
         {!hideHeader && (
           <Header hideAppointmentButton={hideAppointmentButton} />
         )}
         {children}
-
-        <FloatingBottomBar />
+        {!hideFloatingBottomBar && <FloatingBottomBar />}
         {!hideFooter && <FooterSSR />}
       </main>
     </AppSSR>
