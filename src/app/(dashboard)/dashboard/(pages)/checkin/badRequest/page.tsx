@@ -15,42 +15,36 @@ export default function BadRequestSection() {
   const routes = useRoutes();
 
   return (
-    <App>
-      <MainLayout
-        isDashboard
-        hideBackButton
-        hideContactButtons
-        hideProfessionalSelector
-        hideBottomBar
-      >
-        <Flex className="flex-col items-center">
-          <SvgSadIcon
-            width={96}
-            height={96}
-            className="text-hg-primary bg-hg-secondary rounded-full"
-          />
-          <Title className="align-center font-bold mt-8" size="xl">
-            ¡Ups!
-          </Title>
-          <Title className="align-center font-bold mb-8">
-            No te hemos encontrado
-          </Title>
-          <RegistrationForm
-            isDashboard={true}
-            redirect={false}
-            isDerma={false}
-          />
-          <Button
-            type="tertiary"
-            isSubmit
-            className="ml-auto"
-            customStyles="bg-hg-primary mt-8 align-center"
-            onClick={() => router.push(routes.dashboard.checkIn.root)}
-          >
-            Volver
-          </Button>
-        </Flex>
-      </MainLayout>
-    </App>
+    <MainLayout
+      isDashboard
+      hideBackButton
+      hideContactButtons
+      hideProfessionalSelector
+      hideBottomBar
+    >
+      <Flex className="flex-col items-center">
+        <SvgSadIcon
+          width={96}
+          height={96}
+          className="text-hg-primary bg-hg-secondary rounded-full"
+        />
+        <Title className="align-center font-bold mt-8" size="xl">
+          ¡Ups!
+        </Title>
+        <Title className="align-center font-bold mb-8">
+          No te hemos encontrado
+        </Title>
+        <RegistrationForm isDashboard={true} redirect={false} isDerma={false} />
+        <Button
+          type="tertiary"
+          isSubmit
+          className="ml-auto"
+          customStyles="bg-hg-primary mt-8 align-center"
+          onClick={() => router.push(routes.dashboard.checkIn.root)}
+        >
+          Volver
+        </Button>
+      </Flex>
+    </MainLayout>
   );
 }

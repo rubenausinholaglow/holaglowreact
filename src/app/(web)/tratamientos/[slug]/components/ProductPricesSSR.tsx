@@ -57,7 +57,8 @@ export default function ProductPricesSSR({ product }: { product: Product }) {
         (item: string) =>
           item.toLowerCase().includes(product.title.toLowerCase()) &&
           product.title.indexOf('Pack Wellaging') < 0 &&
-          product.title.indexOf('Armonización facial') < 0
+          product.title.indexOf('Armonización facial') < 0 &&
+          product.title.indexOf('Pack Lifting') < 0
       );
   }
 
@@ -201,6 +202,7 @@ export default function ProductPricesSSR({ product }: { product: Product }) {
         <Flex layout="row-center" className="pt-4">
           <BlogShareBar
             title={product.title}
+            text={product.description}
             url={`http://www.holaglow.com/${headersList.get('next-url') || ''}`}
           />
         </Flex>

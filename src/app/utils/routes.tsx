@@ -1,6 +1,7 @@
 const ROUTES = {
   home: '/',
   treatments: '/tratamientos',
+  reagenda: '/reagenda',
   checkout: {
     clinics: '/checkout/clinicas',
     type: '/checkout/tipo-cita',

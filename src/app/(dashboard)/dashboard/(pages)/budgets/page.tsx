@@ -1,21 +1,21 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { ProductClinics } from '@interface/clinic';
 import ProductService from '@services/ProductService';
+import FullScreenLoading from 'app/(web)/components/common/FullScreenLayout';
 import App from 'app/(web)/components/layout/App';
 import MainLayout from 'app/(web)/components/layout/MainLayout';
-import PsrpPage from 'app/(web)/tratamientos/psrp';
 import { SvgSpinner } from 'app/icons/Icons';
 import {
   useGlobalPersistedStore,
   useGlobalStore,
 } from 'app/stores/globalStore';
-import { Product } from 'app/types/product';
 import { HOLAGLOW_COLORS } from 'app/utils/colors';
 import { Flex } from 'designSystem/Layouts/Layouts';
+import { isEmpty } from 'lodash';
 
 import HightLightedProduct from './HightLightedProduct/HightLightedProduct';
+import PsrpDashboard from './PsrpDashboard';
 import { useCartStore } from './stores/userCartStore';
 
 export default function Page() {
@@ -24,19 +24,26 @@ export default function Page() {
   );
   const { dashboardProducts, setDashboardProducts, storedClinicId } =
     useGlobalPersistedStore(state => state);
+
   const {
     setFilteredProducts,
     setProductFilters,
     productFilters,
     isModalOpen,
   } = useGlobalStore(state => state);
+
   const [error, setError] = useState('');
   const [isHydrated, setIsHydrated] = useState(false);
 
   useEffect(() => {
     setFilteredProducts([]);
     setDashboardProducts([]);
+  }, []);
+
+  useEffect(() => {
     const fetchProducts = async () => {
+      setIsHydrated(false);
+
       try {
         const products =
           await ProductService.getDashboardProducts(storedClinicId);
@@ -63,14 +70,14 @@ export default function Page() {
     return <>{error}</>;
   }
 
+  if (!isHydrated || dashboardProducts.length === 0) {
+    return <FullScreenLoading />;
+  }
+
   return (
     <App>
-      <Flex layout="col-center" className="w-full gap-1">
-        <>
-          {productHighlighted != null && <HightLightedProduct />}
-          <PsrpPage isDashboard={true} />
-        </>
-      </Flex>
+      {productHighlighted != null && <HightLightedProduct />}
+      <PsrpDashboard />
     </App>
   );
 }

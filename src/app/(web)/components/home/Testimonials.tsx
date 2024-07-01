@@ -1,5 +1,4 @@
 import { ClinicReview } from '@interface/clinic';
-import { Testimonial } from '@interface/testimonial';
 import clinicService from '@services/ClinicService';
 import { isMobileSSR } from '@utils/isMobileSSR';
 import { SvgHolaglowHand } from 'app/icons/Icons';

@@ -76,7 +76,7 @@ const Page = () => {
       percentageDiscount: percentageDiscount / 100,
       manualPrice: Number(manualPrice.toFixed(2)),
       totalPrice: Number(totalPrice.toFixed(2)),
-      totalPriceWithIva: Number(totalPrice.toFixed(2)),
+      totalPriceWithIVA: Number(totalPrice.toFixed(2)),
       clinicInfoId: storedClinicId,
       referenceId: '',
       statusBudget: StatusBudget.Open,
@@ -122,90 +122,86 @@ const Page = () => {
   }
 
   return (
-    <App>
-      <MainLayout isDashboard isCheckout>
-        <Flex className="w-full">
-          <div className="w-[55%] h-full p-4">
-            {storedBudgetId && !isBudgetModified && !isLoading && (
-              <PaymentModule />
-            )}
-            {!(storedBudgetId && !isBudgetModified && !isLoading) && (
-              <PepperWidget
-                totalPrice={Number(cartTotalPrice())}
-              ></PepperWidget>
-            )}
-          </div>
+    <MainLayout isDashboard isCheckout>
+      <Flex className="w-full">
+        <div className="w-[55%] h-full p-4">
+          {storedBudgetId && !isBudgetModified && !isLoading && (
+            <PaymentModule />
+          )}
+          {!(storedBudgetId && !isBudgetModified && !isLoading) && (
+            <PepperWidget totalPrice={Number(cartTotalPrice())}></PepperWidget>
+          )}
+        </div>
 
-          <div className="w-[45%] bg-white rounded-l-2xl h-full">
-            <Flex layout="col-left" className="p-4">
-              <Flex className="gap-2">
-                <SvgBag height={20} width={20} />
-                Resumen del pedido
-              </Flex>
+        <div className="w-[45%] bg-white rounded-l-2xl h-full">
+          <Flex layout="col-left" className="p-4">
+            <Flex className="gap-2">
+              <SvgBag height={20} width={20} />
+              Resumen del pedido
             </Flex>
-            <ul>
-              {cart?.map(cartItem => (
-                <li key={cartItem.uniqueId}>
-                  <ProductCard isCheckout product={cartItem} />
-                </li>
-              ))}
-            </ul>
+          </Flex>
+          <ul>
+            {cart?.map(cartItem => (
+              <li key={cartItem.uniqueId}>
+                <ProductCard isCheckout product={cartItem} />
+              </li>
+            ))}
+          </ul>
 
-            <CheckoutTotal />
+          <CheckoutTotal />
 
-            <Flex layout="col-left" className="gap-4 my-8 px-4">
-              {(!storedBudgetId || isBudgetModified || isLoading) && (
-                <Button
-                  className="w-full"
-                  customStyles="bg-hg-primary"
-                  size="xl"
-                  type="tertiary"
-                  onClick={async () => {
-                    setIsLoading(true);
-                    await handleFinalize();
-                    setIsLoading(false);
-                    setShowPaymentButtons(!showPaymentButtons);
-                    const message: any = {
-                      userId: user?.id,
-                      page: 'CheckOut',
-                    };
-                    messageService.goToPage(message);
-                  }}
-                >
-                  {isLoading ? (
-                    <SvgSpinner height={24} width={24} />
-                  ) : (
-                    'Finalizar Presupuesto'
-                  )}
-                </Button>
-              )}
+          <Flex layout="col-left" className="gap-4 my-8 px-4">
+            {(!storedBudgetId || isBudgetModified || isLoading) && (
               <Button
                 className="w-full"
-                size="md"
-                type="white"
-                href=""
-                onClick={e => {
-                  setTreatmentPacks([]);
-                  setIsLoadingAgenda(true);
-                  router.push(ROUTES.dashboard.schedule);
+                customStyles="bg-hg-primary"
+                size="xl"
+                type="tertiary"
+                onClick={async () => {
+                  setIsLoading(true);
+                  await handleFinalize();
+                  setIsLoading(false);
+                  setShowPaymentButtons(!showPaymentButtons);
+                  const message: any = {
+                    userId: user?.id,
+                    page: 'CheckOut',
+                  };
+                  messageService.goToPage(message);
                 }}
               >
-                <span className="font-semibold">Agendar Cita</span>
-                {isLoadingAgenda && <SvgSpinner height={24} width={24} />}
+                {isLoading ? (
+                  <SvgSpinner height={24} width={24} />
+                ) : (
+                  'Finalizar Presupuesto'
+                )}
               </Button>
-              <Button
-                className="w-full"
-                size="md"
-                href={`${ROUTES.dashboard.menu}`}
-                type="white"
-              >
-                <span className="font-semibold">Menú</span>
-              </Button>
-            </Flex>
-          </div>
-        </Flex>
-      </MainLayout>
-    </App>
+            )}
+            <Button
+              className="w-full"
+              size="md"
+              type="white"
+              href=""
+              onClick={e => {
+                setTreatmentPacks([]);
+                setIsLoadingAgenda(true);
+                router.push(ROUTES.dashboard.schedule);
+              }}
+            >
+              <span className="font-semibold">Agendar Cita</span>
+              {isLoadingAgenda && <SvgSpinner height={24} width={24} />}
+            </Button>
+            <Button
+              className="w-full"
+              size="md"
+              href={`${ROUTES.dashboard.menu}`}
+              type="white"
+            >
+              <span className="font-semibold">Menú</span>
+            </Button>
+          </Flex>
+        </div>
+      </Flex>
+    </MainLayout>
   );
 };
 

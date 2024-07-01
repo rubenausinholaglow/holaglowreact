@@ -202,7 +202,7 @@ export const PaymentModule = () => {
       percentageDiscount: 0,
       manualPrice: 0,
       totalPrice: totalPrice,
-      totalPriceWithIva: totalPrice,
+      totalPriceWithIVA: totalPrice,
       clinicInfoId: storedClinicId,
       FlowwwId: '',
       referenceId: '',

@@ -1,8 +1,10 @@
 import '/public/styles/googleMaps/googleMapStyles.css';
 
-import { useEffect, useState } from 'react';
+import { ReactNode, useEffect, useRef, useState } from 'react';
+import ReactDOM from 'react-dom';
 import { Clinic } from '@interface/clinic';
 import loader from '@utils/googleMapsLoader';
+import { poppins } from 'app/fonts';
 
 const styles = {
   silver: [
@@ -95,6 +97,61 @@ const styles = {
   ],
 };
 
+function CustomPopup({
+  map,
+  position,
+  content,
+}: {
+  map: google.maps.Map;
+  position: google.maps.LatLng;
+  content: ReactNode;
+}) {
+  const popupRef = useRef(document.createElement('div'));
+
+  useEffect(() => {
+    const popupDiv = popupRef.current;
+    popupDiv.style.position = 'absolute';
+    popupDiv.style.transform = 'translate(-50%, -100%)';
+    popupDiv.style.background = 'transparent'; // Custom styles
+    popupDiv.style.padding = '0';
+    popupDiv.style.border = 'none';
+    popupDiv.style.borderRadius = '0';
+    popupDiv.style.boxShadow = 'none';
+
+    const popUp = new window.google.maps.OverlayView();
+
+    popUp.onAdd = () => {
+      const panes = popUp.getPanes();
+      if (panes) {
+        panes.floatPane.appendChild(popupDiv);
+      }
+    };
+
+    popUp.draw = () => {
+      const projection = popUp.getProjection();
+      const pos = projection.fromLatLngToDivPixel(position);
+      if (pos) {
+        popupDiv.style.left = `${pos.x}px`;
+        popupDiv.style.top = `${pos.y}px`;
+      }
+    };
+
+    popUp.onRemove = () => {
+      if (popupDiv.parentNode) {
+        popupDiv.parentNode.removeChild(popupDiv);
+      }
+    };
+
+    popUp.setMap(map);
+
+    return () => {
+      popUp.setMap(null);
+    };
+  }, [map, position]);
+
+  return ReactDOM.createPortal(content, popupRef.current);
+}
+
 export default function CustomMap({
   address,
   selectedClinic,
@@ -112,8 +169,12 @@ export default function CustomMap({
             selectedClinic.lat,
             selectedClinic.long
           );
+
           const mapOptions = {
-            center: latLng,
+            center: new window.google.maps.LatLng(
+              selectedClinic.lat + 0.0005,
+              selectedClinic.long
+            ),
             zoom: 17,
             disableDefaultUI: true,
           };
@@ -133,27 +194,34 @@ export default function CustomMap({
               icon: customIconUrl,
             });
 
-            const contentString = `
-              <div id="content" style="padding: 0 16px 16px;">
-                <p class="city">${selectedClinic.city}</p>
-                <p class="address">${selectedClinic.address}</p>
-                <a href="https://wa.me/34682417208" class="link">Más info</a>
-              </div>
-            `;
-
-            const infowindow = new window.google.maps.InfoWindow({
-              content: contentString,
-              ariaLabel: 'Test',
-            });
-
-            marker.addListener('click', () => {
-              infowindow.open({
-                anchor: marker,
-                map,
-              });
-            });
-
             setMap(newMap);
+
+            const popupContent = (
+              <div
+                id="content"
+                className={`${poppins.className} text-sm text-hg-black -translate-y-16 bg-white p-4 rounded-2xl shadow-lg w-60`}
+              >
+                <p className="text-lg font-semibold mb-2">
+                  {selectedClinic.city}
+                </p>
+                <p className="text-xs mb-2">{selectedClinic.address}</p>
+                <a
+                  className="text-hg-secondary text-xs"
+                  href="https://wa.me/34682417208"
+                >
+                  Más info
+                </a>
+              </div>
+            );
+
+            ReactDOM.render(
+              <CustomPopup
+                map={newMap}
+                position={latLng}
+                content={popupContent}
+              />,
+              mapElement
+            );
           } else {
             console.error('Failed to find map element');
           }

@@ -1,7 +1,6 @@
 import '../../../public/styles/Alma/widgets.min.css';
 
 import Head from 'next/head';
-import Script from 'next/script';
 
 import App from '../(web)/components/layout/App';
 

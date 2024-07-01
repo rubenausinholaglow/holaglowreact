@@ -3,6 +3,8 @@ enum BudgetStatus {
   Finish = 2,
   Rejected = 3,
   Paid = 4,
+  Accepted = 5,
+  Contacted = 6,
 }
 
 interface GetBudgetStatusProps {
@@ -15,6 +17,8 @@ export default function getBudgetStatusText(
 ): GetBudgetStatusProps {
   switch (status) {
     case BudgetStatus.Open:
+      return { text: 'PENDIENTE', color: 'blue' };
+    case BudgetStatus.Contacted:
       return { text: 'PENDIENTE', color: 'blue' };
     case BudgetStatus.Finish:
       return { text: 'ACEPTADO', color: 'green' };

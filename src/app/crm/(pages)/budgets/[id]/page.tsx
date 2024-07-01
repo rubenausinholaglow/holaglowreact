@@ -1,9 +1,13 @@
 'use client';
 import React, { useEffect, useState } from 'react';
 import TextArea from '@dashboardComponents/ui/TextArea';
-import { Budget } from '@interface/budget';
+import { Budget, BudgetProduct } from '@interface/budget';
 import { Accordion } from '@radix-ui/react-accordion';
 import { budgetService } from '@services/BudgetService';
+import {
+  budgetTotalPriceWithDiscount,
+  getProductPrice,
+} from '@utils/budgetUtils';
 import FullScreenLoading from 'app/(web)/components/common/FullScreenLayout';
 import ContainerCRM from 'app/crm/components/layout/ContainerCRM';
 import MainLayoutCRM from 'app/crm/components/layout/MainLayoutCRM';
@@ -34,16 +38,23 @@ export default function BudgetDetailPage({ params }: BudgetDetailsProps) {
   async function getBudget() {
     setBudgetDetail(undefined);
     budgetService.getBudget(params.id).then(x => {
-      setBudgetDetail(x);
-      let statusText = 'Pendiente';
-      if (x?.statusBudget == 3) {
-        statusText = 'Rechazado';
-      }
-      if (x?.statusBudget == 4) {
-        statusText = 'Pagado';
-      }
+      if (x) {
+        let total = 0;
+        x.products.forEach(x => {
+          total += getProductPrice(x);
+        });
+        x.totalPriceWithIVA = budgetTotalPriceWithDiscount(x, total);
+        setBudgetDetail(x);
+        let statusText = 'Pendiente';
+        if (x?.statusBudget == 3) {
+          statusText = 'Rechazado';
+        }
+        if (x?.statusBudget == 4) {
+          statusText = 'Pagado';
+        }
 
-      setIsLoading(false);
+        setIsLoading(false);
+      }
     });
   }
 
@@ -75,6 +86,9 @@ export default function BudgetDetailPage({ params }: BudgetDetailsProps) {
     } else {
       await budgetService.addComment(budgetDetail!.id!, comment);
     }
+    if (budgetDetail?.statusBudget == 1) {
+      await setBudgetStatus('4');
+    }
     getBudget();
     setComment('');
     setCommentId('');
@@ -88,46 +102,80 @@ export default function BudgetDetailPage({ params }: BudgetDetailsProps) {
             <FullScreenLoading />
           ) : (
             <>
-              <Flex className="w-full gap-2 justify-end p-4">
-                <Text className="text-sm text-hg-black500 mr-auto">
-                  {dayjs(budgetDetail?.creationDate).format('YYYY-MM-DD')}
-                </Text>
-                <Button
-                  type="primary"
-                  customStyles="bg-hg-black500"
-                  className={
-                    budgetDetail.statusBudget !== 1 ? 'opacity-30' : ''
-                  }
-                  onClick={() => {
-                    setBudgetStatus('1');
-                  }}
-                >
-                  Pendiente
+              <Flex className="w-full gap-2 p-4">
+                <Button type="primary" customStyles="bg-hg-black mr-auto">
+                  <a
+                    target="_blank"
+                    href={
+                      'https://budgetimages.blob.core.windows.net/images/budgets/' +
+                      budgetDetail.id +
+                      '/Presupuesto.pdf'
+                    }
+                  >
+                    PDF
+                  </a>
                 </Button>
-                <Button
-                  type="primary"
-                  customStyles="bg-hg-error"
-                  className={
-                    budgetDetail.statusBudget !== 3 ? 'opacity-30' : ''
-                  }
-                  onClick={() => {
-                    setBudgetStatus('3');
-                  }}
-                >
-                  Rechazado
+                <Button type="primary" customStyles="bg-hg-black mr-auto">
+                  <a
+                    target="_blank"
+                    href={
+                      'https://www.holaglow.com/dashboard?isCallCenter=true&ignoreMessages=true&phoneNumber=+34' +
+                      budgetDetail.user?.phone
+                    }
+                  >
+                    Crear Presupuesto
+                  </a>
                 </Button>
-                <Button
-                  type="primary"
-                  customStyles="bg-hg-green"
-                  className={
-                    budgetDetail.statusBudget !== 4 ? 'opacity-30' : ''
-                  }
-                  onClick={() => {
-                    setBudgetStatus('4');
-                  }}
-                >
-                  Pagado
-                </Button>
+                <Flex className="w-full justify-end">
+                  <Button
+                    type="primary"
+                    customStyles="bg-hg-black500 mr-2"
+                    className={
+                      budgetDetail.statusBudget !== 1 ? 'opacity-30' : ''
+                    }
+                    onClick={() => {
+                      setBudgetStatus('1');
+                    }}
+                  >
+                    Pendiente
+                  </Button>
+                  <Button
+                    type="primary"
+                    customStyles="bg-hg-tertiary mr-2"
+                    className={
+                      budgetDetail.statusBudget !== 6 ? 'opacity-30' : ''
+                    }
+                    onClick={() => {
+                      setBudgetStatus('6');
+                    }}
+                  >
+                    En seguimiento
+                  </Button>
+                  <Button
+                    type="primary"
+                    customStyles="bg-hg-error mr-2"
+                    className={
+                      budgetDetail.statusBudget !== 3 ? 'opacity-30' : ''
+                    }
+                    onClick={() => {
+                      setBudgetStatus('3');
+                    }}
+                  >
+                    Rechazado
+                  </Button>
+                  <Button
+                    type="primary"
+                    customStyles="bg-hg-green mr-2"
+                    className={
+                      budgetDetail.statusBudget !== 4 ? 'opacity-30' : ''
+                    }
+                    onClick={() => {
+                      setBudgetStatus('4');
+                    }}
+                  >
+                    Pagado
+                  </Button>
+                </Flex>
               </Flex>
               <Flex className="w-full gap-4 p-4 items-start">
                 <SvgUserOctagon className="h-8 w-8 shrink-0" />
@@ -151,12 +199,14 @@ export default function BudgetDetailPage({ params }: BudgetDetailsProps) {
                   <Text className="font-semibold">
                     {budgetDetail?.products.map(x => (
                       <Text key={x.id} className="font-semibold">
-                        {x.product?.title}
+                        {x.product?.title} - {getProductPrice(x)}€
+                        {getProductPrice(x) != x.price &&
+                          ' (Original: ' + x.price + '€)'}
                       </Text>
                     ))}
                   </Text>
                   <Text className="text-sm">
-                    Importe: {budgetDetail?.totalPrice}€
+                    Importe: {budgetDetail?.totalPriceWithIVA}€
                   </Text>
                   <Text className="text-sm text-hg-black500budget">
                     {budgetDetail?.professional!.name}

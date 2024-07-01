@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { isMobile } from 'react-device-detect';
 import { Clinic } from '@interface/clinic';
 import CheckHydration from '@utils/CheckHydration';
@@ -20,8 +20,6 @@ import CustomMap from './CustomMap';
 import FullScreenLoading from './FullScreenLayout';
 
 export default function ClinicsSelector({ clinics }: { clinics: Clinic[] }) {
-  const mapContainerRef = useRef(null);
-
   const [selectedAccordion, setSelectedAccordion] = useState<string>('3');
   const [selectedClinic, setSelectedClinic] = useState<Clinic>();
   const [mapHeight, setMapHeight] = useState(0);

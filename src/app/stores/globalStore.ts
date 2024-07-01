@@ -45,6 +45,7 @@ interface SessionStore {
   appointmentUrl: string;
   dermaPhone: string;
   treatmentPacks: PackUnitiesScheduled[];
+  hasSeenDashboardProfessionals: boolean;
   isCallMeTriggered: boolean;
 }
 interface SessionActions {
@@ -65,6 +66,7 @@ interface SessionActions {
   setAppointmentUrl: (url: string) => void;
   setDermaPhone: (phone: string) => void;
   setTreatmentPacks: (treatment: PackUnitiesScheduled[]) => void;
+  setHasSeenDashboardProfessionals: (value: boolean) => void;
   setIsCallMeTriggered: (value: boolean) => void;
 }
 
@@ -114,6 +116,29 @@ interface GlobalPersistActions {
   setExtraInfo: (value?: boolean) => void;
 }
 
+interface CrmStore {
+  clinicId: string;
+}
+
+interface CrmActions {
+  setClinicId: (clinicId: string) => void;
+}
+export const useCrmStore = create(
+  persist<CrmStore & CrmActions>(
+    set => ({
+      clinicId: '',
+      setClinicId: value => {
+        set({ clinicId: value });
+      },
+    }),
+    {
+      name: 'session-storagecrm',
+      version: 1,
+      storage: createJSONStorage(() => sessionStorage),
+    }
+  )
+);
+
 export const useSessionStore = create(
   persist<SessionStore & SessionActions>(
     set => ({
@@ -153,6 +178,7 @@ export const useSessionStore = create(
       appointmentUrl: '',
       dermaPhone: '',
       treatmentPacks: [],
+      hasSeenDashboardProfessionals: false,
       isCallMeTriggered: false,
       setAppointmentUrl: value => {
         set({ appointmentUrl: value });
@@ -205,13 +231,16 @@ export const useSessionStore = create(
       setTreatmentPacks: value => {
         set({ treatmentPacks: value });
       },
+      setHasSeenDashboardProfessionals: value => {
+        set({ hasSeenDashboardProfessionals: value });
+      },
       setIsCallMeTriggered: value => {
         set({ isCallMeTriggered: value });
       },
     }),
     {
       name: 'session-storage',
-      version: 29,
+      version: 31,
       storage: createJSONStorage(() => sessionStorage),
     }
   )
@@ -303,7 +332,7 @@ export const useGlobalPersistedStore = create(
     }),
     {
       name: 'global-storage',
-      version: 69,
+      version: 72,
     }
   )
 );

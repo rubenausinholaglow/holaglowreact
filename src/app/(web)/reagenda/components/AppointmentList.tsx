@@ -25,6 +25,7 @@ export default function AppointmentList({
   const [isHydrated, setIsHydrated] = useState(false);
   const [appointments, setAppointments] = useState([] as Appointment[]);
   const [currentToken, setCurrentToken] = useState('');
+  const [fromAgenda, setFromAgenda] = useState(false);
 
   let showPast = false;
   let token = '';
@@ -33,6 +34,7 @@ export default function AppointmentList({
     const queryString = window.location.search;
     const params = new URLSearchParams(queryString);
     token = params.get('token') ?? '';
+    setFromAgenda(params.get('fromAgenda') == 'true');
     setCurrentToken(token);
     showPast = params.get('showPast') == 'true';
 
@@ -58,7 +60,8 @@ export default function AppointmentList({
           isDerma ? 'font-gtUltraThin' : 'font-semibold'
         }`}
       >
-        Reagendar cita
+        {fromAgenda && 'Parece que ya tienes una cita'}{' '}
+        {!fromAgenda && 'Reagendar cita'}
       </Text>
       <Flex layout="col-left" className="gap-4">
         {appointments.map(appointment => {

@@ -218,16 +218,10 @@ export default function Agenda({
         !block15and45minutes &&
         (!(hour == '10' && minutes == '00') || selectedTreatmentsIds != '902')
       ) {
-        if (
-          x.box != '7' ||
-          (x.box == '7' && !isDashboard && !user) ||
-          isOnline
-        ) {
-          hours.push(x);
-          if (parseInt(hour) < 15) {
-            morning.push(x);
-          } else afternoon.push(x);
-        }
+        hours.push(x);
+        if (parseInt(hour) < 15) {
+          morning.push(x);
+        } else afternoon.push(x);
       }
     });
     setMorningHours(morning);
@@ -338,12 +332,7 @@ export default function Agenda({
               }
             }
           });
-        } else if (
-          user &&
-          selectedDay &&
-          !isDerma &&
-          (isDashboard || isCheckin || isOnline)
-        ) {
+        } else if (user && selectedDay) {
           setLoadingDays(true);
           setLoadingMonth(true);
           if (isDashboard || isCheckin)
@@ -406,9 +395,7 @@ export default function Agenda({
             }
           });
         } else if (!isDerma) {
-          router.push('/checkout/contactform');
-        } else if (isDerma && isCheckout) {
-          router.push('/planes/contactform');
+          router.push(ROUTES.checkout.contactForm);
         }
       } catch {
         setShowErrorMessage(true);

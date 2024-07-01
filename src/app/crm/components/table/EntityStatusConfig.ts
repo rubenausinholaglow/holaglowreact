@@ -21,11 +21,13 @@ export const entityStatusConfig: Record<string, StatusConfig> = {
       OPEN: 'Pendiente',
       PAID: 'Pagado',
       REJECTED: 'Rechazado',
+      CONTACTED: 'En seguimiento',
     },
     colors: {
       OPEN: 'bg-hg-black500',
       PAID: 'bg-hg-green',
       REJECTED: 'bg-hg-error',
+      CONTACTED: 'bg-hg-tertiary',
     },
   },
 };
