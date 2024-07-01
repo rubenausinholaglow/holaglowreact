@@ -55,6 +55,7 @@ export interface RegistrationFormProps {
   showBirthday?: boolean;
   isDerma: boolean;
   hideCheckboxes?: boolean;
+  lastStep?: boolean;
 }
 
 export interface CheckboxProps {

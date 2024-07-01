@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { isMobile } from 'react-device-detect';
 import CheckHydration from '@utils/CheckHydration';
 import App from 'app/(web)/components/layout/App';

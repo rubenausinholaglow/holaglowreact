@@ -24,7 +24,7 @@ export default function LeadLandingRegistrationForm() {
     }
 
     initProduct(process.env.NEXT_PUBLIC_PROBADOR_VIRTUAL_ID!);
-    analyticsMetrics.treatmentText = 'LandingPPCHolaglow';
+    analyticsMetrics.treatmentText = 'ProbadorVirtualPPC';
     analyticsMetrics.externalReference = 'Landing';
     analyticsMetrics.utmAdgroup = '';
     analyticsMetrics.utmCampaign = '';
@@ -36,5 +36,5 @@ export default function LeadLandingRegistrationForm() {
     setAnalyticsMetrics(analyticsMetrics);
   }, []);
 
-  return <RegistrationForm page="902" isDerma={false} />;
+  return <RegistrationForm page="902" isDerma={false} lastStep={true} />;
 }
