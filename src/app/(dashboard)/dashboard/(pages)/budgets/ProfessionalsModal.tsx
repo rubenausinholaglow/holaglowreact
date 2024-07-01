@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState } from 'react';
 import { isMobile } from 'react-device-detect';
-import { Professional } from '@interface/clinic';
+import { Professional, ProfessionalType } from '@interface/clinic';
 import clinicService from '@services/ClinicService';
 import DynamicIcon from 'app/(web)/components/common/DynamicIcon';
 import { SvgAdd, SvgArrow, SvgGoogle } from 'app/icons/IconsDs';
@@ -39,7 +39,7 @@ export function ProfessionalDashboardCarousel() {
     const fetchProfessionals = async () => {
       const professionalsByCity = await clinicService.getProfessionalsByClinic(
         storedClinicId,
-        1
+        ProfessionalType.Medical
       );
 
       setProfessionalsByCity(professionalsByCity as Professional[]);
