@@ -79,7 +79,7 @@ const Page = () => {
       percentageDiscount: percentageDiscount / 100,
       manualPrice: Number(manualPrice) > 0 ? Number(manualPrice.toFixed(2)) : 0,
       totalPrice: Number(totalPrice.toFixed(2)),
-      totalPriceWithIva: Number(totalPrice.toFixed(2)),
+      totalPriceWithIVA: Number(totalPrice.toFixed(2)),
       clinicInfoId: storedClinicId,
       referenceId: '',
       statusBudget: StatusBudget.Open,
