@@ -36,7 +36,6 @@ export default function ProductDiscountForm({
 
   const { setPromoCode, promoCode } = useSessionStore(state => state);
 
-  const cart = useCartStore(state => state.cart);
   const applyItemDiscount = useCartStore(state => state.applyItemDiscount);
   const cartItemDiscount = (data: any) => {
     applyItemDiscount(data.cartUniqueId, data.Value, data.DiscountType);

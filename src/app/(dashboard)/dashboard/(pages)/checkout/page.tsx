@@ -131,7 +131,7 @@ const Page = () => {
     process.env.NEXT_PUBLIC_CONFIG_PRODUCTS_ACCEPT_DISCOUNTS;
 
   const isValidProduct = (productId: string) => {
-    return productsAcceptDiscounts!.includes(productId);
+    return productsAcceptDiscounts!.includes(productId.toLocaleUpperCase());
   };
 
   // Maintain a set to track which products have had their discount shown
