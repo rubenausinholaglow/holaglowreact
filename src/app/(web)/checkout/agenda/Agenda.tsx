@@ -218,16 +218,10 @@ export default function Agenda({
         !block15and45minutes &&
         (!(hour == '10' && minutes == '00') || selectedTreatmentsIds != '902')
       ) {
-        if (
-          x.box != '7' ||
-          (x.box == '7' && !isDashboard && !user) ||
-          isOnline
-        ) {
-          hours.push(x);
-          if (parseInt(hour) < 15) {
-            morning.push(x);
-          } else afternoon.push(x);
-        }
+        hours.push(x);
+        if (parseInt(hour) < 15) {
+          morning.push(x);
+        } else afternoon.push(x);
       }
     });
     setMorningHours(morning);

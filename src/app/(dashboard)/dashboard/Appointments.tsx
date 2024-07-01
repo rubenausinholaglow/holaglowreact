@@ -293,7 +293,8 @@ const AppointmentsListComponent: React.FC<{
   ): JSX.Element => {
     if (
       appointment.appointmentEvents &&
-      appointment.appointmentEvents.length > 0
+      appointment.appointmentEvents.length > 0 &&
+      appointment.appointmentStatus != 0
     ) {
       const filteredEvents = appointment.appointmentEvents?.filter(
         event => event.appointmentEventType === appointmentEventType

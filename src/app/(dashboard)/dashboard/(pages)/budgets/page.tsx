@@ -64,13 +64,11 @@ export default function Page() {
   }
 
   return (
-    <App>
-      <Flex layout="col-center" className="w-full gap-1">
-        <>
-          {productHighlighted != null && <HightLightedProduct />}
-          <PsrpPage isDashboard={true} />
-        </>
-      </Flex>
-    </App>
+    <Flex layout="col-center" className="w-full gap-1">
+      <>
+        {productHighlighted != null && <HightLightedProduct />}
+        <PsrpPage isDashboard={true} />
+      </>
+    </Flex>
   );
 }

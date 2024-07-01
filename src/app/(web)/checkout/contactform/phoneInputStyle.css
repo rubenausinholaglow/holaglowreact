@@ -21,6 +21,6 @@
   width: 100% !important;
 }
 
-react-international-phone-input.isComplete {
+.react-international-phone-input:not(:placeholder-shown) {
   border: 1px solid theme('colors.hg.black') !important;
 }

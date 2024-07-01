@@ -160,6 +160,23 @@ const SESSION_PRODUCTS_EXTRA_INFO = [
     title: 'Peeling Químico Profundo',
     description: 'Regenera la piel de tu rostro para corregir marcas y manchas',
   },
+  {
+    id: '2a7a2fd9-c6ba-413e-10a5-08db57826543',
+    title: 'Rejuvenecimiento capilar x1',
+    description: 'Fortalece tu cabello y reduce la caída',
+  },
+  {
+    id: 'ae006262-2ef7-4a42-8845-0fde5a25ffcd',
+    title: 'Rejuvenecimiento capilar x3',
+    description:
+      'Consigue un cabello visiblemente más sano a la vez que reduces la caída',
+  },
+  {
+    id: 'caef14b6-b40e-4a86-ae57-56ff04db31b6',
+    title: 'Rejuvenecimiento capilar x6',
+    description:
+      'Pack recomendado para maximizar la reducción de la caída del cabello a la vez que se consigue un aspecto saludable duradero',
+  },
 ];
 
 export default function ProductSessionPriceCard({

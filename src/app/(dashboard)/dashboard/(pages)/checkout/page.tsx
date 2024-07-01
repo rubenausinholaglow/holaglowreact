@@ -161,15 +161,10 @@ const Page = () => {
             </Flex>
             <ul>
               {cart?.map(cartItem => {
-                // Check if the product is valid
                 const isValid = isValidProduct(cartItem.id.toLocaleUpperCase());
-
-                // Determine if the discount should be shown
                 const showDiscount =
                   isValid &&
                   !shownDiscounts.has(cartItem.id.toLocaleUpperCase());
-
-                // If valid and not shown yet, add to the set so it won't be shown again
                 if (
                   isValid &&
                   !shownDiscounts.has(cartItem.id.toLocaleUpperCase())

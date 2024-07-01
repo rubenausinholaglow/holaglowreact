@@ -126,7 +126,8 @@ const RegistrationForm: React.FC<RegistrationFormProps> = ({
     if (initialValues) {
       initialValues.surname = initialValues.lastName;
       initialValues.termsAndConditionsAccepted =
-        initialValues.name.length > 0 && initialValues.secondSurname.length > 0;
+        (initialValues.name.length > 0 && initialValues.surname.length > 0) ||
+        hideCheckboxes;
       setFormData(initialValues);
     }
   }, []);

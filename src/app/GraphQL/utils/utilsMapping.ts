@@ -1,3 +1,8 @@
+import {
+  budgetTotalPriceWithDiscount,
+  getProductPrice,
+} from '@utils/budgetUtils';
+
 import { BudgetsResponseNode } from '../BudgetsQueryResponse';
 import { TaskResponseNode } from '../TaskQueryResponse';
 import { UsersResponseNode } from '../UserQueryResponse';
@@ -14,10 +19,34 @@ export const mapBudgetsData = (
         ' ' +
         budget.user.secondLastName;
       const services = concatenateProductName(budget.products);
+
+      let total = 0;
+      budget.products.forEach(x => {
+        total += getProductPrice({
+          percentageDiscount: x.percentageDiscount,
+          price: x.price,
+          priceDiscount: x.priceDiscount,
+          productId: '',
+        });
+      });
+
+      if (budget.manualPrice > 0) {
+        total = budget.manualPrice;
+      }
+
+      if (budget.priceDiscount > 0) {
+        total = total - budget.priceDiscount;
+      }
+
+      if (budget.percentageDiscount > 0) {
+        total = total - total * budget.percentageDiscount;
+      }
+      const totalWithEuro = total + '€';
       return {
         ...budget,
         fullName,
         services,
+        totalWithEuro,
       };
     });
   } catch (e) {

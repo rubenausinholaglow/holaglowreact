@@ -16,6 +16,7 @@ import {
 import { ColumnDataTable } from 'app/GraphQL/common/types/column';
 import { PageInfo } from 'app/GraphQL/PageInfo';
 import { mapBudgetsData } from 'app/GraphQL/utils/utilsMapping';
+import { useCrmStore } from 'app/stores/globalStore';
 import { Button } from 'designSystem/Buttons/Buttons';
 import { createApolloClient } from 'lib/client';
 
@@ -26,6 +27,7 @@ export default function TableBudgets() {
   const [errorMessage, setErrorMessage] = useState<string | undefined>(
     undefined
   );
+  const { setClinicId } = useCrmStore(state => state);
   const [pageInfo, setPageInfo] = useState<PageInfo>();
   const [totalCount, setTotalCount] = useState<number>(0);
   const [filterStatus, setFilterStatus] = useState('');
@@ -40,7 +42,7 @@ export default function TableBudgets() {
     { label: 'Comercial', key: 'professional.name', format: 'string' },
     {
       label: 'Importe',
-      key: 'totalPrice',
+      key: 'totalWithEuro',
       format: 'string',
     },
     { label: 'Servicios', key: 'services', format: 'string' },
@@ -55,14 +57,16 @@ export default function TableBudgets() {
     'totalPrice',
     'statusBudget',
     'products.product',
-    'products.title',
   ];
   const queryToExecute = [
     `
       id
       creationDate
-      totalPrice
+      totalPriceWithIVA
       statusBudget
+      manualPrice
+      priceDiscount
+      percentageDiscount
       user {
         firstName
         lastName
@@ -76,6 +80,9 @@ export default function TableBudgets() {
         product {
           title
         }
+        priceDiscount
+        percentageDiscount
+        price
       }
       clinicInfo {
         flowwwId
@@ -133,6 +140,7 @@ export default function TableBudgets() {
     const params = new URLSearchParams(queryString);
     const clinicId = params.get('clinicId') ?? '';
     setClinicFlowwwId(clinicId);
+    setClinicId(clinicId);
     if (clinicFlowwwId) executeQuery(true);
   }, []);
 
@@ -188,6 +196,17 @@ export default function TableBudgets() {
             }}
           >
             Pendiente
+          </Button>
+          <Button
+            type="primary"
+            customStyles="bg-hg-tertiary mr-4"
+            className={filterStatus !== 'Contacted' ? 'opacity-30' : ''}
+            onClick={() => {
+              if (filterStatus == 'Contacted') setFilterStatus('');
+              else setFilterStatus('Contacted');
+            }}
+          >
+            En seguimiento
           </Button>
           <Button
             type="primary"
