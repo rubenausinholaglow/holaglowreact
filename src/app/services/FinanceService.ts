@@ -158,11 +158,8 @@ export default class FinanceService {
         body: JSON.stringify(validatePromoCode),
       });
 
-      if (res.ok) {
-        return res.json();
-      } else {
-        return res.json();
-      }
+      return res.json();
+
     } catch (error: any) {
       Bugsnag.notify(error);
       return {} as PromoCodeResponse;

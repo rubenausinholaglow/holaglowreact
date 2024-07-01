@@ -32,9 +32,7 @@ export default function ProductDiscountForm({
   const [isLoading, setIsLoading] = useState<boolean | null>(null);
 
   const { priceDiscount } = useCartStore(state => state);
-  const { user, advancedPaymentProduct } = useGlobalPersistedStore(
-    state => state
-  );
+  const { user } = useGlobalPersistedStore(state => state);
 
   const { setPromoCode, promoCode } = useSessionStore(state => state);
 
@@ -70,15 +68,6 @@ export default function ProductDiscountForm({
       setIsMGM(!isMGM);
       return;
     }
-    if (
-      cart.filter(
-        item =>
-          item.id.toUpperCase() === advancedPaymentProduct!.id.toUpperCase()
-      ).length > 0
-    ) {
-      return;
-    }
-
     if (data.type === '%') {
       const discount = {
         cartUniqueId: cartUniqueId,

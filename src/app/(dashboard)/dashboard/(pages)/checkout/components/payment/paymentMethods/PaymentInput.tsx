@@ -117,25 +117,23 @@ export default function PaymentInput(props: Props) {
   const cartTotalWithDiscountFixed =
     Math.ceil(cartTotalWithDiscount * 100) / 100;
 
-  function fetchWalletBalance() {
-    if (walletClient && walletClient.amountBalance > 0) {
-      setMaxValue(walletClient.amountBalance);
-    }
-  }
-
   useEffect(() => {
-    if (props.paymentMethod == PaymentMethod.Wallet) {
-      fetchWalletBalance();
+    if (
+      props.paymentMethod == PaymentMethod.Wallet &&
+      walletClient &&
+      walletClient.amountBalance > 0
+    ) {
+      setMaxValue(walletClient.amountBalance);
     } else {
       if (props.paymentMethod == PaymentMethod.AdvancedPayment) {
         setMaxValue(49);
         setInputValue('49');
-        return;
+      } else {
+        setMaxValue(
+          parseFloat(cartTotalWithDiscountFixed.toFixed(2)) -
+            parseFloat(totalAmount.toFixed(2))
+        );
       }
-      setMaxValue(
-        parseFloat(cartTotalWithDiscountFixed.toFixed(2)) -
-          parseFloat(totalAmount.toFixed(2))
-      );
     }
   }, [walletClient, props.paymentMethod]);
 

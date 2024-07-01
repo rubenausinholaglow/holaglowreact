@@ -94,7 +94,6 @@ interface GlobalPersistStore {
   activePayment: PaymentBank;
   isCallCenter: boolean;
   extraInfo: boolean;
-  advancedPaymentProduct : Product | undefined;
 }
 
 interface GlobalPersistActions {
@@ -118,7 +117,6 @@ interface GlobalPersistActions {
   setActivePayment: (value?: PaymentBank) => void;
   setIsCallCenter: (value?: boolean) => void;
   setExtraInfo: (value?: boolean) => void;
-  setAdvancedPaymentProduct: (value?: Product) => void;
 }
 
 export const useSessionStore = create(
@@ -244,7 +242,6 @@ export const useGlobalPersistedStore = create(
       clinics: [],
       user: undefined,
       promoProduct : undefined,
-      advancedPaymentProduct : undefined,
       setStateProducts: (value: Product[]) => {
         set({ stateProducts: value });
       },
@@ -318,9 +315,6 @@ export const useGlobalPersistedStore = create(
       setExtraInfo: value => {
         set({ extraInfo: value });
       },
-      setAdvancedPaymentProduct : value => {
-        set({advancedPaymentProduct : value})
-      }
     }),
     {
       name: 'global-storage',

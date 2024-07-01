@@ -127,13 +127,11 @@ const Page = () => {
     return cartTotalWithDiscount;
   }
 
-  const validProducts = [
-    '6FA3561B-2650-4E00-8ED3-852E95A38A0B',
-    '62403DAD-846F-46CF-B4CC-7DAE946E028E',
-  ];
+  const productsAcceptDiscounts =
+    process.env.NEXT_PUBLIC_CONFIG_PRODUCTS_ACCEPT_DISCOUNTS;
 
   const isValidProduct = (productId: string) => {
-    return validProducts.includes(productId);
+    return productsAcceptDiscounts!.includes(productId);
   };
 
   // Maintain a set to track which products have had their discount shown
