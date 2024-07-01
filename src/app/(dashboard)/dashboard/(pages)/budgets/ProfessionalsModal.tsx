@@ -108,10 +108,10 @@ export function ProfessionalDashboardCarousel() {
                     {professional.title}
                   </li>
                   <li className="font-light text-hg-black500 mb-8">
-                    N. de colegiada {professional.collegiateNumber}
+                    Nº de colegiado {professional.collegiateNumber}
                   </li>
                   <li className="font-light text-hg-black500 text-sm">
-                    Afiliada a la Sociedad Española de Medicina Estética
+                    Afiliado a la Sociedad Española de Medicina Estética
                     <Image
                       src="/images/dashboard/budgets/seme.svg"
                       height={100}
@@ -273,7 +273,7 @@ export default function ProfessionalsModal() {
       <DialogContent className="w-4/5 right-0 bg-white">
         <div className="p-6">
           <Title size="2xl" className="font-gtUltra text-hg-secondary">
-            Nuestras profesionales
+            Nuestros profesionales
           </Title>
         </div>
 

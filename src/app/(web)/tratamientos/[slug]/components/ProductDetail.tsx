@@ -106,7 +106,7 @@ export default function ProductDetailPage({
               size="2xl"
               className="text-left font-bold mb-6 md:mb-8"
             >
-              Nuestras Profesionales
+              Nuestros profesionales
             </Title>
             <Text isAnimated className="text-hg-black500 mb-8 md:text-lg">
               En Holaglow defendemos una medicina estética que cuida y, para
