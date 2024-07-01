@@ -105,6 +105,10 @@ export const PacksConfigured: ProductPackSchedule[] = [
 ];
 
 export function getPackMessage(services: string[]) {
+  if (!services) {
+    return '';
+  }
+
   if (!services.includes('855') && !services.includes('854')) {
     return '*No incluye los tratamientos de rinomodelación ni relleno de ojeras.';
   }
@@ -113,6 +117,5 @@ export function getPackMessage(services: string[]) {
     return ' *No incluye el tratamiento de rinomodelación.';
   }
 
-  // cal configurar tots els productes? o directament si no tenen config podem retornar el missatge de que no tenen ni rino ni relleno de ojeras
   return '';
 }

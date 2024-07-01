@@ -199,8 +199,6 @@ export default function ProductPriceCard({
   const [cardHeight, setCardHeight] = useState(0);
   const [isFlipped, setIsFlipped] = useState<boolean>(false);
   const [packMessage, setPackMessage] = useState<string>('');
-  const [hasRinomodelacion, setHasRinomodelacion] = useState<boolean>(false);
-  const [hasRellenoOjeras, setHasRellenoOjeras] = useState<boolean>(false);
   const [discountedPrice, setDiscountedPrice] = useState<null | number>(null);
 
   useEffect(() => {
@@ -209,18 +207,7 @@ export default function ProductPriceCard({
     }
 
     if (product?.flowwwId && product.isPack) {
-      /* 
-        setHasRinomodelacion(
-          ProductFlowwwIds() ? ProductFlowwwIds().includes('855') : false
-        );
-        setHasRellenoOjeras(
-        ProductFlowwwIds() ? ProductFlowwwIds().includes('854') : false
-      );
-      */
-
-      if (ProductFlowwwIds()) {
-        setPackMessage(getPackMessage(ProductFlowwwIds()));
-      }
+      setPackMessage(getPackMessage(ProductFlowwwIds()));
     }
   }, [product]);
 
@@ -242,7 +229,7 @@ export default function ProductPriceCard({
         id={`frontPriceCard-${index}`}
         className={`bg-white h-full flex-col p-6 rounded-2xl shadow-centered-secondary ${className}`}
       >
-        {(!hasRinomodelacion || !hasRellenoOjeras) && product.isPack && (
+        {packMessage && product.isPack && (
           <div
             className="absolute top-6 right-6 bg-derma-secondary300 rounded-full p-2 text-hg-secondary shrink-0 aspect-square flex justify-center items-center cursor-pointer"
             onClick={() => setIsFlipped(!isFlipped)}
@@ -250,9 +237,6 @@ export default function ProductPriceCard({
             <SvgInfoCircle className="h-6 w-6" />
           </div>
         )}
-
-        <p>{product.flowwwId.toString()}</p>
-        {ProductFlowwwIds() && <p>{packMessage}</p>}
 
         <Flex layout="col-left" className="w-full">
           <Flex layout="row-between" className="w-full mb-2 items-start">
@@ -297,7 +281,7 @@ export default function ProductPriceCard({
         </Flex>
       </Flex>
       <div className="h-full flex">
-        {(!hasRinomodelacion || !hasRellenoOjeras) && (
+        {packMessage && (
           <div
             className="bg-hg-secondary text-white rounded-2xl  flex flex-col items-start gap-4 p-6"
             style={{ minHeight: `${cardHeight}px`, height: `${cardHeight}px` }}
@@ -309,18 +293,7 @@ export default function ProductPriceCard({
               <SvgCross className="h-4 w-4" />
             </div>
 
-            {!hasRinomodelacion && !hasRellenoOjeras && (
-              <p className="md:text-lg font-semibold mb-auto">
-                *No incluye los tratamientos de rinomodelación ni relleno de
-                ojeras.
-              </p>
-            )}
-
-            {!hasRinomodelacion && hasRellenoOjeras && (
-              <p className="md:text-lg font-semibold mb-auto">
-                *No incluye el tratamiento de rinomodelación.
-              </p>
-            )}
+            <p className="md:text-lg font-semibold mb-auto">{packMessage}</p>
 
             <Button
               type="white"
