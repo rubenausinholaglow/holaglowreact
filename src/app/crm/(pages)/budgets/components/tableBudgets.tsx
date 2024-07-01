@@ -205,6 +205,12 @@ export default function TableBudgets() {
         dayjs(endDateFilter).format('YYYY-MM-DD') +
         ' \\"';
     }
+    if (stringFilter) {
+      filterValue +=
+        ' && products.count(product.title.contains(\\"' +
+        stringFilter +
+        '\\")) > 0';
+    }
     const queryBuilders = createQuery(params, filterValue);
     await fetchBudgets(queryBuilders, nextPage);
   };
