@@ -1,4 +1,4 @@
-run-name: Playwright Tests - ${{ github.ref }}
+run: E2E tests
 
 on:
   push:
@@ -33,7 +33,7 @@ jobs:
             sleep 10
           done
         env:
-          GH_TOKEN: ${{ github.token }}
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
   run-e2es:
     needs: wait-for-deployment
