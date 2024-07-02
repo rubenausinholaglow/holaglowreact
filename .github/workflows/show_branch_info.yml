@@ -2,3 +2,10 @@ run name: Run tests for -> ${{ github.ref }}
 
 on:
   push:
+
+jobs:
+  wait_for_deployment:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Just commit + branch information
+        run: echo "just showing branch and commit info"
