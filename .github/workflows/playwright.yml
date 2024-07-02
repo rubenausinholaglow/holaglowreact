@@ -1,4 +1,4 @@
-run-name: Playwright Tests - ${{ github.event.deployment_status.environment_url }}
+run-name: Playwright Tests - envirnoment_url ${{ github.event.deployment_status.environment_url }} - url ${{ github.event.deployment_status.url }} - target_url ${{ github.event.deployment_status.target_url }} - target_url ${{ github.event.deployment_status.target_url }}
 
 on:
   deployment_status:
