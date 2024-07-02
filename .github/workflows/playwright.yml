@@ -1,20 +1,19 @@
-name: E2E tests
+name: Playwright Tests
 
 on:
   push:
     branches:
-      - '**'
+      - main
 
 jobs:
-  jobs:
   wait_for_deployment:
     runs-on: ubuntu-latest
-    timeout-minutes: 5
     steps:
       - name: Wait for 5 minutes
-        run: sleep 300
+        run: sleep 30
 
   run_e2es:
+    needs: wait_for_deployment
     runs-on: ubuntu-latest
     steps:
       - name: Echo deployment status
