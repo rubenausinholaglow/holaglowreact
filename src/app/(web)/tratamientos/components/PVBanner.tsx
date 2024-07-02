@@ -1,6 +1,6 @@
+import { isMobile } from 'react-device-detect';
 import ROUTES from '@utils/routes';
 import { SvgUserScan } from 'app/icons/IconsDs';
-import { useSessionStore } from 'app/stores/globalStore';
 import { Button } from 'designSystem/Buttons/Buttons';
 import { Flex } from 'designSystem/Layouts/Layouts';
 import { Text } from 'designSystem/Texts/Texts';
@@ -13,8 +13,6 @@ export default function PVBanner({
   className?: string;
   isFloating?: boolean;
 }) {
-  const { deviceSize } = useSessionStore(state => state);
-
   return (
     <Flex
       layout="row-left"
@@ -27,15 +25,15 @@ export default function PVBanner({
       }`}
     >
       <Image
-        src={`/images/products/${
-          deviceSize.isMobile ? 'PVMobile.png' : 'PVDesktop.png'
-        }`}
+        src={`/images/products/${isMobile ? 'PVMobile.png' : 'PVDesktop.png'}`}
         alt="Descubre tu tratamiento ideal con nuestro probador virtual gratis"
         height={200}
         width={200}
-        className={`${isFloating ? 'w-[115px]' : 'h-full'} md:h-auto md:w-full`}
+        className={`${
+          isFloating ? 'w-[115px]' : 'h-full'
+        } md:h-auto md:w-full md:-mt-6`}
       />
-      <Flex layout="col-left" className="p-2 md:p-4 pl-4 md:items-center">
+      <Flex layout="col-left" className="p-2 md:p-4 md:pb-2  md:items-center">
         <Text
           className={`font-semibold mb-1 md:text-center ${
             isFloating ? 'text-sm' : 'md:text-lg'
@@ -52,7 +50,7 @@ export default function PVBanner({
             isFloating ? 'tmevent_floating_minicard_pv' : 'tmevent_minicard_pv'
           }
           type="secondary"
-          size={deviceSize.isMobile ? 'sm' : 'md'}
+          size={isMobile ? 'sm' : 'md'}
           href={ROUTES.landings.pv}
         >
           <SvgUserScan className="h-4 w-4 mr-2" />
