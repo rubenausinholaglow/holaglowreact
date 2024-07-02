@@ -21,7 +21,7 @@ export default function ProductPage({ product }: { product: Product }) {
       <div className="bg-derma-secondary300 rounded-t-3xl pt-8 relative">
         <ProductHeaderSSR product={product} />
       </div>
-      <ProductVideos product={product} />
+      {/* <ProductVideos product={product} /> */}
       <ProductPricesSSR product={product} />
       <ProductPaymentOptions totalPrice={product.price} />
       <div className="bg-hg-secondary100 py-12">
