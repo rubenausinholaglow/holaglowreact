@@ -1,18 +1,20 @@
 'use client';
+import 'react-datepicker/dist/react-datepicker.css';
+import 'app/(web)/checkout/agenda/datePickerStyle.css';
+
+import { useEffect, useState } from 'react';
+import DatePicker, { registerLocale } from 'react-datepicker';
+import { BudgetAnalyticsDto } from '@interface/budget';
+import { budgetService } from '@services/BudgetService';
 import App from 'app/(web)/components/layout/App';
 import ContainerCRM from 'app/crm/components/layout/ContainerCRM';
 import MainLayoutCRM from 'app/crm/components/layout/MainLayoutCRM';
 import LoginChecker from 'app/crm/components/login/LoginChecker';
-import 'react-datepicker/dist/react-datepicker.css';
-import 'app/(web)/checkout/agenda/datePickerStyle.css';
-import DatePicker, { registerLocale } from 'react-datepicker';
 import es from 'date-fns/locale/es';
-import { useEffect, useState } from 'react';
-import { BudgetAnalyticsDto } from '@interface/budget';
-import { Flex } from 'designSystem/Layouts/Layouts';
 import dayjs, { Dayjs } from 'dayjs';
-import { budgetService } from '@services/BudgetService';
+import { Flex } from 'designSystem/Layouts/Layouts';
 import { start } from 'repl';
+
 registerLocale('es', es);
 
 export default function BudgetsPage() {
@@ -24,7 +26,7 @@ export default function BudgetsPage() {
     BudgetAnalyticsDto | undefined
   >(undefined);
   const getFromDate = async (date: Dayjs) => {
-    var data = await budgetService.getBudgetAnalytics(
+    const data = await budgetService.getBudgetAnalytics(
       date.format('YYYY-MM-DD')
     );
     if (date.month() == startDateFilter?.getMonth())
@@ -35,8 +37,56 @@ export default function BudgetsPage() {
     getFromDate(dayjs(startDateFilter));
 
     getFromDate(dayjs(startDateFilter).add(-1, 'month'));
-  }, []);
+  }, [startDateFilter]);
 
+  const getRow = (n: number, n2: number, total: number) => {
+    return (
+      <>
+        <label>{n}</label>
+        <label>{((n / total) * 100).toFixed(2)}</label>
+        <label>{n2}€</label>
+      </>
+    );
+  };
+
+  const getTable = (metrics: BudgetAnalyticsDto) => {
+    return (
+      <>
+        <Flex layout="row-left">
+          <label>Pendiente: </label>
+          {getRow(
+            metrics.pendingCount,
+            metrics.pendingMoney,
+            metrics.totalCount
+          )}
+        </Flex>
+        <Flex layout="row-left">
+          <label>Seguimiento: </label>
+          {getRow(
+            metrics.contactedCount,
+            metrics.contactedMoney,
+            metrics.totalCount
+          )}
+        </Flex>
+        <Flex layout="row-left">
+          <label>Convertidos: </label>
+          {getRow(metrics.paidCount, metrics.paidMoney, metrics.totalCount)}
+        </Flex>
+        <Flex layout="row-left">
+          <label>Rechazados: </label>
+          {getRow(
+            metrics.rejectedCount,
+            metrics.rejectedMoney,
+            metrics.totalCount
+          )}
+        </Flex>
+        <Flex layout="row-left">
+          <label>Total: </label>
+          {getRow(metrics.totalCount, metrics.totalMoney, metrics.totalCount)}
+        </Flex>
+      </>
+    );
+  };
   return (
     <App>
       <MainLayoutCRM>
@@ -59,11 +109,15 @@ export default function BudgetsPage() {
             dateFormat="dd/MM/yyyy"
           ></DatePicker>
           {firstMonthAnalytics && (
-            <Flex>{dayjs(startDateFilter).format('MMMM')}</Flex>
+            <Flex layout="col-center">
+              {dayjs(startDateFilter).format('MMMM')}
+              {getTable(firstMonthAnalytics)}
+            </Flex>
           )}
           {secondtMonthAnalytics && (
-            <Flex>
+            <Flex layout="col-center">
               {dayjs(startDateFilter).add(-1, 'month').format('MMMM')}
+              {getTable(secondtMonthAnalytics)}
             </Flex>
           )}
         </ContainerCRM>
