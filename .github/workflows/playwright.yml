@@ -1,4 +1,4 @@
-run: E2E
+name: E2E
 
 on:
   push:
