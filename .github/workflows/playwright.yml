@@ -1,10 +1,9 @@
-env:
-  BRANCH_NAME: ${{ github.ref_name || github.head_ref || github.ref }}
-
-run-name: Playwright Tests - ${{ github.event.deployment_status.repository_url }} - ${{ github.event.deployment_status.ref }} - ${{ github.ref }} - ${{ env.BRANCH_NAME }}
+run-name: Playwright Tests - ${{ github.ref }}
 
 on:
+  push:
   deployment_status:
+
 jobs:
   run-e2es:
     if: github.event_name == 'deployment_status' && github.event.deployment_status.state == 'success'
