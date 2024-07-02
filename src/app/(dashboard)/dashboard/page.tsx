@@ -2,6 +2,7 @@
 
 import React, { useEffect, useState } from 'react';
 import Bugsnag from '@bugsnag/js';
+import ProductService from '@services/ProductService';
 import ScheduleService from '@services/ScheduleService';
 import UserService from '@services/UserService';
 import * as config from '@utils/textConstants';
@@ -25,6 +26,7 @@ import { get, isEmpty } from 'lodash';
 import { useRouter } from 'next/navigation';
 
 import RegistrationForm from '../../(web)/components/common/RegistrationForm';
+import ProductDiscountForm from './(pages)/checkout/components/ProductDiscountForm';
 import { useCrisalix } from './(pages)/crisalix/useCrisalix';
 import AppointmentsListComponent from './Appointments';
 import SearchUser from './SearchUser';
@@ -179,7 +181,6 @@ export default function Page({
             setClinicId(data.clinic.id);
             setClinicFlowwwId(data.clinic.flowwwId);
             setClinicProfessionalId(data.clinicProfessional.id);
-
             if (name == '') {
               name = data.lead.user.firstName;
               id = data.lead.user.id;
@@ -267,7 +268,6 @@ export default function Page({
             setClinicFlowwwId(data.clinicFlowwwId);
             setClinicProfessionalId(data.clinicProfessionalId);
             setSelectedClinic(getClinicToSet(clinics, data.clinicId));
-
             if (name == '') {
               name = data.firstName;
               id = data.userId;
@@ -431,13 +431,22 @@ export default function Page({
                 isDerma={false}
               />
             ) : (
-              <SearchUser
-                email={userEmail}
-                handleFieldChange={handleFieldEmailChange}
-                handleCheckUser={handleCheckUser}
-                errors={errors}
-                isLoading={isLoading}
-              />
+              <div className="flex flex-row ">
+                <SearchUser
+                  email={userEmail}
+                  handleFieldChange={handleFieldEmailChange}
+                  handleCheckUser={handleCheckUser}
+                  errors={errors}
+                  isLoading={isLoading}
+                />
+                <div className="flex justify-center">
+                  <ProductDiscountForm
+                    isCheckout={true}
+                    showPercentage={false}
+                    enableMGM={true}
+                  />
+                </div>
+              </div>
             )}
           </div>
         )}

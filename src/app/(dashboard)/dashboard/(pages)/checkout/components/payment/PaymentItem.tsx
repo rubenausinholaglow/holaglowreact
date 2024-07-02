@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
-import FinanceService from '@services/FinanceService';
 import { messageService } from '@services/MessageService';
 import Notification from 'app/(dashboard)/dashboard/components/ui/Notification';
+import { usePaymentUtils } from 'app/hooks/usePaymentUtils';
 import { SvgSpinner } from 'app/icons/Icons';
 import { SvgCross } from 'app/icons/IconsDs';
 import { useGlobalPersistedStore } from 'app/stores/globalStore';
@@ -11,7 +11,6 @@ import { getPaymentBankText, getPaymentMethodText } from 'app/utils/utils';
 import { Button } from 'designSystem/Buttons/Buttons';
 import { Flex } from 'designSystem/Layouts/Layouts';
 import { Text } from 'designSystem/Texts/Texts';
-import { isEmpty } from 'lodash';
 
 import { usePaymentList } from './payments/usePaymentList';
 
@@ -40,9 +39,13 @@ export default function PaymentItem({ paymentTicketRequest, status }: Props) {
     state => state
   );
 
+  const { deletePayment } = usePaymentUtils();
+
   if (status === undefined) {
     status = StatusPayment.Waiting;
   }
+
+  const paymentNeedResponse = [1, 2, 4];
 
   useEffect(() => {
     switch (status) {
@@ -67,12 +70,14 @@ export default function PaymentItem({ paymentTicketRequest, status }: Props) {
     }
   }, [status]);
 
-  const handleRemoveAndDelete = async (paymentRequest: any) => {
+  const handleRemoveAndDelete = async (
+    paymentRequest: PaymentTicketRequest
+  ) => {
     setIsLoading(true);
-    const id = paymentRequest.id;
-    await FinanceService.deletePayment(id, false)
+
+    await deletePayment(paymentRequest)
       .then(async data => {
-        if (data && !isEmpty(data)) {
+        if (data) {
           removePayment(paymentRequest);
           sendPaymentDeleted(paymentRequest.id);
         } else {
@@ -110,7 +115,7 @@ export default function PaymentItem({ paymentTicketRequest, status }: Props) {
           {getPaymentBankText(paymentTicketRequest.bank)}
         </span>
       )}
-      {paymentTicketRequest.bank != 3 && (
+      {paymentNeedResponse.includes(paymentTicketRequest.bank) && (
         <Text key={paymentTicketRequest.id}>{textPayment}</Text>
       )}
       <Flex className="ml-auto gap-2">

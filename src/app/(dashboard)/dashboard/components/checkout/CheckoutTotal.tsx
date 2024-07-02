@@ -12,7 +12,6 @@ import { Text } from 'designSystem/Texts/Texts';
 export default function CheckoutTotal() {
   const {
     cart,
-    totalPrice,
     priceDiscount,
     percentageDiscount,
     manualPrice,
@@ -31,7 +30,6 @@ export default function CheckoutTotal() {
       0
     );
   }
-
   const hasProductsDiscount =
     productsPriceTotal !== productsPriceTotalWithDiscounts;
 
@@ -72,24 +70,11 @@ export default function CheckoutTotal() {
               </Text>
             </Flex>
           </Flex>
-          <Flex className="w-full gap-2">
-            <Text className="text-hg-black400 text-sm"> </Text>
-            <SvgArrow
-              height={24}
-              width={24}
-              className={`ml-auto transition-transform border border-hg-black rounded-full cursor-pointer p-1 ${
-                showCartDiscount
-                  ? 'rotate-90 bg-hg-secondary100 border-none'
-                  : 'rotate-0'
-              }`}
-              onClick={() => setShowCartDiscount(!showCartDiscount)}
-            />
-          </Flex>
         </Flex>
       </Flex>
       {showCartDiscount && (
         <Flex layout="col-left" className="bg-hg-black100 p-4 gap-2">
-          <ProductDiscountForm isCheckout={true} productPrice={totalPrice} />
+          <ProductDiscountForm isCheckout={true} />
           {hasCartDiscount && (
             <Flex layout="row-left">
               {manualPrice > 0 && (

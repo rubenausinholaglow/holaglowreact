@@ -7,6 +7,7 @@ export const Input = ({
   onChange,
   className,
   children,
+  placeholder,
   ...props
 }: {
   type: 'email' | 'number' | 'text' | 'tel';
@@ -15,6 +16,7 @@ export const Input = ({
   onChange?: (event: any) => void;
   className?: string;
   children?: ReactNode;
+  placeholder?: string;
 }) => {
   return (
     <input
@@ -22,7 +24,7 @@ export const Input = ({
       value={value}
       name={name}
       className={className ? className : ''}
-      placeholder="Introduce tu teléfono, email o DNI"
+      placeholder={placeholder}
       {...props}
     ></input>
   );

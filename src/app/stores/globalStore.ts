@@ -1,5 +1,6 @@
 import { LoginResponse } from '@interface/Login';
 import { PaymentBank, PaymentInitResponse } from '@interface/payment';
+import { PromoCodeResponse, Wallet } from '@interface/wallet';
 import { INITIAL_FILTERS } from 'app/(web)/tratamientos/utils/filters';
 import { Appointment, User, UserCheckin } from 'app/types/appointment';
 import { Post } from 'app/types/blog';
@@ -47,6 +48,8 @@ interface SessionStore {
   treatmentPacks: PackUnitiesScheduled[];
   hasSeenDashboardProfessionals: boolean;
   isCallMeTriggered: boolean;
+  promoCode : PromoCodeResponse | undefined;
+  walletClient: Wallet | undefined;
 }
 interface SessionActions {
   setAnalyticsMetrics: (analyticsMetrics: AnalyticsMetrics) => void;
@@ -68,6 +71,8 @@ interface SessionActions {
   setTreatmentPacks: (treatment: PackUnitiesScheduled[]) => void;
   setHasSeenDashboardProfessionals: (value: boolean) => void;
   setIsCallMeTriggered: (value: boolean) => void;
+  setPromoCode: (value?: PromoCodeResponse) => void;
+  setWalletClient: (value?: Wallet) => void;
 }
 
 interface GlobalPersistStore {
@@ -180,6 +185,8 @@ export const useSessionStore = create(
       treatmentPacks: [],
       hasSeenDashboardProfessionals: false,
       isCallMeTriggered: false,
+      promoCode: undefined,
+      walletClient: undefined,
       setAppointmentUrl: value => {
         set({ appointmentUrl: value });
       },
@@ -237,7 +244,14 @@ export const useSessionStore = create(
       setIsCallMeTriggered: value => {
         set({ isCallMeTriggered: value });
       },
+      setPromoCode: value => {
+        set({ promoCode: value });
+      },
+      setWalletClient: value => {
+        set({ walletClient: value });
+      },
     }),
+  
     {
       name: 'session-storage',
       version: 31,
@@ -256,6 +270,7 @@ export const useGlobalPersistedStore = create(
       dashboardProducts: [],
       clinics: [],
       user: undefined,
+      promoProduct : undefined,
       setStateProducts: (value: Product[]) => {
         set({ stateProducts: value });
       },

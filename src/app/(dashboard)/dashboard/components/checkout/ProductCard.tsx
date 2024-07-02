@@ -15,9 +15,14 @@ import { isEmpty } from 'lodash';
 interface Props {
   product: CartItem;
   isCheckout?: boolean;
+  showDiscount?: boolean;
 }
 
-export default function ProductCard({ product, isCheckout }: Props) {
+export default function ProductCard({
+  product,
+  isCheckout,
+  showDiscount,
+}: Props) {
   const { cart, removeFromCart, removeItemDiscount } = useCartStore(
     state => state
   );
@@ -44,7 +49,9 @@ export default function ProductCard({ product, isCheckout }: Props) {
     (acc, product) => acc + product.price,
     0
   );
-  const validProducts = ['5519', '2151'];
+
+  const productsAcceptDiscounts =
+    process.env.NEXT_PUBLIC_CONFIG_PRODUCTS_ACCEPT_DISCOUNTS;
 
   useEffect(() => {
     if (pendingDiscount) {
@@ -113,9 +120,11 @@ export default function ProductCard({ product, isCheckout }: Props) {
         </Text>
       </Flex>
 
-      {showDiscountForm && (
+      {showDiscount && (
         <>
-          {validProducts.includes(product.flowwwId.toString()) &&
+          {productsAcceptDiscounts!.includes(
+            product.id.toLocaleUpperCase().toString()
+          ) &&
             productsPriceTotal > minPriceToStartDiscount && (
               <div className="bg-hg-black100 p-4 w-full justify-end">
                 <SvgArrow
@@ -132,7 +141,6 @@ export default function ProductCard({ product, isCheckout }: Props) {
                   <>
                     <ProductDiscountForm
                       cartUniqueId={product.uniqueId}
-                      productPrice={product.price}
                       isCheckout={false}
                       showPercentage={true}
                     />

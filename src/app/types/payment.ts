@@ -7,6 +7,7 @@ export interface PaymentTicketRequest {
 }
 export interface ProductTicketRequest {
   id: string;
+  price : string;
 }
 
 export enum PaymentMethod {
@@ -14,6 +15,8 @@ export enum PaymentMethod {
   CreditCard,
   Financing,
   Others,
+  Wallet,
+  AdvancedPayment,
 }
 
 export enum PaymentBank {
@@ -26,7 +29,8 @@ export enum PaymentBank {
   GooglePay,
   ApplePay,
   Paypal,
-  Frakmenta
+  Frakmenta,
+  Points
 }
 
 export interface PaymentInitResponse {

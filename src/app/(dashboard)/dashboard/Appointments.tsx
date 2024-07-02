@@ -38,6 +38,7 @@ import { Text } from 'designSystem/Texts/Texts';
 import { isEmpty } from 'lodash';
 import { useRouter } from 'next/navigation';
 
+import ProductDiscountForm from './(pages)/checkout/components/ProductDiscountForm';
 import { useCrisalix } from './(pages)/crisalix/useCrisalix';
 
 dayjs.extend(utc);
@@ -563,6 +564,11 @@ const AppointmentsListComponent: React.FC<{
                       appointment,
                       AppointmentEventType.Finished
                     )}
+              </Text>
+              <Text className="w-[7%] shrink-0 p-2">
+                {isHeader
+                  ? 'Puntos'
+                  : `${Number(appointment.totalPoints).toFixed(0)} €`}
               </Text>
             </>
           )}

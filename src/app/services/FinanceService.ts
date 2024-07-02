@@ -1,6 +1,7 @@
 import Bugsnag from '@bugsnag/js';
 import { CreateTicketRequest } from '@interface/createTicket';
 import { PaymentInitResponse } from '@interface/payment';
+import { PromoCodeResponse, ValidatePromoCodeRequest, Wallet } from '@interface/wallet';
 import { CreatePayment, InitializePayment } from 'app/types/initializePayment';
 
 export default class FinanceService {
@@ -146,6 +147,46 @@ export default class FinanceService {
     }
   }
 
+  static async validatePromoCode(validatePromoCode: ValidatePromoCodeRequest): Promise<PromoCodeResponse> {
+    try {
+      const url = `${FinanceService.getFinanceUrl(false)}Validate`;
+      const res = await fetch(url, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(validatePromoCode),
+      });
+
+      return res.json();
+
+    } catch (error: any) {
+      Bugsnag.notify(error);
+      return {} as PromoCodeResponse;
+    }
+  }
+
+  static async getWalletBalance(userId: string): Promise<Wallet> {
+    try {
+      const url = `${FinanceService.getFinanceUrl(false)}BalanceUser?userId=${userId}`;
+      const res = await fetch(url, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
+      if (res.ok) {
+        const data = await res.json();
+        return data;
+      } else {
+        return {} as Wallet;
+      }
+    } catch (error: any) {
+      Bugsnag.notify(error);
+    }
+    return {} as Wallet;
+  }
+
   static async getSubscription(userId: string): Promise<boolean> {
     try {
       const url = `${process.env.NEXT_PUBLIC_DERMAFINANCE_API}Subscription?userId=${userId}`;
@@ -195,4 +236,5 @@ export default class FinanceService {
       Bugsnag.notify('Error canceling subscription ' + error);
     }
   }
+
 }

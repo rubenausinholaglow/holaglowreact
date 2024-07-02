@@ -27,11 +27,13 @@ const Page = () => {
   const userCrisalix = useCrisalix(state => state);
   const { remoteControl, setCheckSimulator, user, setBudgetId, isCallCenter } =
     useGlobalPersistedStore(state => state);
+
   const {
     setSelectedTreatments,
     selectedClinic,
     setTreatmentPacks,
     setSelectedPack,
+    setPromoCode,
   } = useSessionStore(state => state);
 
   useEffect(() => {
@@ -42,6 +44,7 @@ const Page = () => {
     useCartStore.setState(INITIAL_STATE);
     setCheckSimulator(false);
     setTreatmentPacks([]);
+    setPromoCode(undefined);
   }, []);
   useEffect(() => {
     if (!remoteControl) {
