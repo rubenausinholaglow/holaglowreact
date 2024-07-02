@@ -66,7 +66,7 @@ const Page = () => {
       userCrisalix.addCrisalixUser(crisalixUser);
       setId(x.id);
       setPlayerToken(x.playerToken);
-      setPlayerId(x.player_Id);
+      setPlayerId(x.player_id);
     });
   }
 
