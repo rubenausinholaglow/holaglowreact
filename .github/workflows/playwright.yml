@@ -1,29 +1,21 @@
-name: E2E
+name: E2E tests
 
 on:
   push:
     branches:
       - '**'
-  deployment_status:
 
 jobs:
-  wait-for-deployment:
-    if: github.event_name == 'push'
+  jobs:
+  wait_for_deployment:
     runs-on: ubuntu-latest
+    timeout-minutes: 5
     steps:
-      - name: 'Wait for successful deployment'
-        id: 'wait'
-        run: |
-          echo "Waiting for 5 minutes before proceeding..."
-          sleep 300
-        env:
-          GH_TOKEN: ${{ github.token }}
+      - name: Wait for 5 minutes
+        run: sleep 300
 
-  run-e2es:
-    needs: wait-for-deployment
-    #if: github.event_name == 'deployment_status' && github.event.deployment_status.state == 'success'
+  run_e2es:
     runs-on: ubuntu-latest
     steps:
-      run: echo $github.event.deployment_status.environment_url
-      env:
-        BASE_URL: ${{ github.event.deployment_status.environment_url }}
+      - name: Echo deployment status
+        run: echo "Deployment status: ${{ github.event.deployment_status }}"
