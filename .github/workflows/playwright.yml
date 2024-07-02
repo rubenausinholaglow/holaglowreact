@@ -8,12 +8,6 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Wait for 5minutes
-        run: sleep 300
-
-  run_e2es:
-    needs: wait_for_deployment
-    runs-on: ubuntu-latest
-    steps:
-      - name: Echo deployment status
         run: |
+          sleep 300
           echo "Deployment status: ${{ github.event.deployment_status.state }}"
