@@ -45,6 +45,19 @@ export interface TicketBudget extends Budget {
   id: string;
 }
 
+export interface BudgetAnalyticsDto {
+  pendingCount: number;
+  contactedCount: number;
+  rejectedCount: number;
+  paidCount: number;
+  totalCount: number;
+  pendingMoney: number;
+  contactedMoney: number;
+  rejectedMoney: number;
+  paidMoney: number;
+  totalMoney: number;
+}
+
 export enum StatusBudget {
   Open = 1,
   Finish = 2,

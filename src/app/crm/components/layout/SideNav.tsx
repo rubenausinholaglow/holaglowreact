@@ -38,7 +38,7 @@ export default SideNav;
 
 const MenuItem = ({ item }: { item: SideNavItem }) => {
   const pathName = usePathname();
-  const [subMenuOpen, setSubMenuOpen] = useState(false);
+  const [subMenuOpen, setSubMenuOpen] = useState(true);
   const { clinicId } = useCrmStore(state => state);
   const toggleSubMenu = () => {
     setSubMenuOpen(!subMenuOpen);

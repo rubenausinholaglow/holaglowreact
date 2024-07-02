@@ -1,6 +1,6 @@
 import Bugsnag from '@bugsnag/js';
 import { ERROR_CREATE_BUDGET } from '@utils/textConstants';
-import { Budget } from 'app/types/budget';
+import { Budget, BudgetAnalyticsDto } from 'app/types/budget';
 import { Ticket } from 'app/types/ticket';
 
 export const budgetService = {
@@ -95,6 +95,24 @@ export const budgetService = {
   async getBudget(id: string): Promise<Budget | undefined> {
     try {
       const url = `${process.env.NEXT_PUBLIC_PATIENTS_API}Budget?id=${id}`;
+      const res = await fetch(url, {
+        method: 'GET',
+      });
+      if (res.ok) {
+        const data = await res.json();
+        return data;
+      } else {
+        return undefined;
+      }
+    } catch (err) {
+      return undefined;
+    }
+  },
+  async getBudgetAnalytics(
+    date: string
+  ): Promise<BudgetAnalyticsDto | undefined> {
+    try {
+      const url = `${process.env.NEXT_PUBLIC_PATIENTS_API}Budget/Analytics?startTime=${date}`;
       const res = await fetch(url, {
         method: 'GET',
       });

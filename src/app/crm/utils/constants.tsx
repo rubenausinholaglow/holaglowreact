@@ -4,6 +4,17 @@ export const SIDENAV_ITEMS: SideNavItem[] = [
   {
     title: 'Presupuestos',
     path: '/crm/budgets?clinicId={{clinicId}}',
+    submenu: true,
+    submenuItems: [
+      {
+        title: 'Analiticas',
+        path: '/crm/budgets/analytics',
+      },
+      {
+        title: 'Presupuestos',
+        path: '/crm/budgets?clinicId={{clinicId}}',
+      },
+    ],
   },
   /*
   {
