@@ -1,11 +1,4 @@
-name: Show commit + branch information
+run name: Run tests for -> ${{ github.ref }}
 
 on:
   push:
-
-jobs:
-  wait_for_deployment:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Just commit + branch information
-        run: echo "Just commit + branch information"
