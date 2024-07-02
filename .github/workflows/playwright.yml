@@ -18,4 +18,4 @@ jobs:
     steps:
       - name: Echo deployment status
         run: |
-          echo "Deployment status: ${{ github.event.deployment_status }}"
+          echo "Deployment status olakease: ${{ github.event.deployment_status }}"
