@@ -17,4 +17,5 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Echo deployment status
-        run: echo "Deployment status: ${{ github.event.deployment_status }}"
+        run: |
+          echo "Deployment status: ${{ github.event.deployment_status }}"
