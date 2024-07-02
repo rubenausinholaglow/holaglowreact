@@ -1,4 +1,4 @@
-run-name: Playwright Tests - ${{ github.ref_name }}
+run-name: Playwright Tests - ${{ github.event.deployment_status.repository_url }} - ${{ github.event.deployment.ref }}
 
 on:
   deployment_status:
