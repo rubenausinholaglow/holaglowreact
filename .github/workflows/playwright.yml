@@ -32,6 +32,8 @@ jobs:
             echo "Deployment not successful yet. Sleeping for 10 seconds..."
             sleep 10
           done
+        env:
+          GH_TOKEN: ${{ github.token }}
 
   run-e2es:
     needs: wait-for-deployment
