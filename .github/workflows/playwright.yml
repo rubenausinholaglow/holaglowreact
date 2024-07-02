@@ -1,4 +1,4 @@
-name: E2E tests
+run: E2E
 
 on:
   push:
@@ -33,7 +33,7 @@ jobs:
             sleep 10
           done
         env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GH_TOKEN: ${{ github.token }}
 
   run-e2es:
     needs: wait-for-deployment
