@@ -1,4 +1,7 @@
-run-name: Playwright Tests - ${{ github.event.deployment_status.repository_url }} - ${{ github.event.deployment.ref }}
+env:
+  BRANCH_NAME: ${{ github.ref_name || github.head_ref || github.ref }}
+
+run-name: Playwright Tests - ${{ github.event.deployment_status.repository_url }} - ${{ github.event.deployment_status.ref }} - ${{ github.ref }} - ${{ env.BRANCH_NAME }}
 
 on:
   deployment_status:
